@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ─── Reset & Base ─────────────────────────────── */
+/* Reset & Base */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{font-family:'DM Sans',system-ui,-apple-system,sans-serif;background:#0a0f1a;color:#e2e8f0;
@@ -28,35 +28,19 @@ a{color:inherit;text-decoration:none}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
 input[type=number]{-moz-appearance:textfield}
 
-/* ─── CSS Variables ────────────────────────────── */
+/* CSS Variables */
 :root{
-  --bg:      #0a0f1a;
-  --bg1:     #0f1629;
-  --bg2:     #151d30;
-  --bg3:     #1a2540;
-  --border:  #1e2d4a;
-  --border2: #243656;
-  --text:    #e2e8f0;
-  --text2:   #94a3b8;
-  --text3:   #64748b;
-  --text4:   #475569;
-  --blue:    #3b82f6;
-  --blue2:   #2563eb;
-  --brand1:  #d97706;
-  --brand2:  #15803d;
-  --green:   #34d399;
-  --green2:  #10b981;
-  --red:     #f87171;
-  --red2:    #ef4444;
-  --amber:   #fbbf24;
-  --violet:  #a78bfa;
-  --sky:     #38bdf8;
-  --mono:    'JetBrains Mono',monospace;
-  --radius:  12px;
-  --radius-sm:8px;
+  --bg:#0a0f1a;--bg1:#0f1629;--bg2:#151d30;--bg3:#1a2540;
+  --border:#1e2d4a;--border2:#243656;
+  --text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--text4:#475569;
+  --blue:#3b82f6;--blue2:#2563eb;--brand1:#d97706;--brand2:#15803d;
+  --green:#34d399;--green2:#10b981;--red:#f87171;--red2:#ef4444;
+  --amber:#fbbf24;--violet:#a78bfa;--sky:#38bdf8;
+  --mono:'JetBrains Mono',monospace;--radius:12px;--radius-sm:8px;
+  --toast-green:#059669;--toast-red:#dc2626;--toast-blue:#2563eb;
 }
 
-/* ─── App Shell ────────────────────────────────── */
+/* App Shell */
 #app{display:flex;flex-direction:column;height:100dvh;max-width:600px;margin:0 auto;position:relative}
 .topbar{flex:none;display:flex;align-items:center;justify-content:space-between;
   padding:10px 16px;background:rgba(15,22,41,.85);backdrop-filter:blur(20px);
@@ -72,12 +56,12 @@ input[type=number]{-moz-appearance:textfield}
 
 .navbar{flex:none;display:flex;background:rgba(15,22,41,.92);backdrop-filter:blur(20px);
   border-top:1px solid var(--border);padding-bottom:env(safe-area-inset-bottom);z-index:30}
-.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0;
-  color:var(--text4);transition:color .15s;cursor:pointer;border:none;background:none;font-size:10px;font-weight:500}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 0;
+  color:var(--text4);transition:color .15s;cursor:pointer;border:none;background:none;font-size:9px;font-weight:500}
 .nav-item.active{color:var(--blue)}
-.nav-item svg{width:20px;height:20px}
+.nav-item svg{width:18px;height:18px}
 
-/* ─── Common UI ────────────────────────────────── */
+/* Common UI */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 16px;
   border-radius:var(--radius);font-size:14px;font-weight:600;border:none;cursor:pointer;transition:all .15s}
 .btn-primary{background:var(--blue);color:#fff}.btn-primary:hover{background:var(--blue2)}
@@ -107,9 +91,17 @@ select.input{-webkit-appearance:none;appearance:none;background-image:url("data:
 .badge-amber{background:rgba(251,191,36,.12);color:var(--amber)}
 .badge-gray{background:rgba(100,116,139,.15);color:var(--text3)}
 
-.page{padding:16px 16px 20px;animation:fadeUp .2s ease-out}
+.page{padding:16px 16px 20px;animation:pageIn .25s ease-out}
+@keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
+@keyframes slideInRight{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideOutRight{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(40px)}}
+@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes modalOut{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(.95)}}
+@keyframes backdropIn{from{opacity:0}to{opacity:1}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
 
 .label{font-size:11px;color:var(--text3);margin-bottom:6px;display:block;font-weight:500}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -221,6 +213,75 @@ select.input{-webkit-appearance:none;appearance:none;background-image:url("data:
 .timeline-body .when{font-size:10px;color:var(--text4);margin-top:2px}
 .timeline-body .detail{font-size:10px;color:var(--text4);font-family:var(--mono);margin-top:2px}
 
+/* Modal & Toast */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);z-index:100;
+  display:flex;align-items:center;justify-content:center;padding:20px;animation:backdropIn .2s ease-out}
+.modal-backdrop.closing{animation:backdropIn .15s ease-in reverse forwards}
+.modal-box{width:100%;max-width:380px;background:var(--bg2);border:1px solid var(--border2);
+  border-radius:16px;padding:24px;animation:modalIn .25s ease-out;box-shadow:0 25px 60px rgba(0,0,0,.5)}
+.modal-backdrop.closing .modal-box{animation:modalOut .15s ease-in forwards}
+.modal-title{font-size:16px;font-weight:700;margin-bottom:8px}
+.modal-msg{font-size:13px;color:var(--text2);line-height:1.5;margin-bottom:20px;white-space:pre-line}
+.modal-input{width:100%;padding:12px 14px;background:var(--bg1);border:1px solid var(--border);
+  border-radius:var(--radius);font-size:14px;color:var(--text);outline:none;margin-bottom:16px}
+.modal-input:focus{border-color:rgba(59,130,246,.5)}
+.modal-btns{display:flex;gap:10px;justify-content:flex-end}
+.modal-btns .btn{min-width:80px}
+
+.toast-container{position:fixed;top:60px;right:16px;z-index:200;display:flex;flex-direction:column;gap:8px;pointer-events:none;max-width:340px}
+.toast{pointer-events:auto;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;
+  font-size:13px;font-weight:500;box-shadow:0 8px 30px rgba(0,0,0,.4);animation:slideInRight .3s ease-out;
+  backdrop-filter:blur(12px)}
+.toast.removing{animation:slideOutRight .25s ease-in forwards}
+.toast-success{background:rgba(5,150,105,.92);color:#fff}
+.toast-error{background:rgba(220,38,38,.92);color:#fff}
+.toast-info{background:rgba(37,99,235,.92);color:#fff}
+.toast svg{width:16px;height:16px;flex-shrink:0}
+
+/* Skeleton loading */
+.skeleton{background:linear-gradient(90deg,var(--bg3) 25%,var(--bg2) 50%,var(--bg3) 75%);
+  background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:var(--radius-sm)}
+.skeleton-line{height:14px;margin-bottom:8px;border-radius:4px}
+.skeleton-circle{border-radius:50%}
+
+/* Empty states */
+.empty-state{text-align:center;padding:48px 20px;color:var(--text4)}
+.empty-state .empty-icon{font-size:48px;margin-bottom:16px;opacity:.6}
+.empty-state .empty-title{font-size:15px;font-weight:600;color:var(--text3);margin-bottom:6px}
+.empty-state .empty-desc{font-size:12px;line-height:1.5}
+
+/* Photo attachment */
+.photo-thumb{width:60px;height:60px;border-radius:8px;object-fit:cover;border:1px solid var(--border);cursor:pointer}
+.photo-full-modal img{max-width:100%;max-height:70vh;border-radius:12px}
+
+/* Onboarding overlay */
+.onboarding-backdrop{position:fixed;inset:0;background:rgba(10,15,26,.95);z-index:300;display:flex;
+  align-items:center;justify-content:center;padding:24px;animation:backdropIn .4s ease-out}
+.onboarding-box{max-width:360px;text-align:center}
+.onboarding-step{animation:fadeUp .4s ease-out}
+.onboarding-emoji{font-size:64px;margin-bottom:20px}
+.onboarding-title{font-size:20px;font-weight:700;margin-bottom:10px}
+.onboarding-desc{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:24px}
+.onboarding-dots{display:flex;gap:8px;justify-content:center;margin-bottom:20px}
+.onboarding-dots span{width:8px;height:8px;border-radius:50%;background:var(--bg3);transition:all .2s}
+.onboarding-dots span.active{background:var(--blue);width:24px;border-radius:4px}
+
+/* Version badge */
+.version-badge{display:inline-flex;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:600;
+  background:rgba(59,130,246,.1);color:var(--blue);border:1px solid rgba(59,130,246,.2)}
+
+/* PIN strength */
+.pin-strength{height:4px;border-radius:2px;margin-top:6px;background:var(--bg3);overflow:hidden}
+.pin-strength-bar{height:100%;border-radius:2px;transition:width .3s,background .3s}
+
+/* Template cards */
+.template-card{padding:12px;border-radius:var(--radius);background:var(--bg2);border:1px dashed var(--border);
+  cursor:pointer;transition:all .15s;text-align:center}
+.template-card:hover{border-color:var(--blue);background:rgba(59,130,246,.05)}
+
+/* Pull to refresh indicator */
+.ptr-indicator{text-align:center;padding:8px;font-size:11px;color:var(--text4);display:none}
+
 /* Print */
 @media print{
   .topbar,.navbar,.no-print{display:none!important}
@@ -232,19 +293,21 @@ select.input{-webkit-appearance:none;appearance:none;background-image:url("data:
 </head>
 <body>
 <div id="app"></div>
+<div class="toast-container" id="toast-container"></div>
 
 <script>
-// ═══════════════════════════════════════════════════════════════
-// Tcha Agro — Single-File Offline-First PWA
-// ═══════════════════════════════════════════════════════════════
+// ==================================================================
+// Tcha Agro v2.0 — Single-File Offline-First PWA
+// ==================================================================
 
-// ─── SVG Icons (inline, zero dependencies) ───────────────────
+// --- SVG Icons (inline, zero dependencies) ---
 const I = {
   dashboard: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>`,
   cash: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>`,
   truck: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 00-2-2H4a2 2 0 00-2 2v11a1 1 0 001 1h1"/><path d="M15 18h2l3-3V8h-5"/><circle cx="7" cy="18" r="2"/><circle cx="18.5" cy="18" r="2"/></svg>`,
   chart: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>`,
   settings: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`,
+  contacts: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>`,
   plus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`,
   back: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>`,
   search: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
@@ -262,6 +325,7 @@ const I = {
   wallet: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 010-4h14v4"/><path d="M3 5v14a2 2 0 002 2h16v-5"/><path d="M18 12a2 2 0 100 4 2 2 0 000-4z"/></svg>`,
   pkg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>`,
   download: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>`,
+  upload: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>`,
   x: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
   arrow: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
   shield: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
@@ -274,9 +338,15 @@ const I = {
   refresh: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>`,
   users: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>`,
   alert: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
+  camera: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>`,
+  copy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>`,
+  phone: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0122 16.92z"/></svg>`,
+  mail: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>`,
+  bookmark: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>`,
 };
 
-// ─── Utility Functions ───────────────────────────────────────
+
+// --- Utility Functions ---
 const $ = s => document.querySelector(s);
 const h = (tag, attrs, ...children) => {
   const el = document.createElement(tag);
@@ -319,192 +389,326 @@ function fmtRelative(iso) {
   return fmtDate(iso.slice(0,10));
 }
 
-// ─── Translations ────────────────────────────────────────────
+function haptic() { try { navigator.vibrate && navigator.vibrate(10); } catch(e){} }
+
+// --- Modal & Toast System ---
+function showToast(msg, type='success') {
+  const container = document.getElementById('toast-container');
+  const icons = {
+    success: I.check,
+    error: I.alert,
+    info: I.info
+  };
+  const toast = h('div', {className: `toast toast-${type}`, innerHTML: icons[type] || ''});
+  toast.appendChild(h('span', null, msg));
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('removing');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+function showModal(title, message, buttons) {
+  return new Promise(resolve => {
+    const backdrop = h('div', {className: 'modal-backdrop', onClick: e => {
+      if (e.target === backdrop) { closeM(null); }
+    }});
+    const box = h('div', {className: 'modal-box'});
+    if (title) box.appendChild(h('div', {className: 'modal-title'}, title));
+    if (message) box.appendChild(h('div', {className: 'modal-msg'}, message));
+    const btns = h('div', {className: 'modal-btns'});
+    (buttons || [{label: 'OK', value: true, primary: true}]).forEach(b => {
+      btns.appendChild(h('button', {
+        className: `btn ${b.primary ? 'btn-primary' : 'btn-ghost'} btn-sm`,
+        onClick: () => closeM(b.value)
+      }, b.label));
+    });
+    box.appendChild(btns);
+    backdrop.appendChild(box);
+    document.body.appendChild(backdrop);
+    function closeM(val) {
+      backdrop.classList.add('closing');
+      setTimeout(() => { backdrop.remove(); resolve(val); }, 180);
+    }
+  });
+}
+
+function showConfirm(title, message) {
+  return showModal(title, message, [
+    {label: t('cancel'), value: false, primary: false},
+    {label: 'OK', value: true, primary: true}
+  ]);
+}
+
+function showPrompt(title, message, defaultVal) {
+  return new Promise(resolve => {
+    const backdrop = h('div', {className: 'modal-backdrop', onClick: e => {
+      if (e.target === backdrop) closeM(null);
+    }});
+    const box = h('div', {className: 'modal-box'});
+    if (title) box.appendChild(h('div', {className: 'modal-title'}, title));
+    if (message) box.appendChild(h('div', {className: 'modal-msg'}, message));
+    const inp = h('input', {className: 'modal-input', type: 'text', value: defaultVal || '', autofocus: true});
+    box.appendChild(inp);
+    const btns = h('div', {className: 'modal-btns'});
+    btns.appendChild(h('button', {className: 'btn btn-ghost btn-sm', onClick: () => closeM(null)}, t('cancel')));
+    btns.appendChild(h('button', {className: 'btn btn-primary btn-sm', onClick: () => closeM(inp.value)}, 'OK'));
+    box.appendChild(btns);
+    backdrop.appendChild(box);
+    document.body.appendChild(backdrop);
+    setTimeout(() => inp.focus(), 50);
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') closeM(inp.value); });
+    function closeM(val) {
+      backdrop.classList.add('closing');
+      setTimeout(() => { backdrop.remove(); resolve(val); }, 180);
+    }
+  });
+}
+
+// --- Translations ---
 const LANG = {
   de: {
-    // Navigation
-    start: 'Start', dashboard: 'Dashboard', cash: 'Kasse', warehouse: 'Lager', delivery: 'Lieferung', more: 'Mehr',
-    // Common
-    save: 'Speichern', cancel: 'Abbrechen', delete: 'Löschen', edit: 'Bearbeiten', back: 'Zurück', search: 'Suchen…',
-    new: 'Neu', all: 'Alle', today: 'Heute', yesterday: 'Gestern', justNow: 'gerade eben', minAgo: 'vor {n} Min', hrAgo: 'vor {n} Std',
-    // Auth
-    username: 'Benutzername', pin: 'PIN', login: 'Anmelden', logout: 'Abmelden', wrongCredentials: 'Benutzername oder PIN falsch',
-    enterBoth: 'Bitte beides eingeben', demoAccess: 'Demo-Zugänge',
-    // Dashboard
-    hello: 'Hallo', businessCenter: 'Tcha Agro Business Center', todayIn3Steps: 'Heute in 3 Schritten',
-    step1: 'Einnahme oder Ausgabe erfassen', step2: 'Lagerbestand kurz prüfen', step3: 'Am Ende des Tages synchronisieren',
-    booking: 'Buchung', sync: 'Sync', income: 'Einnahmen', expenses: 'Ausgaben', cashBalance: 'Kasse (Bar)', warehouseVal: 'Lager',
-    empty: 'Leer', recentBookings: 'Letzte Buchungen', noBookingsToday: 'Noch keine Buchungen heute', activities: 'Aktivitäten',
-    // Transactions
-    transactions: 'Transaktionen', newBooking: 'Neue Buchung', editBooking: 'Buchung bearbeiten', amount: 'Betrag (FCFA)',
-    category: 'Kategorie', paymentMethod: 'Zahlungsart', description: 'Beschreibung', date: 'Datum', time: 'Uhrzeit',
-    sale: 'Verkauf', incomeType: 'Einnahme', expense: 'Ausgabe', cash: 'Bar', card: 'Karte', transfer: 'Überw.',
-    book: 'Buchen', void: 'Stornieren', voidConfirm: 'Buchung stornieren?', entries: 'Einträge',
-    fillAmountCat: 'Bitte Betrag und Kategorie ausfüllen.', requiredFields: 'Pflichtfelder',
-    optional: 'Optional', descExample: 'z.B. 20 Hühner an Mme Ablavi',
-    // Shipments
-    shipments: 'Lieferscheine', newShipment: 'Neuer Lieferschein', editShipment: 'Lieferschein bearbeiten',
-    inbound: 'Einlieferung', outbound: 'Auslieferung', supplier: 'Lieferant', customer: 'Kunde', reference: 'Referenz',
-    status: 'Status', draft: 'Entwurf', delivered: 'Geliefert', cancelled: 'Storniert', stored: 'Eingelagert', sold: 'Verkauft',
-    positions: 'Positionen', addLine: 'Zeile', article: 'Artikel', quantity: 'Menge', price: 'Preis', total: 'Gesamt',
-    units: 'Einh.', notes: 'Notizen', createShipment: 'Lieferschein erstellen',
-    fillPartner: 'Bitte Lieferant oder Kunde eingeben.', fillPosition: 'Bitte mindestens eine Position mit Artikel und Menge > 0 eingeben.',
-    documents: 'Dokumente', noShipments: 'Keine Lieferscheine',
-    // Warehouse
-    inStock: 'Im Lager', stockValue: 'Lagerwert', soldItems: 'Verkauft', items: 'Posten', unitsLabel: 'Einheiten',
-    waitingForPrice: 'Posten warten auf besseren Preis', warehouseEmpty: 'Lager ist leer',
-    createStoredShipment: 'Lieferschein mit Status "Eingelagert" erstellen', storedSince: 'seit {n} Tagen',
-    purchaseValue: 'Einkaufswert', sell: 'Verkaufen', sellPrice: 'Verkaufspreis (FCFA):', sellConfirm: 'Verkaufen für {price}?',
-    profit: 'Gewinn', loss: 'Verlust', showSold: 'verkaufte Posten anzeigen', hideSold: 'Verkauft ausblenden',
-    // Reports
-    reports: 'Reports & Auswertungen', periodAnalysis: 'Zeitraum-Analyse nach Kategorie und Zahlungsart',
-    balance: 'Saldo', bookings: 'Buchungen', totalLabel: 'gesamt', byCategory: 'Nach Kategorie', byPayment: 'Nach Zahlungsart', noData: 'Keine Daten',
-    // Settings
-    settings: 'Einstellungen', interface: 'Bedienung', simpleMode: 'Einfach-Modus',
-    simpleModeDesc: 'Zeigt kurze Schritt-Hinweise und klarere Eingaben für Laien.',
-    simpleModeActive: 'Einfach-Modus aktiv', enableSimpleMode: 'Einfach-Modus einschalten',
-    language: 'Sprache', synchronization: 'Synchronisation', online: 'Online', offline: 'Offline',
-    lastSync: 'Letzter Sync', pending: 'Ausstehend', changes: 'Änderungen', syncNow: 'Jetzt synchronisieren',
-    users: 'Benutzer', deactivate: 'Deaktiv.', activate: 'Aktivieren', admin: 'Admin',
-    data: 'Daten', exportCSV: 'CSV exportieren', deleteAllData: 'Alle Daten löschen', deleteConfirm: 'ALLE lokalen Daten löschen?',
-    info: 'Info', loggedInAs: 'Angemeldet',
-    // Google Sheets
-    googleSync: 'Google Sheets Sync', sheetId: 'Sheet ID', apiEndpoint: 'API Endpoint (Apps Script URL)',
-    apiKey: 'API-Schlüssel', testConnection: 'Verbindung testen', saveConfig: 'Konfiguration speichern',
-    notConfigured: 'Nicht konfiguriert', configured: 'Konfiguriert', connectionOk: 'Verbindung OK',
-    connectionFailed: 'Verbindung fehlgeschlagen',
-    // Admin
-    adminArea: 'Admin-Bereich', adminPinRequired: 'Admin-PIN erforderlich', enterAdminPin: 'Bitte Admin-PIN eingeben:',
-    wrongPin: 'Falscher PIN', adminOnly: 'Nur für Administratoren',
-    // Guide strips
-    guideStart: 'Heute starten: <b>1)</b> Buchung anlegen, <b>2)</b> Lager prüfen, <b>3)</b> Abends synchronisieren.',
-    guideCash: 'Kasse: Betrag eingeben, Kategorie wählen und dann auf <b>Buchen</b> tippen.',
-    guideWarehouse: 'Lager: Eingelagerte Ware prüfen und bei Verkauf den Verkaufspreis eintragen.',
-    guideShipments: 'Lieferschein: Partner eintragen, Positionen ergänzen und speichern.',
-    guideSettings: 'Mehr: Synchronisieren, Export und grundlegende App-Einstellungen.',
-    simpleModeHint: 'Einfach-Modus aktiv: nur die wichtigsten Schritte anzeigen.',
-    changeHistory: 'Änderungsverlauf',
-    // Actions & Entities
-    actionCreate: 'erstellt', actionUpdate: 'geändert', actionDelete: 'gelöscht', actionVoid: 'storniert',
-    entityTransaction: 'Transaktion', entityShipment: 'Lieferschein', entityItem: 'Position', entityUser: 'Benutzer',
-    // Additional UI
-    noTransactions: 'Keine Transaktionen gefunden', voided: 'Storniert', createdBy: 'Erstellt von', partner: 'Partner',
-    addToStock: 'Einlagern', sum: 'Summe', deliveryNote: 'Lieferhinweis', warehouseEmptyHint: 'Lieferschein mit Status „Eingelagert" erstellen',
-    waitItems: '{n} Posten warten auf besseren Preis', sinceXDays: 'seit {n} Tagen', items_units: '{items} Posten · {units} Einheiten'
+    start:'Start',dashboard:'Dashboard',cash:'Kasse',warehouse:'Lager',delivery:'Lieferung',more:'Mehr',
+    save:'Speichern',cancel:'Abbrechen',delete:'L\u00f6schen',edit:'Bearbeiten',back:'Zur\u00fcck',search:'Suchen\u2026',
+    new:'Neu',all:'Alle',today:'Heute',yesterday:'Gestern',justNow:'gerade eben',minAgo:'vor {n} Min',hrAgo:'vor {n} Std',
+    username:'Benutzername',pin:'PIN',login:'Anmelden',logout:'Abmelden',wrongCredentials:'Benutzername oder PIN falsch',
+    enterBoth:'Bitte beides eingeben',demoAccess:'Demo-Zug\u00e4nge',
+    hello:'Hallo',businessCenter:'Tcha Agro Business Center',todayIn3Steps:'Heute in 3 Schritten',
+    step1:'Einnahme oder Ausgabe erfassen',step2:'Lagerbestand kurz pr\u00fcfen',step3:'Am Ende des Tages synchronisieren',
+    booking:'Buchung',sync:'Sync',income:'Einnahmen',expenses:'Ausgaben',cashBalance:'Kasse (Bar)',warehouseVal:'Lager',
+    empty:'Leer',recentBookings:'Letzte Buchungen',noBookingsToday:'Noch keine Buchungen heute',activities:'Aktivit\u00e4ten',
+    transactions:'Transaktionen',newBooking:'Neue Buchung',editBooking:'Buchung bearbeiten',amount:'Betrag (FCFA)',
+    category:'Kategorie',paymentMethod:'Zahlungsart',description:'Beschreibung',date:'Datum',time:'Uhrzeit',
+    sale:'Verkauf',incomeType:'Einnahme',expense:'Ausgabe',cash:'Bar',card:'Karte',transfer:'\u00dcberw.',
+    book:'Buchen',void:'Stornieren',voidConfirm:'Buchung stornieren?',entries:'Eintr\u00e4ge',
+    fillAmountCat:'Bitte Betrag und Kategorie ausf\u00fcllen.',requiredFields:'Pflichtfelder',
+    optional:'Optional',descExample:'z.B. 20 H\u00fchner an Mme Ablavi',
+    shipments:'Lieferscheine',newShipment:'Neuer Lieferschein',editShipment:'Lieferschein bearbeiten',
+    inbound:'Einlieferung',outbound:'Auslieferung',supplier:'Lieferant',customer:'Kunde',reference:'Referenz',
+    status:'Status',draft:'Entwurf',delivered:'Geliefert',cancelled:'Storniert',stored:'Eingelagert',sold:'Verkauft',
+    positions:'Positionen',addLine:'Zeile',article:'Artikel',quantity:'Menge',price:'Preis',total:'Gesamt',
+    units:'Einh.',notes:'Notizen',createShipment:'Lieferschein erstellen',
+    fillPartner:'Bitte Lieferant oder Kunde eingeben.',fillPosition:'Bitte mindestens eine Position mit Artikel und Menge > 0 eingeben.',
+    documents:'Dokumente',noShipments:'Keine Lieferscheine',
+    inStock:'Im Lager',stockValue:'Lagerwert',soldItems:'Verkauft',items:'Posten',unitsLabel:'Einheiten',
+    waitingForPrice:'Posten warten auf besseren Preis',warehouseEmpty:'Lager ist leer',
+    createStoredShipment:'Lieferschein mit Status "Eingelagert" erstellen',storedSince:'seit {n} Tagen',
+    purchaseValue:'Einkaufswert',sell:'Verkaufen',sellPrice:'Verkaufspreis (FCFA):',sellConfirm:'Verkaufen f\u00fcr {price}?',
+    profit:'Gewinn',loss:'Verlust',showSold:'verkaufte Posten anzeigen',hideSold:'Verkauft ausblenden',
+    reports:'Reports & Auswertungen',periodAnalysis:'Zeitraum-Analyse nach Kategorie und Zahlungsart',
+    balance:'Saldo',bookings:'Buchungen',totalLabel:'gesamt',byCategory:'Nach Kategorie',byPayment:'Nach Zahlungsart',noData:'Keine Daten',
+    settings:'Einstellungen',interface:'Bedienung',simpleMode:'Einfach-Modus',
+    simpleModeDesc:'Zeigt kurze Schritt-Hinweise und klarere Eingaben f\u00fcr Laien.',
+    simpleModeActive:'Einfach-Modus aktiv',enableSimpleMode:'Einfach-Modus einschalten',
+    language:'Sprache',synchronization:'Synchronisation',online:'Online',offline:'Offline',
+    lastSync:'Letzter Sync',pending:'Ausstehend',changes:'\u00c4nderungen',syncNow:'Jetzt synchronisieren',
+    users:'Benutzer',deactivate:'Deaktiv.',activate:'Aktivieren',admin:'Admin',
+    data:'Daten',exportCSV:'CSV exportieren',deleteAllData:'Alle Daten l\u00f6schen',deleteConfirm:'ALLE lokalen Daten l\u00f6schen?',
+    info:'Info',loggedInAs:'Angemeldet',
+    googleSync:'Google Sheets Sync',sheetId:'Sheet ID',apiEndpoint:'API Endpoint (Apps Script URL)',
+    apiKey:'API-Schl\u00fcssel',testConnection:'Verbindung testen',saveConfig:'Konfiguration speichern',
+    notConfigured:'Nicht konfiguriert',configured:'Konfiguriert',connectionOk:'Verbindung OK',
+    connectionFailed:'Verbindung fehlgeschlagen',
+    adminArea:'Admin-Bereich',adminPinRequired:'Admin-PIN erforderlich',enterAdminPin:'Bitte Admin-PIN eingeben:',
+    wrongPin:'Falscher PIN',adminOnly:'Nur f\u00fcr Administratoren',
+    guideStart:'Heute starten: <b>1)</b> Buchung anlegen, <b>2)</b> Lager pr\u00fcfen, <b>3)</b> Abends synchronisieren.',
+    guideCash:'Kasse: Betrag eingeben, Kategorie w\u00e4hlen und dann auf <b>Buchen</b> tippen.',
+    guideWarehouse:'Lager: Eingelagerte Ware pr\u00fcfen und bei Verkauf den Verkaufspreis eintragen.',
+    guideShipments:'Lieferschein: Partner eintragen, Positionen erg\u00e4nzen und speichern.',
+    guideSettings:'Mehr: Synchronisieren, Export und grundlegende App-Einstellungen.',
+    simpleModeHint:'Einfach-Modus aktiv: nur die wichtigsten Schritte anzeigen.',
+    changeHistory:'\u00c4nderungsverlauf',
+    actionCreate:'erstellt',actionUpdate:'ge\u00e4ndert',actionDelete:'gel\u00f6scht',actionVoid:'storniert',
+    entityTransaction:'Transaktion',entityShipment:'Lieferschein',entityItem:'Position',entityUser:'Benutzer',
+    noTransactions:'Keine Transaktionen gefunden',voided:'Storniert',createdBy:'Erstellt von',partner:'Partner',
+    addToStock:'Einlagern',sum:'Summe',deliveryNote:'Lieferhinweis',warehouseEmptyHint:'Lieferschein mit Status \u201eEingelagert\u201c erstellen',
+    waitItems:'{n} Posten warten auf besseren Preis',sinceXDays:'seit {n} Tagen',items_units:'{items} Posten \u00b7 {units} Einheiten',
+    // New v2 strings
+    contacts:'Kontakte',contactName:'Name',contactType:'Typ',contactPhone:'Telefon',contactEmail:'E-Mail',
+    contactAddress:'Adresse',contactNotes:'Notizen',newContact:'Neuer Kontakt',editContact:'Kontakt bearbeiten',
+    supplierType:'Lieferant',customerType:'Kunde',bothType:'Beides',noContacts:'Keine Kontakte',
+    contactTransactions:'Transaktionen',contactShipments:'Lieferscheine',
+    backup:'Backup',exportBackup:'Backup exportieren',importBackup:'Backup importieren',
+    mergeImport:'Zusammenf\u00fchren',replaceImport:'Ersetzen',importSuccess:'Import erfolgreich',
+    exportSuccess:'Backup exportiert',importError:'Importfehler',
+    attachPhoto:'Foto anh\u00e4ngen',removePhoto:'Foto entfernen',viewPhoto:'Foto ansehen',
+    changePin:'PIN \u00e4ndern',oldPin:'Alter PIN',newPin:'Neuer PIN',confirmPin:'PIN best\u00e4tigen',
+    pinChanged:'PIN ge\u00e4ndert',pinMismatch:'PINs stimmen nicht \u00fcberein',pinWeak:'PIN zu kurz',
+    pinStrength:'PIN-St\u00e4rke',weak:'Schwach',medium:'Mittel',strong:'Stark',
+    templates:'Vorlagen',newTemplate:'Als Vorlage speichern',templateName:'Vorlagenname',
+    noTemplates:'Keine Vorlagen',useTemplate:'Vorlage verwenden',deleteTemplate:'Vorlage l\u00f6schen',
+    quickTemplates:'Schnellvorlagen',
+    welcome:'Willkommen',welcomeDesc:'Tcha Agro hilft Ihnen, Ihre Kasse und Ihr Lager zu verwalten.',
+    onbStep1Title:'Buchungen erfassen',onbStep1Desc:'Erfassen Sie schnell Einnahmen und Ausgaben mit wenigen Klicks.',
+    onbStep2Title:'Lager verwalten',onbStep2Desc:'Behalten Sie den \u00dcberblick \u00fcber Ihren Warenbestand.',
+    onbStep3Title:'Berichte erstellen',onbStep3Desc:'Analysieren Sie Ihre Gesch\u00e4ftszahlen mit detaillierten Reports.',
+    gotIt:'Verstanden',next:'Weiter',
+    weekDays:'Mo,Di,Mi,Do,Fr,Sa,So',
+    prevPeriod:'Vorherige Periode',comparison:'Vergleich',
+    dailyTrend:'T\u00e4glicher Verlauf',categoryBreakdown:'Kategorie-Aufteilung',
+    last7days:'Letzte 7 Tage'
   },
   fr: {
-    start: 'Accueil', dashboard: 'Tableau de bord', cash: 'Caisse', warehouse: 'Stock', delivery: 'Livraison', more: 'Plus',
-    save: 'Enregistrer', cancel: 'Annuler', delete: 'Supprimer', edit: 'Modifier', back: 'Retour', search: 'Rechercher…',
-    new: 'Nouveau', all: 'Tous', today: "Aujourd'hui", yesterday: 'Hier', justNow: "à l'instant", minAgo: 'il y a {n} min', hrAgo: 'il y a {n} h',
-    username: "Nom d'utilisateur", pin: 'PIN', login: 'Connexion', logout: 'Déconnexion', wrongCredentials: "Nom d'utilisateur ou PIN incorrect",
-    enterBoth: 'Veuillez remplir les deux champs', demoAccess: 'Accès démo',
-    hello: 'Bonjour', businessCenter: 'Tcha Agro Business Center', todayIn3Steps: "Aujourd'hui en 3 étapes",
-    step1: 'Enregistrer une recette ou dépense', step2: 'Vérifier le stock', step3: 'Synchroniser en fin de journée',
-    booking: 'Opération', sync: 'Sync', income: 'Recettes', expenses: 'Dépenses', cashBalance: 'Caisse (espèces)', warehouseVal: 'Stock',
-    empty: 'Vide', recentBookings: 'Dernières opérations', noBookingsToday: "Pas encore d'opérations aujourd'hui", activities: 'Activités',
-    transactions: 'Transactions', newBooking: 'Nouvelle opération', editBooking: "Modifier l'opération", amount: 'Montant (FCFA)',
-    category: 'Catégorie', paymentMethod: 'Mode de paiement', description: 'Description', date: 'Date', time: 'Heure',
-    sale: 'Vente', incomeType: 'Recette', expense: 'Dépense', cash: 'Espèces', card: 'Carte', transfer: 'Virement',
-    book: 'Enregistrer', void: 'Annuler', voidConfirm: "Annuler l'opération?", entries: 'entrées',
-    fillAmountCat: 'Veuillez remplir le montant et la catégorie.', requiredFields: 'Champs obligatoires',
-    optional: 'Optionnel', descExample: 'ex: 20 poulets à Mme Ablavi',
-    shipments: 'Bordereaux', newShipment: 'Nouveau bordereau', editShipment: 'Modifier le bordereau',
-    inbound: 'Réception', outbound: 'Expédition', supplier: 'Fournisseur', customer: 'Client', reference: 'Référence',
-    status: 'Statut', draft: 'Brouillon', delivered: 'Livré', cancelled: 'Annulé', stored: 'En stock', sold: 'Vendu',
-    positions: 'Lignes', addLine: 'Ligne', article: 'Article', quantity: 'Quantité', price: 'Prix', total: 'Total',
-    units: 'unités', notes: 'Notes', createShipment: 'Créer le bordereau',
-    fillPartner: 'Veuillez entrer le fournisseur ou client.', fillPosition: 'Veuillez ajouter au moins une ligne avec article et quantité > 0.',
-    documents: 'Documents', noShipments: 'Aucun bordereau',
-    inStock: 'En stock', stockValue: 'Valeur du stock', soldItems: 'Vendus', items: 'articles', unitsLabel: 'unités',
-    waitingForPrice: "articles en attente d'un meilleur prix", warehouseEmpty: 'Le stock est vide',
-    createStoredShipment: 'Créer un bordereau avec statut "En stock"', storedSince: 'depuis {n} jours',
-    purchaseValue: "Prix d'achat", sell: 'Vendre', sellPrice: 'Prix de vente (FCFA):', sellConfirm: 'Vendre pour {price}?',
-    profit: 'Bénéfice', loss: 'Perte', showSold: 'afficher les articles vendus', hideSold: 'Masquer vendus',
-    reports: 'Rapports', periodAnalysis: 'Analyse par période, catégorie et mode de paiement',
-    balance: 'Solde', bookings: 'Opérations', totalLabel: 'total', byCategory: 'Par catégorie', byPayment: 'Par mode de paiement', noData: 'Aucune donnée',
-    settings: 'Paramètres', interface: 'Interface', simpleMode: 'Mode simple',
-    simpleModeDesc: 'Affiche des conseils courts et des entrées plus claires pour les débutants.',
-    simpleModeActive: 'Mode simple actif', enableSimpleMode: 'Activer le mode simple',
-    language: 'Langue', synchronization: 'Synchronisation', online: 'En ligne', offline: 'Hors ligne',
-    lastSync: 'Dernière sync', pending: 'En attente', changes: 'Modifications', syncNow: 'Synchroniser maintenant',
-    users: 'Utilisateurs', deactivate: 'Désactiver', activate: 'Activer', admin: 'Admin',
-    data: 'Données', exportCSV: 'Exporter CSV', deleteAllData: 'Supprimer toutes les données', deleteConfirm: 'Supprimer TOUTES les données locales?',
-    info: 'Info', loggedInAs: 'Connecté',
-    googleSync: 'Sync Google Sheets', sheetId: 'ID de la feuille', apiEndpoint: 'URL API (Apps Script)',
-    apiKey: 'Clé API', testConnection: 'Tester la connexion', saveConfig: 'Enregistrer la configuration',
-    notConfigured: 'Non configuré', configured: 'Configuré', connectionOk: 'Connexion OK',
-    connectionFailed: 'Échec de la connexion',
-    adminArea: 'Zone Admin', adminPinRequired: 'PIN Admin requis', enterAdminPin: 'Veuillez entrer le PIN Admin:',
-    wrongPin: 'PIN incorrect', adminOnly: 'Réservé aux administrateurs',
-    guideStart: "Aujourd'hui: <b>1)</b> Créer une opération, <b>2)</b> Vérifier le stock, <b>3)</b> Synchroniser le soir.",
-    guideCash: 'Caisse: Entrer le montant, choisir la catégorie et appuyer sur <b>Enregistrer</b>.',
-    guideWarehouse: 'Stock: Vérifier les articles stockés et entrer le prix de vente lors de la vente.',
-    guideShipments: 'Bordereau: Entrer le partenaire, ajouter les lignes et enregistrer.',
-    guideSettings: 'Plus: Synchroniser, exporter et paramètres de base.',
-    simpleModeHint: 'Mode simple actif: seules les étapes essentielles sont affichées.',
-    changeHistory: 'Historique des modifications',
-    actionCreate: 'créé', actionUpdate: 'modifié', actionDelete: 'supprimé', actionVoid: 'annulé',
-    entityTransaction: 'Transaction', entityShipment: 'Bordereau', entityItem: 'Ligne', entityUser: 'Utilisateur',
-    noTransactions: 'Aucune transaction trouvée', voided: 'Annulé', createdBy: 'Créé par', partner: 'Partenaire',
-    addToStock: 'Stocker', sum: 'Somme', deliveryNote: 'Note de livraison', warehouseEmptyHint: 'Créer un bordereau avec statut \"En stock\"',
-    waitItems: '{n} articles en attente', sinceXDays: 'depuis {n} jours', items_units: '{items} articles · {units} unités'
+    start:'Accueil',dashboard:'Tableau de bord',cash:'Caisse',warehouse:'Stock',delivery:'Livraison',more:'Plus',
+    save:'Enregistrer',cancel:'Annuler',delete:'Supprimer',edit:'Modifier',back:'Retour',search:'Rechercher\u2026',
+    new:'Nouveau',all:'Tous',today:"Aujourd'hui",yesterday:'Hier',justNow:"a l'instant",minAgo:'il y a {n} min',hrAgo:'il y a {n} h',
+    username:"Nom d'utilisateur",pin:'PIN',login:'Connexion',logout:'D\u00e9connexion',wrongCredentials:"Nom d'utilisateur ou PIN incorrect",
+    enterBoth:'Veuillez remplir les deux champs',demoAccess:'Acc\u00e8s d\u00e9mo',
+    hello:'Bonjour',businessCenter:'Tcha Agro Business Center',todayIn3Steps:"Aujourd'hui en 3 \u00e9tapes",
+    step1:'Enregistrer une recette ou d\u00e9pense',step2:'V\u00e9rifier le stock',step3:'Synchroniser en fin de journ\u00e9e',
+    booking:'Op\u00e9ration',sync:'Sync',income:'Recettes',expenses:'D\u00e9penses',cashBalance:'Caisse (esp\u00e8ces)',warehouseVal:'Stock',
+    empty:'Vide',recentBookings:'Derni\u00e8res op\u00e9rations',noBookingsToday:"Pas encore d'op\u00e9rations aujourd'hui",activities:'Activit\u00e9s',
+    transactions:'Transactions',newBooking:'Nouvelle op\u00e9ration',editBooking:"Modifier l'op\u00e9ration",amount:'Montant (FCFA)',
+    category:'Cat\u00e9gorie',paymentMethod:'Mode de paiement',description:'Description',date:'Date',time:'Heure',
+    sale:'Vente',incomeType:'Recette',expense:'D\u00e9pense',cash:'Esp\u00e8ces',card:'Carte',transfer:'Virement',
+    book:'Enregistrer',void:'Annuler',voidConfirm:"Annuler l'op\u00e9ration?",entries:'entr\u00e9es',
+    fillAmountCat:'Veuillez remplir le montant et la cat\u00e9gorie.',requiredFields:'Champs obligatoires',
+    optional:'Optionnel',descExample:'ex: 20 poulets \u00e0 Mme Ablavi',
+    shipments:'Bordereaux',newShipment:'Nouveau bordereau',editShipment:'Modifier le bordereau',
+    inbound:'R\u00e9ception',outbound:'Exp\u00e9dition',supplier:'Fournisseur',customer:'Client',reference:'R\u00e9f\u00e9rence',
+    status:'Statut',draft:'Brouillon',delivered:'Livr\u00e9',cancelled:'Annul\u00e9',stored:'En stock',sold:'Vendu',
+    positions:'Lignes',addLine:'Ligne',article:'Article',quantity:'Quantit\u00e9',price:'Prix',total:'Total',
+    units:'unit\u00e9s',notes:'Notes',createShipment:'Cr\u00e9er le bordereau',
+    fillPartner:'Veuillez entrer le fournisseur ou client.',fillPosition:'Veuillez ajouter au moins une ligne avec article et quantit\u00e9 > 0.',
+    documents:'Documents',noShipments:'Aucun bordereau',
+    inStock:'En stock',stockValue:'Valeur du stock',soldItems:'Vendus',items:'articles',unitsLabel:'unit\u00e9s',
+    waitingForPrice:"articles en attente d'un meilleur prix",warehouseEmpty:'Le stock est vide',
+    createStoredShipment:'Cr\u00e9er un bordereau avec statut "En stock"',storedSince:'depuis {n} jours',
+    purchaseValue:"Prix d'achat",sell:'Vendre',sellPrice:'Prix de vente (FCFA):',sellConfirm:'Vendre pour {price}?',
+    profit:'B\u00e9n\u00e9fice',loss:'Perte',showSold:'afficher les articles vendus',hideSold:'Masquer vendus',
+    reports:'Rapports',periodAnalysis:'Analyse par p\u00e9riode, cat\u00e9gorie et mode de paiement',
+    balance:'Solde',bookings:'Op\u00e9rations',totalLabel:'total',byCategory:'Par cat\u00e9gorie',byPayment:'Par mode de paiement',noData:'Aucune donn\u00e9e',
+    settings:'Param\u00e8tres',interface:'Interface',simpleMode:'Mode simple',
+    simpleModeDesc:'Affiche des conseils courts et des entr\u00e9es plus claires pour les d\u00e9butants.',
+    simpleModeActive:'Mode simple actif',enableSimpleMode:'Activer le mode simple',
+    language:'Langue',synchronization:'Synchronisation',online:'En ligne',offline:'Hors ligne',
+    lastSync:'Derni\u00e8re sync',pending:'En attente',changes:'Modifications',syncNow:'Synchroniser maintenant',
+    users:'Utilisateurs',deactivate:'D\u00e9sactiver',activate:'Activer',admin:'Admin',
+    data:'Donn\u00e9es',exportCSV:'Exporter CSV',deleteAllData:'Supprimer toutes les donn\u00e9es',deleteConfirm:'Supprimer TOUTES les donn\u00e9es locales?',
+    info:'Info',loggedInAs:'Connect\u00e9',
+    googleSync:'Sync Google Sheets',sheetId:'ID de la feuille',apiEndpoint:'URL API (Apps Script)',
+    apiKey:'Cl\u00e9 API',testConnection:'Tester la connexion',saveConfig:'Enregistrer la configuration',
+    notConfigured:'Non configur\u00e9',configured:'Configur\u00e9',connectionOk:'Connexion OK',
+    connectionFailed:'\u00c9chec de la connexion',
+    adminArea:'Zone Admin',adminPinRequired:'PIN Admin requis',enterAdminPin:'Veuillez entrer le PIN Admin:',
+    wrongPin:'PIN incorrect',adminOnly:'R\u00e9serv\u00e9 aux administrateurs',
+    guideStart:"Aujourd'hui: <b>1)</b> Cr\u00e9er une op\u00e9ration, <b>2)</b> V\u00e9rifier le stock, <b>3)</b> Synchroniser le soir.",
+    guideCash:'Caisse: Entrer le montant, choisir la cat\u00e9gorie et appuyer sur <b>Enregistrer</b>.',
+    guideWarehouse:'Stock: V\u00e9rifier les articles stock\u00e9s et entrer le prix de vente lors de la vente.',
+    guideShipments:'Bordereau: Entrer le partenaire, ajouter les lignes et enregistrer.',
+    guideSettings:'Plus: Synchroniser, exporter et param\u00e8tres de base.',
+    simpleModeHint:'Mode simple actif: seules les \u00e9tapes essentielles sont affich\u00e9es.',
+    changeHistory:'Historique des modifications',
+    actionCreate:'cr\u00e9\u00e9',actionUpdate:'modifi\u00e9',actionDelete:'supprim\u00e9',actionVoid:'annul\u00e9',
+    entityTransaction:'Transaction',entityShipment:'Bordereau',entityItem:'Ligne',entityUser:'Utilisateur',
+    noTransactions:'Aucune transaction trouv\u00e9e',voided:'Annul\u00e9',createdBy:'Cr\u00e9\u00e9 par',partner:'Partenaire',
+    addToStock:'Stocker',sum:'Somme',deliveryNote:'Note de livraison',warehouseEmptyHint:'Cr\u00e9er un bordereau avec statut "En stock"',
+    waitItems:'{n} articles en attente',sinceXDays:'depuis {n} jours',items_units:'{items} articles \u00b7 {units} unit\u00e9s',
+    // New v2 strings
+    contacts:'Contacts',contactName:'Nom',contactType:'Type',contactPhone:'T\u00e9l\u00e9phone',contactEmail:'Email',
+    contactAddress:'Adresse',contactNotes:'Notes',newContact:'Nouveau contact',editContact:'Modifier le contact',
+    supplierType:'Fournisseur',customerType:'Client',bothType:'Les deux',noContacts:'Aucun contact',
+    contactTransactions:'Transactions',contactShipments:'Bordereaux',
+    backup:'Sauvegarde',exportBackup:'Exporter sauvegarde',importBackup:'Importer sauvegarde',
+    mergeImport:'Fusionner',replaceImport:'Remplacer',importSuccess:'Import r\u00e9ussi',
+    exportSuccess:'Sauvegarde export\u00e9e',importError:"Erreur d'import",
+    attachPhoto:'Joindre photo',removePhoto:'Supprimer photo',viewPhoto:'Voir photo',
+    changePin:'Changer le PIN',oldPin:'Ancien PIN',newPin:'Nouveau PIN',confirmPin:'Confirmer le PIN',
+    pinChanged:'PIN chang\u00e9',pinMismatch:'Les PINs ne correspondent pas',pinWeak:'PIN trop court',
+    pinStrength:'Force du PIN',weak:'Faible',medium:'Moyen',strong:'Fort',
+    templates:'Mod\u00e8les',newTemplate:'Enregistrer comme mod\u00e8le',templateName:'Nom du mod\u00e8le',
+    noTemplates:'Aucun mod\u00e8le',useTemplate:'Utiliser le mod\u00e8le',deleteTemplate:'Supprimer le mod\u00e8le',
+    quickTemplates:'Mod\u00e8les rapides',
+    welcome:'Bienvenue',welcomeDesc:'Tcha Agro vous aide \u00e0 g\u00e9rer votre caisse et votre stock.',
+    onbStep1Title:'Enregistrer des op\u00e9rations',onbStep1Desc:'Enregistrez rapidement recettes et d\u00e9penses en quelques clics.',
+    onbStep2Title:'G\u00e9rer le stock',onbStep2Desc:'Gardez un \u0153il sur vos marchandises en stock.',
+    onbStep3Title:'Cr\u00e9er des rapports',onbStep3Desc:"Analysez vos chiffres d'affaires avec des rapports d\u00e9taill\u00e9s.",
+    gotIt:'Compris',next:'Suivant',
+    weekDays:'Lun,Mar,Mer,Jeu,Ven,Sam,Dim',
+    prevPeriod:'P\u00e9riode pr\u00e9c\u00e9dente',comparison:'Comparaison',
+    dailyTrend:'Tendance quotidienne',categoryBreakdown:'R\u00e9partition par cat\u00e9gorie',
+    last7days:'7 derniers jours'
   },
   en: {
-    start: 'Home', dashboard: 'Dashboard', cash: 'Cash', warehouse: 'Stock', delivery: 'Delivery', more: 'More',
-    save: 'Save', cancel: 'Cancel', delete: 'Delete', edit: 'Edit', back: 'Back', search: 'Search…',
-    new: 'New', all: 'All', today: 'Today', yesterday: 'Yesterday', justNow: 'just now', minAgo: '{n} min ago', hrAgo: '{n} hr ago',
-    username: 'Username', pin: 'PIN', login: 'Login', logout: 'Logout', wrongCredentials: 'Username or PIN incorrect',
-    enterBoth: 'Please fill in both fields', demoAccess: 'Demo Access',
-    hello: 'Hello', businessCenter: 'Tcha Agro Business Center', todayIn3Steps: 'Today in 3 Steps',
-    step1: 'Record income or expense', step2: 'Check stock briefly', step3: 'Sync at end of day',
-    booking: 'Entry', sync: 'Sync', income: 'Income', expenses: 'Expenses', cashBalance: 'Cash Balance', warehouseVal: 'Stock',
-    empty: 'Empty', recentBookings: 'Recent Entries', noBookingsToday: 'No entries today yet', activities: 'Activities',
-    transactions: 'Transactions', newBooking: 'New Entry', editBooking: 'Edit Entry', amount: 'Amount (FCFA)',
-    category: 'Category', paymentMethod: 'Payment Method', description: 'Description', date: 'Date', time: 'Time',
-    sale: 'Sale', incomeType: 'Income', expense: 'Expense', cash: 'Cash', card: 'Card', transfer: 'Transfer',
-    book: 'Save', void: 'Void', voidConfirm: 'Void this entry?', entries: 'entries',
-    fillAmountCat: 'Please fill amount and category.', requiredFields: 'Required',
-    optional: 'Optional', descExample: 'e.g. 20 chickens to Mrs Ablavi',
-    shipments: 'Shipments', newShipment: 'New Shipment', editShipment: 'Edit Shipment',
-    inbound: 'Inbound', outbound: 'Outbound', supplier: 'Supplier', customer: 'Customer', reference: 'Reference',
-    status: 'Status', draft: 'Draft', delivered: 'Delivered', cancelled: 'Cancelled', stored: 'In Stock', sold: 'Sold',
-    positions: 'Items', addLine: 'Line', article: 'Article', quantity: 'Qty', price: 'Price', total: 'Total',
-    units: 'units', notes: 'Notes', createShipment: 'Create Shipment',
-    fillPartner: 'Please enter supplier or customer.', fillPosition: 'Please add at least one item with article and quantity > 0.',
-    documents: 'Documents', noShipments: 'No shipments',
-    inStock: 'In Stock', stockValue: 'Stock Value', soldItems: 'Sold', items: 'items', unitsLabel: 'units',
-    waitingForPrice: 'items waiting for better price', warehouseEmpty: 'Stock is empty',
-    createStoredShipment: 'Create shipment with status "In Stock"', storedSince: 'since {n} days',
-    purchaseValue: 'Purchase Value', sell: 'Sell', sellPrice: 'Selling Price (FCFA):', sellConfirm: 'Sell for {price}?',
-    profit: 'Profit', loss: 'Loss', showSold: 'show sold items', hideSold: 'Hide sold',
-    reports: 'Reports', periodAnalysis: 'Period analysis by category and payment method',
-    balance: 'Balance', bookings: 'Entries', totalLabel: 'total', byCategory: 'By Category', byPayment: 'By Payment Method', noData: 'No data',
-    settings: 'Settings', interface: 'Interface', simpleMode: 'Simple Mode',
-    simpleModeDesc: 'Shows short hints and clearer inputs for beginners.',
-    simpleModeActive: 'Simple Mode active', enableSimpleMode: 'Enable Simple Mode',
-    language: 'Language', synchronization: 'Synchronization', online: 'Online', offline: 'Offline',
-    lastSync: 'Last Sync', pending: 'Pending', changes: 'Changes', syncNow: 'Sync Now',
-    users: 'Users', deactivate: 'Deactivate', activate: 'Activate', admin: 'Admin',
-    data: 'Data', exportCSV: 'Export CSV', deleteAllData: 'Delete All Data', deleteConfirm: 'Delete ALL local data?',
-    info: 'Info', loggedInAs: 'Logged in',
-    googleSync: 'Google Sheets Sync', sheetId: 'Sheet ID', apiEndpoint: 'API Endpoint (Apps Script URL)',
-    apiKey: 'API Key', testConnection: 'Test Connection', saveConfig: 'Save Configuration',
-    notConfigured: 'Not configured', configured: 'Configured', connectionOk: 'Connection OK',
-    connectionFailed: 'Connection failed',
-    adminArea: 'Admin Area', adminPinRequired: 'Admin PIN required', enterAdminPin: 'Please enter Admin PIN:',
-    wrongPin: 'Wrong PIN', adminOnly: 'Administrators only',
-    guideStart: 'Today: <b>1)</b> Create entry, <b>2)</b> Check stock, <b>3)</b> Sync in the evening.',
-    guideCash: 'Cash: Enter amount, select category and tap <b>Save</b>.',
-    guideWarehouse: 'Stock: Check stored items and enter selling price when selling.',
-    guideShipments: 'Shipment: Enter partner, add items and save.',
-    guideSettings: 'More: Sync, export and basic app settings.',
-    simpleModeHint: 'Simple Mode active: only essential steps shown.',
-    changeHistory: 'Change History',
-    actionCreate: 'created', actionUpdate: 'updated', actionDelete: 'deleted', actionVoid: 'voided',
-    entityTransaction: 'Transaction', entityShipment: 'Shipment', entityItem: 'Item', entityUser: 'User',
-    noTransactions: 'No transactions found', voided: 'Voided', createdBy: 'Created by', partner: 'Partner',
-    addToStock: 'Add to Stock', sum: 'Sum', deliveryNote: 'Delivery note', warehouseEmptyHint: 'Create shipment with status \"In Stock\"',
-    waitItems: '{n} items waiting for better price', sinceXDays: 'since {n} days', items_units: '{items} items · {units} units'
+    start:'Home',dashboard:'Dashboard',cash:'Cash',warehouse:'Stock',delivery:'Delivery',more:'More',
+    save:'Save',cancel:'Cancel',delete:'Delete',edit:'Edit',back:'Back',search:'Search\u2026',
+    new:'New',all:'All',today:'Today',yesterday:'Yesterday',justNow:'just now',minAgo:'{n} min ago',hrAgo:'{n} hr ago',
+    username:'Username',pin:'PIN',login:'Login',logout:'Logout',wrongCredentials:'Username or PIN incorrect',
+    enterBoth:'Please fill in both fields',demoAccess:'Demo Access',
+    hello:'Hello',businessCenter:'Tcha Agro Business Center',todayIn3Steps:'Today in 3 Steps',
+    step1:'Record income or expense',step2:'Check stock briefly',step3:'Sync at end of day',
+    booking:'Entry',sync:'Sync',income:'Income',expenses:'Expenses',cashBalance:'Cash Balance',warehouseVal:'Stock',
+    empty:'Empty',recentBookings:'Recent Entries',noBookingsToday:'No entries today yet',activities:'Activities',
+    transactions:'Transactions',newBooking:'New Entry',editBooking:'Edit Entry',amount:'Amount (FCFA)',
+    category:'Category',paymentMethod:'Payment Method',description:'Description',date:'Date',time:'Time',
+    sale:'Sale',incomeType:'Income',expense:'Expense',cash:'Cash',card:'Card',transfer:'Transfer',
+    book:'Save',void:'Void',voidConfirm:'Void this entry?',entries:'entries',
+    fillAmountCat:'Please fill amount and category.',requiredFields:'Required',
+    optional:'Optional',descExample:'e.g. 20 chickens to Mrs Ablavi',
+    shipments:'Shipments',newShipment:'New Shipment',editShipment:'Edit Shipment',
+    inbound:'Inbound',outbound:'Outbound',supplier:'Supplier',customer:'Customer',reference:'Reference',
+    status:'Status',draft:'Draft',delivered:'Delivered',cancelled:'Cancelled',stored:'In Stock',sold:'Sold',
+    positions:'Items',addLine:'Line',article:'Article',quantity:'Qty',price:'Price',total:'Total',
+    units:'units',notes:'Notes',createShipment:'Create Shipment',
+    fillPartner:'Please enter supplier or customer.',fillPosition:'Please add at least one item with article and quantity > 0.',
+    documents:'Documents',noShipments:'No shipments',
+    inStock:'In Stock',stockValue:'Stock Value',soldItems:'Sold',items:'items',unitsLabel:'units',
+    waitingForPrice:'items waiting for better price',warehouseEmpty:'Stock is empty',
+    createStoredShipment:'Create shipment with status "In Stock"',storedSince:'since {n} days',
+    purchaseValue:'Purchase Value',sell:'Sell',sellPrice:'Selling Price (FCFA):',sellConfirm:'Sell for {price}?',
+    profit:'Profit',loss:'Loss',showSold:'show sold items',hideSold:'Hide sold',
+    reports:'Reports',periodAnalysis:'Period analysis by category and payment method',
+    balance:'Balance',bookings:'Entries',totalLabel:'total',byCategory:'By Category',byPayment:'By Payment Method',noData:'No data',
+    settings:'Settings',interface:'Interface',simpleMode:'Simple Mode',
+    simpleModeDesc:'Shows short hints and clearer inputs for beginners.',
+    simpleModeActive:'Simple Mode active',enableSimpleMode:'Enable Simple Mode',
+    language:'Language',synchronization:'Synchronization',online:'Online',offline:'Offline',
+    lastSync:'Last Sync',pending:'Pending',changes:'Changes',syncNow:'Sync Now',
+    users:'Users',deactivate:'Deactivate',activate:'Activate',admin:'Admin',
+    data:'Data',exportCSV:'Export CSV',deleteAllData:'Delete All Data',deleteConfirm:'Delete ALL local data?',
+    info:'Info',loggedInAs:'Logged in',
+    googleSync:'Google Sheets Sync',sheetId:'Sheet ID',apiEndpoint:'API Endpoint (Apps Script URL)',
+    apiKey:'API Key',testConnection:'Test Connection',saveConfig:'Save Configuration',
+    notConfigured:'Not configured',configured:'Configured',connectionOk:'Connection OK',
+    connectionFailed:'Connection failed',
+    adminArea:'Admin Area',adminPinRequired:'Admin PIN required',enterAdminPin:'Please enter Admin PIN:',
+    wrongPin:'Wrong PIN',adminOnly:'Administrators only',
+    guideStart:'Today: <b>1)</b> Create entry, <b>2)</b> Check stock, <b>3)</b> Sync in the evening.',
+    guideCash:'Cash: Enter amount, select category and tap <b>Save</b>.',
+    guideWarehouse:'Stock: Check stored items and enter selling price when selling.',
+    guideShipments:'Shipment: Enter partner, add items and save.',
+    guideSettings:'More: Sync, export and basic app settings.',
+    simpleModeHint:'Simple Mode active: only essential steps shown.',
+    changeHistory:'Change History',
+    actionCreate:'created',actionUpdate:'updated',actionDelete:'deleted',actionVoid:'voided',
+    entityTransaction:'Transaction',entityShipment:'Shipment',entityItem:'Item',entityUser:'User',
+    noTransactions:'No transactions found',voided:'Voided',createdBy:'Created by',partner:'Partner',
+    addToStock:'Add to Stock',sum:'Sum',deliveryNote:'Delivery note',warehouseEmptyHint:'Create shipment with status "In Stock"',
+    waitItems:'{n} items waiting for better price',sinceXDays:'since {n} days',items_units:'{items} items \u00b7 {units} units',
+    // New v2 strings
+    contacts:'Contacts',contactName:'Name',contactType:'Type',contactPhone:'Phone',contactEmail:'Email',
+    contactAddress:'Address',contactNotes:'Notes',newContact:'New Contact',editContact:'Edit Contact',
+    supplierType:'Supplier',customerType:'Customer',bothType:'Both',noContacts:'No contacts',
+    contactTransactions:'Transactions',contactShipments:'Shipments',
+    backup:'Backup',exportBackup:'Export Backup',importBackup:'Import Backup',
+    mergeImport:'Merge',replaceImport:'Replace',importSuccess:'Import successful',
+    exportSuccess:'Backup exported',importError:'Import error',
+    attachPhoto:'Attach Photo',removePhoto:'Remove Photo',viewPhoto:'View Photo',
+    changePin:'Change PIN',oldPin:'Old PIN',newPin:'New PIN',confirmPin:'Confirm PIN',
+    pinChanged:'PIN changed',pinMismatch:'PINs do not match',pinWeak:'PIN too short',
+    pinStrength:'PIN Strength',weak:'Weak',medium:'Medium',strong:'Strong',
+    templates:'Templates',newTemplate:'Save as Template',templateName:'Template Name',
+    noTemplates:'No templates',useTemplate:'Use Template',deleteTemplate:'Delete Template',
+    quickTemplates:'Quick Templates',
+    welcome:'Welcome',welcomeDesc:'Tcha Agro helps you manage your cash register and stock.',
+    onbStep1Title:'Record Entries',onbStep1Desc:'Quickly record income and expenses with a few taps.',
+    onbStep2Title:'Manage Stock',onbStep2Desc:'Keep track of your stored goods.',
+    onbStep3Title:'Create Reports',onbStep3Desc:'Analyze your business numbers with detailed reports.',
+    gotIt:'Got it',next:'Next',
+    weekDays:'Mon,Tue,Wed,Thu,Fri,Sat,Sun',
+    prevPeriod:'Previous period',comparison:'Comparison',
+    dailyTrend:'Daily Trend',categoryBreakdown:'Category Breakdown',
+    last7days:'Last 7 days'
   }
 };
 
@@ -515,7 +719,6 @@ function t(key, params = {}) {
   return str;
 }
 
-// Dynamic translation getters for UI labels
 const TXN_TYPE = new Proxy({}, { get: (_, k) => ({ sale: t('sale'), income: t('incomeType'), expense: t('expense') })[k] });
 const PAY = new Proxy({}, { get: (_, k) => ({ cash: t('cash'), card: t('card'), transfer: t('transfer') })[k] });
 const SHIP_TYPE = new Proxy({}, { get: (_, k) => ({ inbound: t('inbound'), outbound: t('outbound') })[k] });
@@ -528,9 +731,9 @@ const STATUS_BADGE = { draft:'badge-gray', final:'badge-green', cancelled:'badge
 const ACTION_LABEL = new Proxy({}, { get: (_, k) => ({ create: t('actionCreate'), update: t('actionUpdate'), delete: t('actionDelete'), void: t('actionVoid') })[k] });
 const ENTITY_LABEL = new Proxy({}, { get: (_, k) => ({ transaction: t('entityTransaction'), shipment_doc: t('entityShipment'), shipment_item: t('entityItem'), user: t('entityUser') })[k] });
 
-// ─── IndexedDB Layer ─────────────────────────────────────────
+// --- IndexedDB Layer ---
 const DB_NAME = 'Tcha AgroDB';
-const DB_VER = 1;
+const DB_VER = 2;
 let idb = null;
 
 function openDB() {
@@ -539,13 +742,21 @@ function openDB() {
     const req = indexedDB.open(DB_NAME, DB_VER);
     req.onupgradeneeded = e => {
       const db = e.target.result;
-      const stores = {
-        users: 'id', transactions: 'id', shipment_docs: 'id',
-        shipment_items: 'id', audit_log: 'id', categories: 'id', outbox: 'id', meta: 'key'
+      const oldVer = e.oldVersion;
+      // v1 stores
+      const v1stores = {
+        users:'id', transactions:'id', shipment_docs:'id',
+        shipment_items:'id', audit_log:'id', categories:'id', outbox:'id', meta:'key'
       };
-      Object.entries(stores).forEach(([name, key]) => {
+      Object.entries(v1stores).forEach(([name, key]) => {
         if (!db.objectStoreNames.contains(name)) db.createObjectStore(name, { keyPath: key });
       });
+      // v2 stores
+      if (oldVer < 2) {
+        if (!db.objectStoreNames.contains('contacts')) db.createObjectStore('contacts', { keyPath: 'id' });
+        if (!db.objectStoreNames.contains('attachments')) db.createObjectStore('attachments', { keyPath: 'id' });
+        if (!db.objectStoreNames.contains('templates')) db.createObjectStore('templates', { keyPath: 'id' });
+      }
     };
     req.onsuccess = e => { idb = e.target.result; resolve(idb); };
     req.onerror = e => reject(e.target.error);
@@ -560,7 +771,6 @@ async function dbPut(store, obj) {
     tx.oncomplete = () => res(); tx.onerror = e => rej(e.target.error);
   });
 }
-
 async function dbGet(store, key) {
   const db = await openDB();
   return new Promise((res, rej) => {
@@ -569,7 +779,6 @@ async function dbGet(store, key) {
     req.onsuccess = () => res(req.result); req.onerror = e => rej(e.target.error);
   });
 }
-
 async function dbGetAll(store) {
   const db = await openDB();
   return new Promise((res, rej) => {
@@ -578,7 +787,6 @@ async function dbGetAll(store) {
     req.onsuccess = () => res(req.result || []); req.onerror = e => rej(e.target.error);
   });
 }
-
 async function dbDelete(store, key) {
   const db = await openDB();
   return new Promise((res, rej) => {
@@ -587,7 +795,6 @@ async function dbDelete(store, key) {
     tx.oncomplete = () => res(); tx.onerror = e => rej(e.target.error);
   });
 }
-
 async function dbCount(store) {
   const db = await openDB();
   return new Promise((res, rej) => {
@@ -596,7 +803,6 @@ async function dbCount(store) {
     req.onsuccess = () => res(req.result); req.onerror = e => rej(e.target.error);
   });
 }
-
 async function dbClear(store) {
   const db = await openDB();
   return new Promise((res, rej) => {
@@ -606,398 +812,493 @@ async function dbClear(store) {
   });
 }
 
-// ─── Données initiales et suggestions ────────────────────────
-
-// Suggestions d'articles prédéfinies (pour les bordereaux)
+// --- Seed Data ---
 const ARTICLE_SUGGESTIONS = [
-  { name: 'Poulets vivants', sku: 'POU-VIF', unit: 'pièce', defaultPrice: 5000 },
-  { name: 'Poulets abattus', sku: 'POU-ABT', unit: 'kg', defaultPrice: 3500 },
-  { name: 'Œufs (plateau de 30)', sku: 'OEU-30', unit: 'plateau', defaultPrice: 3000 },
-  { name: 'Œufs (carton de 180)', sku: 'OEU-180', unit: 'carton', defaultPrice: 17000 },
-  { name: 'Aliment poulet 50kg', sku: 'ALI-50', unit: 'sac', defaultPrice: 18500 },
-  { name: 'Aliment poulet 25kg', sku: 'ALI-25', unit: 'sac', defaultPrice: 9500 },
-  { name: 'Aliment poussin 25kg', sku: 'ALP-25', unit: 'sac', defaultPrice: 11000 },
-  { name: 'Maïs grain', sku: 'MAI-GR', unit: 'kg', defaultPrice: 350 },
-  { name: 'Soja torréfié', sku: 'SOJ-TO', unit: 'kg', defaultPrice: 600 },
-  { name: 'Concentré ponte', sku: 'CON-PO', unit: 'sac', defaultPrice: 25000 },
-  { name: 'Vaccin Newcastle', sku: 'VAC-NEW', unit: 'flacon', defaultPrice: 3500 },
-  { name: 'Antibiotique volaille', sku: 'ANT-VOL', unit: 'flacon', defaultPrice: 5000 },
-  { name: 'Vitamines', sku: 'VIT-GEN', unit: 'sachet', defaultPrice: 1500 },
-  { name: 'Poussins 1 jour', sku: 'PSN-1J', unit: 'pièce', defaultPrice: 750 },
-  { name: 'Copeaux de bois', sku: 'COP-BO', unit: 'sac', defaultPrice: 2500 },
+  {name:'Poulets vivants',sku:'POU-VIF',unit:'pi\u00e8ce',defaultPrice:5000},
+  {name:'Poulets abattus',sku:'POU-ABT',unit:'kg',defaultPrice:3500},
+  {name:'\u0152ufs (plateau de 30)',sku:'OEU-30',unit:'plateau',defaultPrice:3000},
+  {name:'\u0152ufs (carton de 180)',sku:'OEU-180',unit:'carton',defaultPrice:17000},
+  {name:'Aliment poulet 50kg',sku:'ALI-50',unit:'sac',defaultPrice:18500},
+  {name:'Aliment poulet 25kg',sku:'ALI-25',unit:'sac',defaultPrice:9500},
+  {name:'Aliment poussin 25kg',sku:'ALP-25',unit:'sac',defaultPrice:11000},
+  {name:'Ma\u00efs grain',sku:'MAI-GR',unit:'kg',defaultPrice:350},
+  {name:'Soja torr\u00e9fi\u00e9',sku:'SOJ-TO',unit:'kg',defaultPrice:600},
+  {name:'Concentr\u00e9 ponte',sku:'CON-PO',unit:'sac',defaultPrice:25000},
+  {name:'Vaccin Newcastle',sku:'VAC-NEW',unit:'flacon',defaultPrice:3500},
+  {name:'Antibiotique volaille',sku:'ANT-VOL',unit:'flacon',defaultPrice:5000},
+  {name:'Vitamines',sku:'VIT-GEN',unit:'sachet',defaultPrice:1500},
+  {name:'Poussins 1 jour',sku:'PSN-1J',unit:'pi\u00e8ce',defaultPrice:750},
+  {name:'Copeaux de bois',sku:'COP-BO',unit:'sac',defaultPrice:2500},
 ];
-
-// Suggestions de partenaires (fournisseurs/clients)
-const PARTNER_SUGGESTIONS = [
-  'Marché Grand Lomé',
-  'Fournisseur Aliment Lomé',
-  'Restaurant Le Bénin',
-  'Hôtel de la Paix',
-  'Superette Bon Prix',
-  'Abobo Volaille SA',
-  'Ferme Avicole Kara',
-  'Grossiste Adja',
-];
-
-// Unités disponibles
-const UNIT_OPTIONS = ['pièce', 'kg', 'sac', 'plateau', 'carton', 'litre', 'tonne', 'flacon', 'sachet'];
+const PARTNER_SUGGESTIONS = ['March\u00e9 Grand Lom\u00e9','Fournisseur Aliment Lom\u00e9','Restaurant Le B\u00e9nin','H\u00f4tel de la Paix','Superette Bon Prix','Abobo Volaille SA','Ferme Avicole Kara','Grossiste Adja'];
+const UNIT_OPTIONS = ['pi\u00e8ce','kg','sac','plateau','carton','litre','tonne','flacon','sachet'];
 
 async function seed() {
   const count = await dbCount('users');
   if (count > 0) return;
   const n = now();
-
-  // Utilisateur admin par défaut (PIN à changer après première connexion)
-  const users = [
-    {id:'u1',username:'admin',display_name:'Administrateur',pin_hash:'0000',role:'admin',is_active:true,created_at:n,updated_at:n},
-  ];
-  for (const u of users) await dbPut('users', u);
-
-  // Catégories en français
+  await dbPut('users', {id:'u1',username:'admin',display_name:'Administrateur',pin_hash:'0000',role:'admin',is_active:true,created_at:n,updated_at:n});
   const cats = [
     {id:'c1',name:'Poulets vivants',type:'sale',is_active:true,sort_order:1},
     {id:'c2',name:'Poulets abattus',type:'sale',is_active:true,sort_order:2},
-    {id:'c3',name:'Œufs',type:'sale',is_active:true,sort_order:3},
+    {id:'c3',name:'\u0152ufs',type:'sale',is_active:true,sort_order:3},
     {id:'c4',name:'Aliment (vente)',type:'sale',is_active:true,sort_order:4},
     {id:'c5',name:'Poussins',type:'sale',is_active:true,sort_order:5},
     {id:'c6',name:'Aliment (achat)',type:'expense',is_active:true,sort_order:6},
-    {id:'c7',name:'Médicaments/Vaccins',type:'expense',is_active:true,sort_order:7},
+    {id:'c7',name:'M\u00e9dicaments/Vaccins',type:'expense',is_active:true,sort_order:7},
     {id:'c8',name:'Personnel',type:'expense',is_active:true,sort_order:8},
     {id:'c9',name:'Transport',type:'expense',is_active:true,sort_order:9},
-    {id:'c10',name:'Électricité/Eau',type:'expense',is_active:true,sort_order:10},
-    {id:'c11',name:'Matériel',type:'expense',is_active:true,sort_order:11},
+    {id:'c10',name:'\u00c9lectricit\u00e9/Eau',type:'expense',is_active:true,sort_order:10},
+    {id:'c11',name:'Mat\u00e9riel',type:'expense',is_active:true,sort_order:11},
     {id:'c12',name:'Autre recette',type:'income',is_active:true,sort_order:12},
-    {id:'c13',name:'Autre dépense',type:'expense',is_active:true,sort_order:13},
+    {id:'c13',name:'Autre d\u00e9pense',type:'expense',is_active:true,sort_order:13},
   ];
   for (const c of cats) await dbPut('categories', c);
 }
 
-// Migration: S'assurer que l'utilisateur admin existe
 async function ensureAdminUser() {
   const users = await dbGetAll('users');
-  const adminExists = users.some(u => u.username === 'admin');
-  if (!adminExists) {
+  if (!users.some(u => u.username === 'admin')) {
     const n = now();
-    await dbPut('users', {
-      id: 'u_admin_' + Date.now(),
-      username: 'admin',
-      display_name: 'Administrateur',
-      pin_hash: '0000',
-      role: 'admin',
-      is_active: true,
-      created_at: n,
-      updated_at: n
-    });
-    console.log('Admin user created: admin / 0000');
+    await dbPut('users', {id:'u_admin_'+Date.now(),username:'admin',display_name:'Administrateur',pin_hash:'0000',role:'admin',is_active:true,created_at:n,updated_at:n});
   }
 }
 
-// ─── App State ───────────────────────────────────────────────
+// --- App State ---
 const state = {
-  user: null, token: null,
-  route: 'dashboard', routeParam: null,
-  users: [], pendingCount: 0,
-  online: navigator.onLine,
-  lastSync: localStorage.getItem('kf_lastSync'),
-  simpleMode: localStorage.getItem('kf_simpleMode') !== '0',
-  lang: localStorage.getItem('kf_lang') || 'fr',
-  adminVerified: false,
-  gsConfig: JSON.parse(localStorage.getItem('kf_gsConfig') || 'null') || { sheetId: '', apiEndpoint: '', apiKey: '' }
+  user:null, token:null,
+  route:'dashboard', routeParam:null,
+  users:[], pendingCount:0,
+  online:navigator.onLine,
+  lastSync:localStorage.getItem('kf_lastSync'),
+  simpleMode:localStorage.getItem('kf_simpleMode')!=='0',
+  lang:localStorage.getItem('kf_lang')||'fr',
+  adminVerified:false,
+  gsConfig:JSON.parse(localStorage.getItem('kf_gsConfig')||'null')||{sheetId:'',apiEndpoint:'',apiKey:''}
 };
 
-function userMap() {
-  const m = {};
-  state.users.forEach(u => m[u.id] = u);
-  return m;
-}
+function userMap(){const m={};state.users.forEach(u=>m[u.id]=u);return m}
+function setSimpleMode(e){state.simpleMode=!!e;localStorage.setItem('kf_simpleMode',e?'1':'0')}
+function setLang(l){state.lang=l;localStorage.setItem('kf_lang',l)}
+function saveGsConfig(c){state.gsConfig=c;localStorage.setItem('kf_gsConfig',JSON.stringify(c))}
+function isAdmin(){return state.user&&state.user.role==='admin'}
 
-function setSimpleMode(enabled) {
-  state.simpleMode = !!enabled;
-  localStorage.setItem('kf_simpleMode', enabled ? '1' : '0');
-}
-
-function setLang(lang) {
-  state.lang = lang;
-  localStorage.setItem('kf_lang', lang);
-}
-
-function saveGsConfig(cfg) {
-  state.gsConfig = cfg;
-  localStorage.setItem('kf_gsConfig', JSON.stringify(cfg));
-}
-
-function isAdmin() {
-  return state.user && state.user.role === 'admin';
-}
-
-function requireAdminPin(callback) {
-  if (!isAdmin()) {
-    alert(t('adminOnly'));
-    return false;
-  }
-  if (state.adminVerified) {
-    callback();
-    return true;
-  }
-  const pin = prompt(t('enterAdminPin'));
+async function requireAdminPin(callback) {
+  if (!isAdmin()) { showToast(t('adminOnly'),'error'); return false; }
+  if (state.adminVerified) { await callback(); return true; }
+  const pin = await showPrompt(t('adminArea'), t('enterAdminPin'));
   if (!pin) return false;
   if (pin === state.user.pin_hash) {
     state.adminVerified = true;
-    setTimeout(() => { state.adminVerified = false; }, 300000); // 5 min timeout
-    callback();
+    setTimeout(() => { state.adminVerified = false; }, 300000);
+    await callback();
     return true;
   } else {
-    alert(t('wrongPin'));
+    showToast(t('wrongPin'), 'error');
     return false;
   }
 }
 
 async function testGoogleConnection() {
-  if (!state.gsConfig.apiEndpoint) return { ok: false, error: t('notConfigured') };
+  if (!state.gsConfig.apiEndpoint) return {ok:false,error:t('notConfigured')};
   try {
-    const resp = await fetch(state.gsConfig.apiEndpoint + '?action=ping&key=' + encodeURIComponent(state.gsConfig.apiKey), { method: 'GET' });
-    if (resp.ok) return { ok: true };
-    return { ok: false, error: resp.statusText };
-  } catch (e) {
-    return { ok: false, error: e.message };
-  }
+    const resp = await fetch(state.gsConfig.apiEndpoint+'?action=ping&key='+encodeURIComponent(state.gsConfig.apiKey),{method:'GET'});
+    return resp.ok ? {ok:true} : {ok:false,error:resp.statusText};
+  } catch(e) { return {ok:false,error:e.message}; }
 }
 
 async function syncToGoogleSheets() {
-  if (!state.gsConfig.apiEndpoint) return { ok: false, error: t('notConfigured') };
+  if (!state.gsConfig.apiEndpoint) return {ok:false,error:t('notConfigured')};
   const items = await dbGetAll('outbox');
-  if (items.length === 0) return { ok: true, synced: 0 };
+  if (!items.length) return {ok:true,synced:0};
   try {
-    const resp = await fetch(state.gsConfig.apiEndpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'sync', key: state.gsConfig.apiKey, sheetId: state.gsConfig.sheetId, items })
-    });
+    const resp = await fetch(state.gsConfig.apiEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'sync',key:state.gsConfig.apiKey,sheetId:state.gsConfig.sheetId,items})});
     if (resp.ok) {
-      for (const item of items) await dbDelete('outbox', item.id);
-      state.lastSync = now();
-      localStorage.setItem('kf_lastSync', state.lastSync);
-      state.pendingCount = 0;
-      return { ok: true, synced: items.length };
+      for (const item of items) await dbDelete('outbox',item.id);
+      state.lastSync=now();localStorage.setItem('kf_lastSync',state.lastSync);state.pendingCount=0;
+      return {ok:true,synced:items.length};
     }
-    return { ok: false, error: resp.statusText };
-  } catch (e) {
-    return { ok: false, error: e.message };
-  }
+    return {ok:false,error:resp.statusText};
+  } catch(e) { return {ok:false,error:e.message}; }
 }
 
-// ─── Router ──────────────────────────────────────────────────
+// --- Router ---
 function navigate(route, param) {
+  haptic();
   state.route = route;
   state.routeParam = param || null;
   window.location.hash = param ? `${route}/${param}` : route;
   render();
 }
-
 function parseHash() {
   const hash = window.location.hash.slice(1) || 'dashboard';
   const parts = hash.split('/');
   state.route = parts[0];
   state.routeParam = parts[1] || null;
 }
-
 window.addEventListener('hashchange', () => { parseHash(); render(); });
 window.addEventListener('online', () => { state.online = true; render(); });
 window.addEventListener('offline', () => { state.online = false; render(); });
 
-// ─── Auth ────────────────────────────────────────────────────
+// --- Auth ---
 async function login(username, pin) {
   const users = await dbGetAll('users');
   const user = users.find(u => u.username === username.toLowerCase().trim() && u.is_active);
   if (!user || user.pin_hash !== pin) return false;
-  state.user = user;
-  state.token = 'tok_' + user.id;
-  state.users = users;
-  localStorage.setItem('kf_session', JSON.stringify({userId: user.id}));
+  state.user = user; state.token = 'tok_'+user.id; state.users = users;
+  localStorage.setItem('kf_session', JSON.stringify({userId:user.id}));
   return true;
 }
-
 function logout() {
   state.user = null; state.token = null;
   localStorage.removeItem('kf_session');
   navigate('dashboard');
 }
-
 async function restoreSession() {
   const s = localStorage.getItem('kf_session');
   if (!s) return;
   try {
     const {userId} = JSON.parse(s);
     const user = await dbGet('users', userId);
-    if (user && user.is_active) {
-      state.user = user;
-      state.token = 'tok_' + user.id;
-      state.users = await dbGetAll('users');
-    }
+    if (user && user.is_active) { state.user = user; state.token = 'tok_'+user.id; state.users = await dbGetAll('users'); }
   } catch(e) {}
 }
 
-// ─── Sync (Outbox counter) ───────────────────────────────────
-async function updatePending() {
-  state.pendingCount = await dbCount('outbox');
-}
+// --- Sync ---
+async function updatePending() { state.pendingCount = await dbCount('outbox'); }
 setInterval(updatePending, 3000);
 
 async function triggerSync() {
-  // In production: POST outbox items to Google Apps Script API
   const items = await dbGetAll('outbox');
   for (const item of items) await dbDelete('outbox', item.id);
-  state.lastSync = now();
-  localStorage.setItem('kf_lastSync', state.lastSync);
-  state.pendingCount = 0;
-  render();
+  state.lastSync = now(); localStorage.setItem('kf_lastSync', state.lastSync);
+  state.pendingCount = 0; render();
 }
 
-// ─── Audit helper ────────────────────────────────────────────
+// --- Audit ---
 async function addAudit(entityType, entityId, action, changes) {
-  await dbPut('audit_log', {
-    id: uuid(), entity_type: entityType, entity_id: entityId,
-    action, changes: JSON.stringify(changes || {}),
-    user_id: state.user.id, timestamp: now()
-  });
+  await dbPut('audit_log', {id:uuid(),entity_type:entityType,entity_id:entityId,action,changes:JSON.stringify(changes||{}),user_id:state.user.id,timestamp:now()});
 }
-
 async function addOutbox(entityType, entityId, payload) {
-  await dbPut('outbox', {
-    id: uuid(), entity_type: entityType, entity_id: entityId,
-    action: 'upsert', payload: JSON.stringify(payload),
-    created_at: now(), retry_count: 0
+  await dbPut('outbox', {id:uuid(),entity_type:entityType,entity_id:entityId,action:'upsert',payload:JSON.stringify(payload),created_at:now(),retry_count:0});
+}
+
+// --- SVG Chart Helpers ---
+function buildBarChart7Days(txns) {
+  const days = [];
+  const dayLabels = t('weekDays').split(',');
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(Date.now() - i * 86400000);
+    const ds = d.toISOString().slice(0,10);
+    const dow = d.getDay(); // 0=Sun
+    const labelIdx = dow === 0 ? 6 : dow - 1;
+    days.push({date:ds, label:dayLabels[labelIdx]||ds.slice(8), inc:0, exp:0});
+  }
+  txns.forEach(tx => {
+    const day = days.find(d => d.date === tx.date);
+    if (!day) return;
+    if (tx.type === 'expense') day.exp += tx.amount;
+    else day.inc += tx.amount;
+  });
+  const maxVal = Math.max(...days.map(d => Math.max(d.inc, d.exp)), 1);
+  const W = 280, H = 120, pad = 30, barW = 12, gap = 6;
+  const chartH = H - pad - 10;
+  let svg = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto">`;
+  // Y axis
+  svg += `<line x1="${pad}" y1="5" x2="${pad}" y2="${H-pad}" stroke="var(--border)" stroke-width="0.5"/>`;
+  svg += `<line x1="${pad}" y1="${H-pad}" x2="${W-5}" y2="${H-pad}" stroke="var(--border)" stroke-width="0.5"/>`;
+  // Y labels
+  svg += `<text x="${pad-4}" y="12" fill="var(--text4)" font-size="7" text-anchor="end" font-family="var(--mono)">${fmtCur(maxVal).replace(' FCFA','')}</text>`;
+  svg += `<text x="${pad-4}" y="${H-pad+2}" fill="var(--text4)" font-size="7" text-anchor="end" font-family="var(--mono)">0</text>`;
+  days.forEach((d, i) => {
+    const x = pad + 10 + i * ((W - pad - 15) / 7);
+    const incH = (d.inc / maxVal) * chartH;
+    const expH = (d.exp / maxVal) * chartH;
+    const incY = H - pad - incH;
+    const expY = H - pad - expH;
+    svg += `<rect x="${x}" y="${incY}" width="${barW}" height="${incH}" rx="2" fill="var(--green)" opacity="0.7"/>`;
+    svg += `<rect x="${x + barW + gap}" y="${expY}" width="${barW}" height="${expH}" rx="2" fill="var(--red)" opacity="0.7"/>`;
+    svg += `<text x="${x + barW + gap/2}" y="${H - pad + 12}" fill="var(--text4)" font-size="7" text-anchor="middle">${d.label}</text>`;
+  });
+  svg += '</svg>';
+  return svg;
+}
+
+function buildDonutChart(entries, total) {
+  if (!entries.length) return '';
+  const colors = ['#3b82f6','#34d399','#f87171','#fbbf24','#a78bfa','#38bdf8','#f472b6','#fb923c','#4ade80','#818cf8'];
+  const R = 50, r = 32, cx = 60, cy = 60;
+  let svg = `<svg viewBox="0 0 120 120" style="width:120px;height:120px">`;
+  let angle = -90;
+  entries.forEach(([cat, amt], i) => {
+    const pct = amt / total;
+    const sweep = pct * 360;
+    const large = sweep > 180 ? 1 : 0;
+    const startRad = (angle * Math.PI) / 180;
+    const endRad = ((angle + sweep) * Math.PI) / 180;
+    const x1 = cx + R * Math.cos(startRad), y1 = cy + R * Math.sin(startRad);
+    const x2 = cx + R * Math.cos(endRad), y2 = cy + R * Math.sin(endRad);
+    const ix1 = cx + r * Math.cos(endRad), iy1 = cy + r * Math.sin(endRad);
+    const ix2 = cx + r * Math.cos(startRad), iy2 = cy + r * Math.sin(startRad);
+    svg += `<path d="M${x1} ${y1} A${R} ${R} 0 ${large} 1 ${x2} ${y2} L${ix1} ${iy1} A${r} ${r} 0 ${large} 0 ${ix2} ${iy2} Z" fill="${colors[i % colors.length]}" opacity="0.8"/>`;
+    angle += sweep;
+  });
+  svg += `<text x="${cx}" y="${cy+3}" fill="var(--text)" font-size="10" text-anchor="middle" font-weight="700">${entries.length}</text>`;
+  svg += '</svg>';
+  return svg;
+}
+
+function buildLineChart(dailyData, W, H) {
+  if (!dailyData.length) return '';
+  const pad = 30, top = 10;
+  const chartW = W - pad - 10, chartH = H - top - 25;
+  const maxVal = Math.max(...dailyData.map(d => d.val), 1);
+  let svg = `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto">`;
+  svg += `<line x1="${pad}" y1="${top}" x2="${pad}" y2="${H-25}" stroke="var(--border)" stroke-width="0.5"/>`;
+  svg += `<line x1="${pad}" y1="${H-25}" x2="${W-5}" y2="${H-25}" stroke="var(--border)" stroke-width="0.5"/>`;
+  // Grid lines
+  for (let i = 0; i <= 3; i++) {
+    const y = top + (chartH / 3) * i;
+    svg += `<line x1="${pad}" y1="${y}" x2="${W-5}" y2="${y}" stroke="var(--border)" stroke-width="0.3" stroke-dasharray="3,3"/>`;
+  }
+  // Build path
+  const points = dailyData.map((d, i) => {
+    const x = pad + (i / Math.max(dailyData.length - 1, 1)) * chartW;
+    const y = top + chartH - (d.val / maxVal) * chartH;
+    return {x, y};
+  });
+  // Area fill
+  const areaPath = `M${points[0].x} ${H-25} L${points.map(p => `${p.x} ${p.y}`).join(' L')} L${points[points.length-1].x} ${H-25} Z`;
+  svg += `<path d="${areaPath}" fill="url(#lineGrad)" opacity="0.3"/>`;
+  svg += `<defs><linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--blue)"/><stop offset="100%" stop-color="transparent"/></linearGradient></defs>`;
+  // Line
+  const linePath = `M${points.map(p => `${p.x} ${p.y}`).join(' L')}`;
+  svg += `<path d="${linePath}" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round"/>`;
+  // Dots & labels
+  dailyData.forEach((d, i) => {
+    if (i % Math.ceil(dailyData.length / 7) === 0 || i === dailyData.length - 1) {
+      svg += `<circle cx="${points[i].x}" cy="${points[i].y}" r="2.5" fill="var(--blue)"/>`;
+      svg += `<text x="${points[i].x}" y="${H-12}" fill="var(--text4)" font-size="6" text-anchor="middle">${d.label}</text>`;
+    }
+  });
+  svg += '</svg>';
+  return svg;
+}
+
+// --- Backup & Restore ---
+async function exportFullBackup() {
+  const data = {};
+  const stores = ['transactions','shipment_docs','shipment_items','categories','audit_log','contacts','attachments','templates'];
+  for (const s of stores) {
+    try { data[s] = await dbGetAll(s); } catch(e) { data[s] = []; }
+  }
+  data._meta = {version:2, exported_at:now(), app:'TchaAgro'};
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `tcha-agro-backup-${today()}.json`; a.click();
+  URL.revokeObjectURL(url);
+  showToast(t('exportSuccess'), 'success');
+}
+
+async function importFullBackup(file, mode) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (!data._meta || data._meta.app !== 'TchaAgro') {
+          showToast(t('importError'), 'error');
+          return resolve(false);
+        }
+        const stores = ['transactions','shipment_docs','shipment_items','categories','audit_log','contacts','attachments','templates'];
+        for (const s of stores) {
+          if (!data[s]) continue;
+          if (mode === 'replace') {
+            try { await dbClear(s); } catch(e) {}
+          }
+          for (const item of data[s]) {
+            await dbPut(s, item);
+          }
+        }
+        showToast(t('importSuccess'), 'success');
+        resolve(true);
+      } catch(err) {
+        showToast(t('importError') + ': ' + err.message, 'error');
+        resolve(false);
+      }
+    };
+    reader.readAsText(file);
   });
 }
 
-// ═══════════════════════════════════════════════════════════════
-// SCREENS
-// ═══════════════════════════════════════════════════════════════
+// --- Photo/Attachment Helpers ---
+async function capturePhoto() {
+  return new Promise((resolve) => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.capture = 'environment';
+    input.onchange = () => {
+      const file = input.files[0];
+      if (!file) return resolve(null);
+      const reader = new FileReader();
+      reader.onload = (e) => resolve({data_url: e.target.result, filename: file.name});
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  });
+}
 
-// ─── Login Screen ────────────────────────────────────────────
+async function saveAttachment(entityType, entityId, photoData) {
+  const att = {id:uuid(), entity_type:entityType, entity_id:entityId, data_url:photoData.data_url, filename:photoData.filename, created_at:now()};
+  await dbPut('attachments', att);
+  return att;
+}
+
+async function getAttachments(entityType, entityId) {
+  const all = await dbGetAll('attachments');
+  return all.filter(a => a.entity_type === entityType && a.entity_id === entityId);
+}
+
+function showPhotoModal(dataUrl) {
+  const backdrop = h('div', {className:'modal-backdrop', onClick: e => { if (e.target === backdrop) backdrop.remove(); }});
+  const box = h('div', {className:'modal-box photo-full-modal', style:{padding:'12px',textAlign:'center'}});
+  box.appendChild(h('img', {src:dataUrl, style:{maxWidth:'100%',maxHeight:'70vh',borderRadius:'12px'}}));
+  box.appendChild(h('button', {className:'btn btn-ghost btn-sm', style:{marginTop:'12px'}, onClick:() => backdrop.remove()}, t('back')));
+  backdrop.appendChild(box);
+  document.body.appendChild(backdrop);
+}
+
+
+// ============================================================
+// SCREENS
+// ============================================================
+
+// --- Onboarding ---
+function showOnboarding() {
+  if (localStorage.getItem('kf_onboarded')) return;
+  const steps = [
+    {emoji:'🐔', title:t('welcome'), desc:t('welcomeDesc')},
+    {emoji:'💰', title:t('onbStep1Title'), desc:t('onbStep1Desc')},
+    {emoji:'📦', title:t('onbStep2Title'), desc:t('onbStep2Desc')},
+    {emoji:'📊', title:t('onbStep3Title'), desc:t('onbStep3Desc')}
+  ];
+  let step = 0;
+  const backdrop = h('div', {className:'onboarding-backdrop'});
+  const box = h('div', {className:'onboarding-box'});
+  function renderStep() {
+    box.innerHTML = '';
+    const s = steps[step];
+    const stepDiv = h('div', {className:'onboarding-step'});
+    stepDiv.appendChild(h('div', {className:'onboarding-emoji'}, s.emoji));
+    stepDiv.appendChild(h('div', {className:'onboarding-title'}, s.title));
+    stepDiv.appendChild(h('div', {className:'onboarding-desc'}, s.desc));
+    const dots = h('div', {className:'onboarding-dots'});
+    steps.forEach((_, i) => dots.appendChild(h('span', {className: i === step ? 'active' : ''})));
+    stepDiv.appendChild(dots);
+    const btn = h('button', {className:'btn btn-primary', style:{width:'100%',padding:'14px'},
+      onClick:() => {
+        if (step < steps.length - 1) { step++; renderStep(); }
+        else { localStorage.setItem('kf_onboarded','1'); backdrop.remove(); }
+      }}, step < steps.length - 1 ? t('next') : t('gotIt'));
+    stepDiv.appendChild(btn);
+    box.appendChild(stepDiv);
+  }
+  renderStep();
+  backdrop.appendChild(box);
+  document.body.appendChild(backdrop);
+}
+
+// --- Login Screen ---
 function renderLogin() {
   const app = $('#app');
   app.innerHTML = '';
-
-  const wrap = h('div', {className:'login-wrap'});
+  const wrap = h('div',{className:'login-wrap'});
   wrap.appendChild(h('div',{className:'login-glow'}));
-
   const box = h('div',{className:'login-box'});
-  const logo = h('div',{className:'login-logo'},
+  box.appendChild(h('div',{className:'login-logo'},
     h('div',{className:'login-logo-icon'},'🐔'),
     h('h1',null,'Tcha Agro'),
     h('p',null,'Tcha Agro Business Center, Togo')
-  );
-  box.appendChild(logo);
-
+  ));
   let uname='', pin='';
-  const err = h('div',{style:{color:'var(--red)',fontSize:'13px',display:'none',marginBottom:'12px',display:'flex',alignItems:'center',gap:'6px'}});
-
+  const err = h('div',{style:{color:'var(--red)',fontSize:'13px',display:'none',marginBottom:'12px',alignItems:'center',gap:'6px'}});
   const form = h('div',{className:'space-y'});
-
-  const uInput = h('input',{className:'input',type:'text',placeholder:t('username'),autocomplete:'username',autofocus:true,
-    style:{paddingLeft:'40px'}});
-  const uWrap = h('div',{className:'input-icon',innerHTML:I.user});
-  uWrap.appendChild(uInput);
+  const uInput = h('input',{className:'input',type:'text',placeholder:t('username'),autocomplete:'username',autofocus:true,style:{paddingLeft:'40px'}});
+  const uWrap = h('div',{className:'input-icon',innerHTML:I.user}); uWrap.appendChild(uInput);
   uInput.addEventListener('input',e=>uname=e.target.value);
-
-  const pInput = h('input',{className:'input',type:'password',inputMode:'numeric',pattern:'[0-9]*',placeholder:t('pin'),
-    autocomplete:'current-password',maxLength:'6',style:{paddingLeft:'40px',letterSpacing:'0.3em'}});
-  const pWrap = h('div',{className:'input-icon',innerHTML:I.lock});
-  pWrap.appendChild(pInput);
+  const pInput = h('input',{className:'input',type:'password',inputMode:'numeric',pattern:'[0-9]*',placeholder:t('pin'),autocomplete:'current-password',maxLength:'6',style:{paddingLeft:'40px',letterSpacing:'0.3em'}});
+  const pWrap = h('div',{className:'input-icon',innerHTML:I.lock}); pWrap.appendChild(pInput);
   pInput.addEventListener('input',e=>pin=e.target.value);
-
   const submit = h('button',{className:'btn btn-primary',style:{width:'100%',padding:'14px',fontSize:'15px'},
     onClick:async()=>{
       err.style.display='none';
       if(!uname.trim()||!pin.trim()){err.textContent=t('enterBoth');err.style.display='flex';return}
-      submit.disabled=true; submit.textContent='…';
+      submit.disabled=true;submit.textContent='...';
       const ok=await login(uname,pin);
       if(!ok){err.innerHTML=I.alert+'<span>'+t('wrongCredentials')+'</span>';err.style.display='flex';pInput.value='';pin='';submit.disabled=false;submit.textContent=t('login');return}
+      showOnboarding();
       render();
     }
   },t('login'));
-
   pInput.addEventListener('keydown',e=>{if(e.key==='Enter')submit.click()});
-
   form.append(uWrap, pWrap, err, submit);
   box.appendChild(form);
-
-  // Info d'aide
   const helpBox = h('div',{style:{marginTop:'32px',padding:'16px',borderRadius:'12px',background:'linear-gradient(135deg,rgba(217,119,6,.08),rgba(21,128,61,.08))',border:'1px solid rgba(217,119,6,.2)'}});
-  helpBox.appendChild(h('p',{style:{fontSize:'12px',color:'var(--text2)',textAlign:'center',lineHeight:'1.5'}},
-    '🐔 Bienvenue dans Tcha Agro'));
-  helpBox.appendChild(h('p',{style:{fontSize:'11px',color:'var(--text3)',textAlign:'center',marginTop:'8px'}},
-    'Première connexion: admin / 0000'));
+  helpBox.appendChild(h('p',{style:{fontSize:'12px',color:'var(--text2)',textAlign:'center',lineHeight:'1.5'}},'🐔 Bienvenue dans Tcha Agro'));
+  helpBox.appendChild(h('p',{style:{fontSize:'11px',color:'var(--text3)',textAlign:'center',marginTop:'8px'}},'Premi\u00e8re connexion: admin / 0000'));
   box.appendChild(helpBox);
   wrap.appendChild(box);
   app.appendChild(wrap);
 }
 
-// ─── App Shell ───────────────────────────────────────────────
+// --- App Shell ---
 function renderShell(content) {
   const app = $('#app');
   app.innerHTML = '';
   const um = userMap();
-
   // Top bar
   const topbar = h('div',{className:'topbar'});
   const tl = h('div',{className:'topbar-left'},
     h('div',{className:'topbar-logo'},'🐔'),
-    h('div',{className:'topbar-info'},
-      h('h1',null,'Tcha Agro'),
-      h('p',null,state.user.display_name)
-    )
+    h('div',{className:'topbar-info'},h('h1',null,'Tcha Agro'),h('p',null,state.user.display_name))
   );
   const tr = h('div',{className:'topbar-right'});
-
-  const syncBtn = h('button',{className:'sync-btn',onClick:triggerSync,
-    title:state.lastSync?`${t('lastSync')}: ${fmtRelative(state.lastSync)}`:t('syncNow')});
+  const syncBtn = h('button',{className:'sync-btn',onClick:triggerSync,title:state.lastSync?`${t('lastSync')}: ${fmtRelative(state.lastSync)}`:t('syncNow')});
   syncBtn.appendChild(h('span',{className:`sync-dot ${state.online?'online':'offline'}`}));
   if(state.pendingCount>0) syncBtn.appendChild(h('span',{className:'pending-badge'},String(state.pendingCount)));
   tr.appendChild(syncBtn);
-
-  const logoutBtn = h('button',{className:'btn-ghost',onClick:logout,
-    style:{padding:'6px',borderRadius:'8px'},innerHTML:I.logout,title:t('logout')});
+  const logoutBtn = h('button',{className:'btn-ghost',onClick:logout,style:{padding:'6px',borderRadius:'8px'},innerHTML:I.logout,title:t('logout')});
   tr.appendChild(logoutBtn);
-
   topbar.append(tl,tr);
   app.appendChild(topbar);
 
   if (state.simpleMode) {
-    const helpKey = state.route.startsWith('txn') ? 'transactions'
-      : state.route.startsWith('ship') ? 'shipments'
-      : state.route;
-    const helpByRoute = {
-      dashboard: t('guideStart'),
-      transactions: t('guideCash'),
-      warehouse: t('guideWarehouse'),
-      shipments: t('guideShipments'),
-      settings: t('guideSettings')
-    };
+    const helpKey = state.route.startsWith('txn')?'transactions':state.route.startsWith('ship')?'shipments':state.route;
+    const helpByRoute = {dashboard:t('guideStart'),transactions:t('guideCash'),warehouse:t('guideWarehouse'),shipments:t('guideShipments'),settings:t('guideSettings')};
     const strip = h('div',{className:'guide-strip'});
     strip.innerHTML = helpByRoute[helpKey] || t('simpleModeHint');
     app.appendChild(strip);
   }
-
   // Main
   const main = h('div',{className:'main'});
   main.appendChild(content);
   app.appendChild(main);
-
-  // Navbar
+  // Navbar - 6 items
   const nav = h('div',{className:'navbar'});
   const navItems = [
     {r:'dashboard',icon:I.dashboard,label:state.simpleMode?t('start'):t('dashboard')},
     {r:'transactions',icon:I.cash,label:t('cash')},
     {r:'warehouse',icon:I.pkg,label:t('warehouse')},
     {r:'shipments',icon:I.truck,label:t('delivery')},
+    {r:'contacts',icon:I.contacts,label:t('contacts')},
     {r:'settings',icon:I.settings,label:t('more')},
   ];
   navItems.forEach(ni=>{
-    const active = state.route.startsWith(ni.r) || (ni.r==='dashboard'&&state.route==='dashboard');
-    const btn = h('button',{className:`nav-item ${state.route===ni.r||(ni.r==='transactions'&&state.route.startsWith('txn'))||(ni.r==='shipments'&&state.route.startsWith('ship'))||(ni.r==='settings'&&state.route==='reports')?'active':''}`,
-      onClick:()=>navigate(ni.r)});
+    const isActive = state.route===ni.r||(ni.r==='transactions'&&state.route.startsWith('txn'))||(ni.r==='shipments'&&state.route.startsWith('ship'))||(ni.r==='settings'&&(state.route==='reports'||state.route==='settings'))||(ni.r==='contacts'&&state.route.startsWith('contact'));
+    const btn = h('button',{className:`nav-item ${isActive?'active':''}`,onClick:()=>navigate(ni.r)});
     btn.innerHTML = ni.icon;
     btn.appendChild(h('span',null,ni.label));
     nav.appendChild(btn);
@@ -1005,22 +1306,22 @@ function renderShell(content) {
   app.appendChild(nav);
 }
 
-// ─── Dashboard ───────────────────────────────────────────────
+// --- Dashboard ---
 async function renderDashboard() {
-  const txns = (await dbGetAll('transactions')).filter(t=>t.date===today()&&t.status==='active');
+  const allTxns = (await dbGetAll('transactions')).filter(t=>t.status==='active');
+  const todayTxns = allTxns.filter(t=>t.date===today());
   const audits = (await dbGetAll('audit_log')).sort((a,b)=>b.timestamp.localeCompare(a.timestamp)).slice(0,15);
   const storedDocs = (await dbGetAll('shipment_docs')).filter(d=>d.status==='en_stock');
   const storedValue = storedDocs.reduce((s,d)=>s+d.total_value,0);
+  const templates = await dbGetAll('templates');
   const um = userMap();
 
-  const salesAmt = txns.filter(t=>t.type!=='expense').reduce((s,t)=>s+t.amount,0);
-  const expAmt = txns.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
-  const cashIn = txns.filter(t=>t.type!=='expense'&&t.payment_method==='cash').reduce((s,t)=>s+t.amount,0);
-  const cashOut = txns.filter(t=>t.type==='expense'&&t.payment_method==='cash').reduce((s,t)=>s+t.amount,0);
+  const salesAmt = todayTxns.filter(t=>t.type!=='expense').reduce((s,t)=>s+t.amount,0);
+  const expAmt = todayTxns.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const cashIn = todayTxns.filter(t=>t.type!=='expense'&&t.payment_method==='cash').reduce((s,t)=>s+t.amount,0);
+  const cashOut = todayTxns.filter(t=>t.type==='expense'&&t.payment_method==='cash').reduce((s,t)=>s+t.amount,0);
 
   const page = h('div',{className:'page'});
-
-  // Greeting
   page.append(
     h('h2',{style:{fontSize:'20px',fontWeight:'700'}},`${t('hello')}, ${state.user.display_name} 👋`),
     h('p',{style:{fontSize:'13px',color:'var(--text3)',marginTop:'2px'}},t('businessCenter'))
@@ -1033,15 +1334,10 @@ async function renderDashboard() {
     const mkStep = (nr,text,go,label) => {
       const row = h('div',{className:'flex-between',style:{padding:'8px 10px',borderRadius:'8px',background:'var(--bg1)',border:'1px solid var(--border)'}});
       row.appendChild(h('p',{style:{fontSize:'12px',color:'var(--text2)'}},h('b',null,`${nr}. `),text));
-      const btn = h('button',{className:'btn-ghost btn-sm',style:{color:'var(--blue)',padding:'6px 8px'},onClick:()=>navigate(go)},label);
-      row.appendChild(btn);
+      row.appendChild(h('button',{className:'btn-ghost btn-sm',style:{color:'var(--blue)',padding:'6px 8px'},onClick:()=>navigate(go)},label));
       return row;
     };
-    steps.append(
-      mkStep('1',t('step1'),'txn-form/new',t('booking')),
-      mkStep('2',t('step2'),'warehouse',t('warehouse')),
-      mkStep('3',t('step3'),'settings',t('sync'))
-    );
+    steps.append(mkStep('1',t('step1'),'txn-form/new',t('booking')),mkStep('2',t('step2'),'warehouse',t('warehouse')),mkStep('3',t('step3'),'settings',t('sync')));
     starter.appendChild(steps);
     page.appendChild(starter);
   }
@@ -1058,9 +1354,48 @@ async function renderDashboard() {
     mkStat('sc-green',I.up,t('income'),fmtCur(salesAmt)),
     mkStat('sc-red',I.down,t('expenses'),fmtCur(expAmt)),
     mkStat('sc-blue',I.wallet,t('cashBalance'),fmtCur(cashIn-cashOut)),
-    mkStat('sc-violet',I.pkg,t('warehouseVal'),storedDocs.length>0?`${storedDocs.length} · ${fmtCur(storedValue)}`:t('empty'))
+    mkStat('sc-violet',I.pkg,t('warehouseVal'),storedDocs.length>0?`${storedDocs.length} \u00b7 ${fmtCur(storedValue)}`:t('empty'))
   );
   page.appendChild(stats);
+
+  // 7-day chart
+  const chartCard = h('div',{className:'card',style:{marginTop:'14px'}});
+  chartCard.appendChild(h('h3',{style:{fontSize:'12px',fontWeight:'600',color:'var(--text3)',marginBottom:'8px'}},t('last7days')));
+  const last7 = allTxns.filter(tx => {
+    const d = new Date(tx.date);
+    return d >= new Date(Date.now() - 7*86400000);
+  });
+  chartCard.innerHTML += buildBarChart7Days(last7);
+  const legend = h('div',{style:{display:'flex',gap:'16px',justifyContent:'center',marginTop:'6px',fontSize:'10px'}});
+  legend.innerHTML = `<span style="color:var(--green)">■ ${t('income')}</span><span style="color:var(--red)">■ ${t('expenses')}</span>`;
+  chartCard.appendChild(legend);
+  page.appendChild(chartCard);
+
+  // Quick Templates
+  if (templates.length > 0) {
+    const tplSec = h('div',{style:{marginTop:'14px'}});
+    tplSec.appendChild(h('h3',{style:{fontSize:'13px',fontWeight:'600',color:'var(--text2)',marginBottom:'8px'}},t('quickTemplates')));
+    const tplGrid = h('div',{style:{display:'flex',gap:'8px',overflowX:'auto',paddingBottom:'4px'}});
+    templates.slice(0,5).forEach(tpl => {
+      const card = h('div',{className:'template-card',style:{minWidth:'120px',flexShrink:0},
+        onClick:async()=>{
+          const txn = {id:uuid(),type:tpl.type,amount:tpl.amount,category:tpl.category,description:tpl.description,
+            payment_method:tpl.payment_method,date:today(),time:timeNow(),status:'active',revision:1,
+            created_by:state.user.id,created_at:now(),updated_by:state.user.id,updated_at:now(),_sync:'pending'};
+          await dbPut('transactions',txn);
+          await addAudit('transaction',txn.id,'create');
+          await addOutbox('transaction',txn.id,txn);
+          showToast(`${tpl.name}: ${fmtCur(tpl.amount)}`,'success');
+          render();
+        }});
+      card.appendChild(h('p',{style:{fontSize:'18px'}},tpl.type==='expense'?'📤':'📥'));
+      card.appendChild(h('p',{style:{fontSize:'11px',fontWeight:'600',marginTop:'4px',color:'var(--text)'}},tpl.name));
+      card.appendChild(h('p',{style:{fontSize:'10px',color:'var(--text4)',marginTop:'2px'}},fmtCur(tpl.amount)));
+      tplGrid.appendChild(card);
+    });
+    tplSec.appendChild(tplGrid);
+    page.appendChild(tplSec);
+  }
 
   // Quick Actions
   const qa = h('div',{className:'grid3',style:{marginTop:'14px'}});
@@ -1080,25 +1415,28 @@ async function renderDashboard() {
   const secH = h('div',{className:'flex-between',style:{marginTop:'20px',marginBottom:'10px'}});
   secH.appendChild(h('h3',{style:{fontSize:'13px',fontWeight:'600',color:'var(--text2)'}},t('recentBookings')));
   const allBtn = h('button',{className:'btn-ghost btn-sm',onClick:()=>navigate('transactions')});
-  allBtn.innerHTML=`${t('all')} ${I.arrow}`; allBtn.style.gap='4px'; allBtn.style.fontSize='11px'; allBtn.style.color='var(--blue)';
+  allBtn.innerHTML=`${t('all')} ${I.arrow}`;allBtn.style.gap='4px';allBtn.style.fontSize='11px';allBtn.style.color='var(--blue)';
   secH.appendChild(allBtn);
   page.appendChild(secH);
 
-  if(txns.length===0) {
-    page.appendChild(h('p',{style:{textAlign:'center',color:'var(--text4)',padding:'24px 0',fontSize:'13px'}},t('noBookingsToday')));
+  if(todayTxns.length===0) {
+    page.appendChild(h('div',{className:'empty-state'},
+      h('div',{className:'empty-icon'},'📝'),
+      h('div',{className:'empty-title'},t('noBookingsToday')),
+      h('div',{className:'empty-desc'},t('step1'))
+    ));
   } else {
-    txns.slice(0,5).forEach(tx=>{
+    todayTxns.slice(0,5).forEach(tx=>{
       const item = h('div',{className:'list-item',onClick:()=>navigate('txn-detail',tx.id)});
       const left = h('div',{style:{display:'flex',alignItems:'center',gap:'10px',minWidth:0,flex:1}});
       left.appendChild(h('div',{style:{width:'8px',height:'8px',borderRadius:'50%',flexShrink:0,background:tx.type==='expense'?'var(--red)':'var(--green)'}}));
       const info = h('div',{style:{minWidth:0}});
       info.appendChild(h('p',{className:'truncate',style:{fontSize:'13px'}},tx.description||tx.category));
-      info.appendChild(h('p',{style:{fontSize:'10px',color:'var(--text4)',marginTop:'1px'}},`${tx.time} · ${(um[tx.created_by]||{}).display_name||'?'}`));
+      info.appendChild(h('p',{style:{fontSize:'10px',color:'var(--text4)',marginTop:'1px'}},`${tx.time} \u00b7 ${(um[tx.created_by]||{}).display_name||'?'}`));
       left.appendChild(info);
       item.appendChild(left);
-      const amt = h('span',{className:'tabular',style:{fontSize:'13px',fontWeight:'600',color:TXN_COLOR[tx.type],flexShrink:0,marginLeft:'10px'}},
-        `${tx.type==='expense'?'−':'+'} ${fmtCur(tx.amount)}`);
-      item.appendChild(amt);
+      item.appendChild(h('span',{className:'tabular',style:{fontSize:'13px',fontWeight:'600',color:TXN_COLOR[tx.type],flexShrink:0,marginLeft:'10px'}},
+        `${tx.type==='expense'?'\u2212':'+'} ${fmtCur(tx.amount)}`));
       page.appendChild(item);
     });
   }
@@ -1111,15 +1449,15 @@ async function renderDashboard() {
   page.appendChild(actH);
 
   audits.forEach((a,i)=>{
-    const u = um[a.user_id] || {display_name:'?'};
+    const u = um[a.user_id]||{display_name:'?'};
     const ti = h('div',{className:'timeline-item'});
-    const dot = h('div',{className:'timeline-dot'}, h('span'));
+    const dot = h('div',{className:'timeline-dot'},h('span'));
     if(i<audits.length-1) dot.appendChild(h('div',{className:'line'}));
     ti.appendChild(dot);
     const body = h('div',{className:'timeline-body'});
     body.appendChild(h('p',{className:'who'},h('b',null,u.display_name),` ${ACTION_LABEL[a.action]||a.action} `,h('span',{style:{color:'var(--text2)'}},ENTITY_LABEL[a.entity_type]||a.entity_type)));
     let changes='';
-    try{const c=JSON.parse(a.changes);const ks=Object.keys(c);if(ks.length)changes=ks.map(k=>`${k}: ${c[k].old} → ${c[k].new}`).join(', ');}catch(e){}
+    try{const c=JSON.parse(a.changes);const ks=Object.keys(c);if(ks.length)changes=ks.map(k=>`${k}: ${c[k].old} \u2192 ${c[k].new}`).join(', ');}catch(e){}
     if(changes) body.appendChild(h('p',{className:'detail truncate'},changes));
     body.appendChild(h('p',{className:'when'},fmtRelative(a.timestamp)));
     ti.appendChild(body);
@@ -1129,7 +1467,7 @@ async function renderDashboard() {
   renderShell(page);
 }
 
-// ─── Transactions List ───────────────────────────────────────
+// --- Transactions List --- (BUG FIX: tx -> t in filter)
 async function renderTransactions() {
   let allTxns = (await dbGetAll('transactions')).filter(t=>t.status==='active').sort((a,b)=>b.created_at.localeCompare(a.created_at));
   const um = userMap();
@@ -1137,16 +1475,15 @@ async function renderTransactions() {
 
   function buildPage() {
     const filtered = allTxns.filter(t=>{
-      if(filterType&&tx.type!==filterType) return false;
-      if(filterUser&&tx.created_by!==filterUser) return false;
-      if(searchQ){const q=searchQ.toLowerCase();return tx.description.toLowerCase().includes(q)||tx.category.toLowerCase().includes(q)||String(tx.amount).includes(q)}
+      if(filterType&&t.type!==filterType) return false;
+      if(filterUser&&t.created_by!==filterUser) return false;
+      if(searchQ){const q=searchQ.toLowerCase();return t.description.toLowerCase().includes(q)||t.category.toLowerCase().includes(q)||String(t.amount).includes(q)}
       return true;
     });
 
     const incAmt = filtered.filter(tx=>tx.type!=='expense').reduce((s,tx)=>s+tx.amount,0);
     const expAmt = filtered.filter(tx=>tx.type==='expense').reduce((s,tx)=>s+tx.amount,0);
 
-    // Group by date
     const groups = new Map();
     filtered.forEach(tx=>{if(!groups.has(tx.date))groups.set(tx.date,[]);groups.get(tx.date).push(tx)});
     const sorted = [...groups.entries()].sort((a,b)=>b[0].localeCompare(a[0]));
@@ -1171,7 +1508,7 @@ async function renderTransactions() {
     summary.append(
       h('span',null,`${filtered.length} ${t('entries')}`),
       h('span',{style:{color:'rgba(52,211,153,.7)'}},`+${fmtCur(incAmt)}`),
-      h('span',{style:{color:'rgba(248,113,113,.7)'}},`−${fmtCur(expAmt)}`),
+      h('span',{style:{color:'rgba(248,113,113,.7)'}},`\u2212${fmtCur(expAmt)}`),
       h('span',{style:{marginLeft:'auto',fontWeight:'500',color:'var(--text3)'}},`= ${fmtCur(incAmt-expAmt)}`)
     );
     hdr.appendChild(summary);
@@ -1179,8 +1516,10 @@ async function renderTransactions() {
 
     const list = h('div',{style:{flex:1,overflowY:'auto',padding:'0 16px 16px'}});
     if(sorted.length===0){
-      list.appendChild(h('div',{style:{textAlign:'center',padding:'48px 0',color:'var(--text4)'}},
-        h('p',{style:{fontSize:'13px'}},t('noTransactions'))));
+      list.appendChild(h('div',{className:'empty-state'},
+        h('div',{className:'empty-icon'},'📋'),
+        h('div',{className:'empty-title'},t('noTransactions'))
+      ));
     } else {
       sorted.forEach(([date,txns])=>{
         list.appendChild(h('p',{style:{fontSize:'10px',fontWeight:'600',color:'var(--text4)',textTransform:'uppercase',letterSpacing:'.05em',margin:'14px 2px 6px'}},fmtDate(date)));
@@ -1193,11 +1532,11 @@ async function renderTransactions() {
           left.appendChild(badges);
           left.appendChild(h('p',{className:'truncate',style:{fontSize:'13px'}},tx.description||tx.category));
           left.appendChild(h('p',{style:{fontSize:'10px',color:'var(--text4)',marginTop:'1px'}},
-            `${tx.time} · ${(um[tx.created_by]||{}).display_name||'?'}${tx._sync==='pending'?' · ● ausstehend':''}`));
+            `${tx.time} \u00b7 ${(um[tx.created_by]||{}).display_name||'?'}`));
           item.appendChild(left);
           item.appendChild(h('span',{className:'tabular',style:{fontSize:'13px',fontWeight:'600',color:TXN_COLOR[tx.type],flexShrink:0,marginLeft:'10px'}},
-            `${tx.type==='expense'?'−':'+'} ${fmtCur(tx.amount)}`));
-          page.querySelector('.list-scroll')?.appendChild(item) || list.appendChild(item);
+            `${tx.type==='expense'?'\u2212':'+'} ${fmtCur(tx.amount)}`));
+          list.appendChild(item);
         });
       });
     }
@@ -1206,35 +1545,28 @@ async function renderTransactions() {
   }
 
   let currentPage;
-  function rebuild(){
-    const p=buildPage();
-    if(currentPage){
-      const main=$('.main');
-      main.innerHTML='';
-      main.appendChild(p);
-    }
-    currentPage=p;
-  }
-
+  function rebuild(){const p=buildPage();const main=$('.main');if(main){main.innerHTML='';main.appendChild(p)}currentPage=p;}
   renderShell(buildPage());
 }
 
-// ─── Transaction Form ────────────────────────────────────────
+// --- Transaction Form ---
 async function renderTxnForm() {
   const id = state.routeParam;
   const isEdit = id && id !== 'new';
   const cats = (await dbGetAll('categories')).filter(c=>c.is_active).sort((a,b)=>a.sort_order-b.sort_order);
+  const contacts = await dbGetAll('contacts');
 
-  let form = {type:'sale',amount:'',category:'',description:'',payment_method:'cash',date:today(),time:timeNow()};
+  let form = {type:'sale',amount:'',category:'',description:'',payment_method:'cash',date:today(),time:timeNow(),contact_id:''};
+  let photoData = null;
   if(isEdit){
     const txn = await dbGet('transactions',id);
-    if(txn) form={type:txn.type,amount:String(txn.amount),category:txn.category,description:txn.description,payment_method:txn.payment_method,date:txn.date,time:txn.time};
+    if(txn) form={type:txn.type,amount:String(txn.amount),category:txn.category,description:txn.description,payment_method:txn.payment_method,date:txn.date,time:txn.time,contact_id:txn.contact_id||''};
+    const atts = await getAttachments('transaction', id);
+    if (atts.length) photoData = atts[0];
   }
 
   function buildPage(){
     const page = h('div',{className:'page',style:{maxWidth:'480px',margin:'0 auto'}});
-
-    // Header
     const hdr = h('div',{style:{display:'flex',alignItems:'center',gap:'10px',marginBottom:'20px'}});
     const backBtn = h('button',{className:'btn-ghost',style:{padding:'8px',borderRadius:'10px',marginLeft:'-8px'},title:t('back'),onClick:()=>navigate('transactions')});
     backBtn.innerHTML=I.back;
@@ -1242,10 +1574,7 @@ async function renderTxnForm() {
     page.appendChild(hdr);
 
     const content = h('div',{className:'space-y'});
-
-    if (state.simpleMode) {
-      content.appendChild(h('div',{className:'helper-note'},t('requiredFields')+': ',h('b',null,t('amount')),', ',h('b',null,t('category')),'. '+t('optional')+': '+t('description')+'.'));
-    }
+    if (state.simpleMode) content.appendChild(h('div',{className:'helper-note'},t('requiredFields')+': ',h('b',null,t('amount')),', ',h('b',null,t('category')),'. '+t('optional')+': '+t('description')+'.'));
 
     // Type chips
     const types = h('div',{className:'grid3'});
@@ -1261,8 +1590,8 @@ async function renderTxnForm() {
         const inp = h('input',{type:'number',inputMode:'decimal',placeholder:'0',value:form.amount,
           style:{flex:'1',border:'none',background:'transparent',fontSize:'28px',fontWeight:'700',padding:'16px 14px',color:'var(--text)',outline:'none',width:'100%',textAlign:'right',fontFamily:'"JetBrains Mono",monospace'},
           onInput:e=>form.amount=e.target.value,
-          onFocus:e=>{wrap.style.borderColor='rgba(59,130,246,.5)';if(e.target.value==='0')e.target.value='';},
-          onBlur:e=>{wrap.style.borderColor='var(--border)';if(e.target.value==='')e.target.value='';}
+          onFocus:e=>{wrap.style.borderColor='rgba(59,130,246,.5)';if(e.target.value==='0')e.target.value=''},
+          onBlur:e=>wrap.style.borderColor='var(--border)'
         });
         if(!isEdit)setTimeout(()=>inp.focus(),100);
         wrap.appendChild(inp);
@@ -1295,6 +1624,16 @@ async function renderTxnForm() {
       h('input',{className:'input',type:'text',placeholder:t('descExample'),value:form.description,
         onInput:e=>form.description=e.target.value})));
 
+    // Contact (auto-suggest)
+    if (contacts.length) {
+      const contactWrap = h('div',null,h('label',{className:'label'},t('contacts')));
+      const contactSel = h('select',{className:'input',onInput:e=>form.contact_id=e.target.value});
+      contactSel.appendChild(h('option',{value:''},'— '+t('optional')+' —'));
+      contacts.forEach(c => contactSel.appendChild(h('option',{value:c.id,selected:form.contact_id===c.id?true:undefined},c.name)));
+      contactWrap.appendChild(contactSel);
+      content.appendChild(contactWrap);
+    }
+
     // Date / Time
     const dtRow = h('div',{className:'grid2'});
     dtRow.append(
@@ -1303,11 +1642,27 @@ async function renderTxnForm() {
     );
     content.appendChild(dtRow);
 
-    // Save button
+    // Photo attachment
+    const photoWrap = h('div',{style:{display:'flex',alignItems:'center',gap:'10px'}});
+    if (photoData) {
+      const thumb = h('img',{src:photoData.data_url,className:'photo-thumb',onClick:()=>showPhotoModal(photoData.data_url)});
+      photoWrap.appendChild(thumb);
+      photoWrap.appendChild(h('button',{className:'btn btn-ghost btn-sm',style:{color:'var(--red)'},onClick:()=>{photoData=null;rebuildForm();}},t('removePhoto')));
+    } else {
+      const photoBtn = h('button',{className:'btn btn-ghost btn-sm',onClick:async()=>{
+        const photo = await capturePhoto();
+        if(photo){photoData=photo;rebuildForm();}
+      }});
+      photoBtn.innerHTML=`${I.camera} <span>${t('attachPhoto')}</span>`;
+      photoWrap.appendChild(photoBtn);
+    }
+    content.appendChild(photoWrap);
+
+    // Actions
     const actions = h('div',{style:{display:'flex',gap:'10px',marginTop:'8px'}});
     if(isEdit && isAdmin()){
       const voidBtn = h('button',{className:'btn btn-danger',onClick:async()=>{
-        if(!confirm(t('voidConfirm')))return;
+        if(!await showConfirm(t('void'),t('voidConfirm')))return;
         await dbPut('transactions',{...(await dbGet('transactions',id)),status:'void',updated_by:state.user.id,updated_at:now(),_sync:'pending'});
         await addAudit('transaction',id,'void',{status:{old:'active',new:'void'}});
         navigate('transactions');
@@ -1317,47 +1672,58 @@ async function renderTxnForm() {
     }
 
     const saveBtn = h('button',{className:'btn btn-primary',style:{flex:1},onClick:async()=>{
-      if(!form.amount||!form.category){
-        alert(t('fillAmountCat'));
-        return;
-      }
+      if(!form.amount||!form.category){showToast(t('fillAmountCat'),'error');return}
       const txn = {
-        id: isEdit?id:uuid(), type:form.type, amount:parseFloat(form.amount), category:form.category,
-        description:form.description, payment_method:form.payment_method, date:form.date, time:form.time,
-        status:'active', revision:1, created_by:state.user.id,
-        created_at: isEdit?(await dbGet('transactions',id))?.created_at||now():now(),
-        updated_by:state.user.id, updated_at:now(), _sync:'pending'
+        id:isEdit?id:uuid(),type:form.type,amount:parseFloat(form.amount),category:form.category,
+        description:form.description,payment_method:form.payment_method,date:form.date,time:form.time,
+        contact_id:form.contact_id||null,
+        status:'active',revision:1,created_by:state.user.id,
+        created_at:isEdit?(await dbGet('transactions',id))?.created_at||now():now(),
+        updated_by:state.user.id,updated_at:now(),_sync:'pending'
       };
       await dbPut('transactions',txn);
+      if(photoData && photoData.data_url && !photoData.id) await saveAttachment('transaction',txn.id,photoData);
       await addAudit('transaction',txn.id,isEdit?'update':'create');
       await addOutbox('transaction',txn.id,txn);
+      showToast(isEdit?t('save'):t('book'),'success');
       navigate('transactions');
     }});
     saveBtn.innerHTML=I.check+`<span>${isEdit?t('save'):t('book')}</span>`;
     actions.appendChild(saveBtn);
-    content.appendChild(actions);
 
+    // Save as template
+    if (!isEdit) {
+      const tplBtn = h('button',{className:'btn btn-ghost btn-sm',style:{marginTop:'4px',width:'100%',color:'var(--text4)'},onClick:async()=>{
+        if(!form.amount||!form.category){showToast(t('fillAmountCat'),'error');return}
+        const name = await showPrompt(t('newTemplate'), t('templateName'));
+        if(!name) return;
+        await dbPut('templates',{id:uuid(),name,type:form.type,amount:parseFloat(form.amount),category:form.category,
+          description:form.description,payment_method:form.payment_method,created_at:now()});
+        showToast(t('templates')+': '+name,'success');
+      }});
+      tplBtn.innerHTML=`${I.bookmark} <span>${t('newTemplate')}</span>`;
+      actions.appendChild(h('div',{style:{width:'100%'}},tplBtn));
+    }
+
+    content.appendChild(actions);
     page.appendChild(content);
     return page;
   }
 
-  function rebuildForm(){
-    const main=$('.main');main.innerHTML='';main.appendChild(buildPage());
-  }
-
+  function rebuildForm(){const m=$('.main');m.innerHTML='';m.appendChild(buildPage())}
   renderShell(buildPage());
 }
 
-// ─── Transaction Detail ──────────────────────────────────────
+// --- Transaction Detail ---
 async function renderTxnDetail() {
   const id = state.routeParam;
   const txn = await dbGet('transactions',id);
   if(!txn) return navigate('transactions');
   const um = userMap();
   const audits = (await dbGetAll('audit_log')).filter(a=>a.entity_id===id).sort((a,b)=>b.timestamp.localeCompare(a.timestamp));
+  const attachments = await getAttachments('transaction', id);
 
   const page = h('div',{className:'page',style:{maxWidth:'480px',margin:'0 auto'}});
-
   const hdr = h('div',{className:'flex-between',style:{marginBottom:'20px'}});
   const hdrL = h('div',{style:{display:'flex',alignItems:'center',gap:'10px'}});
   const backBtn = h('button',{className:'btn-ghost',style:{padding:'8px',borderRadius:'10px',marginLeft:'-8px'},title:t('back'),onClick:()=>navigate('transactions')});
@@ -1365,7 +1731,7 @@ async function renderTxnDetail() {
   hdrL.append(backBtn,h('h2',{style:{fontSize:'18px',fontWeight:'700'}},t('booking')));
   hdr.appendChild(hdrL);
   if(txn.status==='active'){
-    const editBtn = h('button',{className:'btn btn-sm btn-ghost',style:{display:'flex',alignItems:'center',gap:'6px'},title:t('edit'),onClick:()=>navigate('txn-form',id)});
+    const editBtn = h('button',{className:'btn btn-sm btn-ghost',style:{display:'flex',alignItems:'center',gap:'6px'},onClick:()=>navigate('txn-form',id)});
     editBtn.innerHTML=I.edit+`<span>${t('edit')}</span>`;hdr.appendChild(editBtn);
   }
   page.appendChild(hdr);
@@ -1377,14 +1743,24 @@ async function renderTxnDetail() {
   if(txn._sync==='pending') badges.appendChild(h('span',{className:'badge badge-amber'},t('pending')));
   card.appendChild(badges);
   card.appendChild(h('p',{className:'tabular',style:{fontSize:'28px',fontWeight:'700',color:TXN_COLOR[txn.type],marginBottom:'16px'}},
-    `${txn.type==='expense'?'−':'+'} ${fmtCur(txn.amount)}`));
+    `${txn.type==='expense'?'\u2212':'+'} ${fmtCur(txn.amount)}`));
 
   const grid = h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'12px 16px',fontSize:'13px'}});
-  const mkField = (l,v) => h('div',null,h('p',{style:{fontSize:'10px',color:'var(--text4)'} },l),h('p',{style:{color:'var(--text2)'}},v));
+  const mkField = (l,v) => h('div',null,h('p',{style:{fontSize:'10px',color:'var(--text4)'}},l),h('p',{style:{color:'var(--text2)'}},v));
   grid.append(mkField(t('category'),txn.category),mkField(t('paymentMethod'),PAY[txn.payment_method]),
     mkField(t('date'),`${fmtDate(txn.date)} ${txn.time}`),mkField(t('createdBy'),(um[txn.created_by]||{}).display_name||'?'));
   if(txn.description) grid.appendChild(h('div',{style:{gridColumn:'span 2'}},h('p',{style:{fontSize:'10px',color:'var(--text4)'}},t('description')),h('p',{style:{color:'var(--text2)'}},txn.description)));
   card.appendChild(grid);
+
+  // Photo attachment display
+  if (attachments.length) {
+    const photoDiv = h('div',{style:{marginTop:'12px',display:'flex',gap:'8px',flexWrap:'wrap'}});
+    attachments.forEach(att => {
+      photoDiv.appendChild(h('img',{src:att.data_url,className:'photo-thumb',onClick:()=>showPhotoModal(att.data_url)}));
+    });
+    card.appendChild(photoDiv);
+  }
+
   page.appendChild(card);
 
   // Audit
@@ -1402,15 +1778,14 @@ async function renderTxnDetail() {
     auditDiv.appendChild(d);
   });
   page.appendChild(auditDiv);
-
   renderShell(page);
 }
 
-// ─── Shipments List ──────────────────────────────────────────
+
+// --- Shipments List ---
 async function renderShipments() {
   const docs = (await dbGetAll('shipment_docs')).sort((a,b)=>b.created_at.localeCompare(a.created_at));
   const um = userMap();
-
   const page = h('div',{style:{display:'flex',flexDirection:'column',height:'100%'}});
   const hdr = h('div',{style:{padding:'16px 16px 10px',flexShrink:0}});
   const topRow = h('div',{className:'flex-between',style:{marginBottom:'10px'}});
@@ -1423,14 +1798,16 @@ async function renderShipments() {
 
   const list = h('div',{style:{flex:1,overflowY:'auto',padding:'0 16px 16px'}});
   if(docs.length===0){
-    list.appendChild(h('div',{style:{textAlign:'center',padding:'48px 0',color:'var(--text4)'}},h('p',{style:{fontSize:'13px'}},t('noShipments'))));
+    list.appendChild(h('div',{className:'empty-state'},
+      h('div',{className:'empty-icon'},'📦'),
+      h('div',{className:'empty-title'},t('noShipments'))
+    ));
   } else {
     docs.forEach(doc=>{
       const item = h('div',{style:{padding:'14px',borderRadius:'var(--radius)',background:'var(--bg2)',border:'1px solid var(--border)',cursor:'pointer',transition:'background .12s',marginTop:'8px'},
         onClick:()=>navigate('ship-detail',doc.id),
         onMouseenter:e=>e.currentTarget.style.background='var(--bg3)',
         onMouseleave:e=>e.currentTarget.style.background='var(--bg2)'});
-
       const top = h('div',{className:'flex-between',style:{marginBottom:'8px'}});
       const badges = h('div',{style:{display:'flex',gap:'6px'}});
       badges.appendChild(h('span',{className:`badge ${SHIP_BADGE[doc.doc_type]}`},`${doc.doc_type==='inbound'?'📦':'📤'} ${SHIP_TYPE[doc.doc_type]}`));
@@ -1438,12 +1815,11 @@ async function renderShipments() {
       top.appendChild(badges);
       top.appendChild(h('span',{className:'text-mono',style:{fontSize:'11px',color:'var(--text4)'}},doc.doc_number));
       item.appendChild(top);
-
       item.appendChild(h('p',{style:{fontSize:'14px',fontWeight:'500'}},doc.partner_name));
       const meta = h('div',{style:{display:'flex',gap:'12px',marginTop:'6px',fontSize:'10px',color:'var(--text4)'}});
       meta.append(h('span',null,fmtDate(doc.doc_date)));
       if(doc.reference)meta.appendChild(h('span',null,`Ref: ${doc.reference}`));
-      meta.appendChild(h('span',null,`${doc.total_qty} Stk`));
+      meta.appendChild(h('span',null,`${doc.total_qty} ${t('units')}`));
       meta.appendChild(h('span',{style:{marginLeft:'auto'}},(um[doc.created_by]||{}).display_name||'?'));
       item.appendChild(meta);
       list.appendChild(item);
@@ -1453,17 +1829,18 @@ async function renderShipments() {
   renderShell(page);
 }
 
-// ─── Shipment Form ───────────────────────────────────────────
+// --- Shipment Form ---
 async function renderShipForm() {
   const id = state.routeParam;
   const isEdit = id && id !== 'new';
+  const contacts = await dbGetAll('contacts');
 
   let form = {doc_type:'inbound',partner_name:'',reference:'',doc_date:today(),doc_time:timeNow(),status:'draft',notes:''};
-  let lines = [{id:uuid(),article_name:'',sku:'',quantity:'',unit:'Stk',unit_price:''}];
+  let lines = [{id:uuid(),article_name:'',sku:'',quantity:'',unit:'pi\u00e8ce',unit_price:''}];
 
   if(isEdit){
     const doc = await dbGet('shipment_docs',id);
-    if(doc){form={doc_type:doc.doc_type,partner_name:doc.partner_name,reference:doc.reference,doc_date:doc.doc_date,doc_time:doc.doc_time,status:doc.status,notes:doc.notes};
+    if(doc){form={doc_type:doc.doc_type,partner_name:doc.partner_name,reference:doc.reference,doc_date:doc.doc_date,doc_time:doc.doc_time,status:doc.status,notes:doc.notes||''};
       const its=(await dbGetAll('shipment_items')).filter(i=>i.doc_id===id).sort((a,b)=>a.line_number-b.line_number);
       if(its.length)lines=its.map(i=>({id:i.id,article_name:i.article_name,sku:i.sku,quantity:String(i.quantity),unit:i.unit,unit_price:i.unit_price?String(i.unit_price):''}));
     }
@@ -1481,10 +1858,7 @@ async function renderShipForm() {
     page.appendChild(hdr);
 
     const content = h('div',{className:'space-y'});
-
-    if (state.simpleMode) {
-      content.appendChild(h('div',{className:'helper-note'},t('requiredFields')+': ',h('b',null,t('supplier')+'/'+t('customer')),'. '+t('fillPosition')));
-    }
+    if(state.simpleMode) content.appendChild(h('div',{className:'helper-note'},t('requiredFields')+': ',h('b',null,t('supplier')+'/'+t('customer')),'. '+t('fillPosition')));
 
     // Type
     const typeRow = h('div',{className:'grid2'});
@@ -1494,23 +1868,23 @@ async function renderShipForm() {
     });
     content.appendChild(typeRow);
 
-    // Partner with datalist suggestions
+    // Partner with contact suggestions
     const partnerWrap = h('div',null);
     partnerWrap.appendChild(h('label',{className:'label'},`${form.doc_type==='inbound'?t('supplier'):t('customer')} *`));
     const partnerInput = h('input',{className:'input',type:'text',list:'partner-suggestions',
-      placeholder:form.doc_type==='inbound'?'Sélectionner ou saisir...':'Sélectionner ou saisir...',
-      value:form.partner_name,autocomplete:'off',
+      placeholder:'S\u00e9lectionner ou saisir...',value:form.partner_name,autocomplete:'off',
       onInput:e=>form.partner_name=e.target.value});
     partnerWrap.appendChild(partnerInput);
     const partnerList = h('datalist',{id:'partner-suggestions'});
     PARTNER_SUGGESTIONS.forEach(p=>partnerList.appendChild(h('option',{value:p})));
+    contacts.forEach(c=>partnerList.appendChild(h('option',{value:c.name})));
     partnerWrap.appendChild(partnerList);
     content.appendChild(partnerWrap);
 
     // Reference & Date
     const row = h('div',{className:'grid2'});
     row.append(
-      h('div',null,h('label',{className:'label'},t('reference')),h('input',{className:'input',type:'text',placeholder:t('deliveryNote')+'…',value:form.reference,onInput:e=>form.reference=e.target.value})),
+      h('div',null,h('label',{className:'label'},t('reference')),h('input',{className:'input',type:'text',placeholder:t('deliveryNote')+'...',value:form.reference,onInput:e=>form.reference=e.target.value})),
       h('div',null,h('label',{className:'label'},t('date')),h('input',{className:'input',type:'date',value:form.doc_date,onInput:e=>form.doc_date=e.target.value}))
     );
     content.appendChild(row);
@@ -1530,7 +1904,7 @@ async function renderShipForm() {
     const linesHdr = h('div',{className:'flex-between',style:{marginBottom:'4px'}});
     linesHdr.appendChild(h('label',{className:'label',style:{margin:0}},t('positions')));
     const addLineBtn = h('button',{className:'btn-ghost btn-sm',style:{color:'var(--blue)',fontSize:'11px'},
-      onClick:()=>{lines.push({id:uuid(),article_name:'',sku:'',quantity:'',unit:'pièce',unit_price:''});rebuildForm()}});;
+      onClick:()=>{lines.push({id:uuid(),article_name:'',sku:'',quantity:'',unit:'pi\u00e8ce',unit_price:''});rebuildForm()}});
     addLineBtn.innerHTML=`${I.plus} ${t('addLine')}`;
     linesHdr.appendChild(addLineBtn);
     linesWrap.appendChild(linesHdr);
@@ -1550,14 +1924,8 @@ async function renderShipForm() {
       const articleInput = h('input',{className:'input',type:'text',list:`article-suggestions-${idx}`,placeholder:t('article'),value:line.article_name,style:{fontSize:'13px',padding:'10px 12px'},autocomplete:'off',
         onInput:e=>{
           line.article_name=e.target.value;
-          // Auto-fill SKU, unit and price from suggestions
           const match = ARTICLE_SUGGESTIONS.find(a=>a.name===e.target.value);
-          if(match){
-            line.sku=match.sku;
-            line.unit=match.unit;
-            line.unit_price=match.defaultPrice;
-            rebuildForm();
-          }
+          if(match){line.sku=match.sku;line.unit=match.unit;line.unit_price=match.defaultPrice;rebuildForm();}
         }});
       const articleList = h('datalist',{id:`article-suggestions-${idx}`});
       ARTICLE_SUGGESTIONS.forEach(a=>articleList.appendChild(h('option',{value:a.name})));
@@ -1594,60 +1962,49 @@ async function renderShipForm() {
     if(totalVal>0) totalR.appendChild(h('span',{className:'tabular',style:{fontWeight:'600'}},fmtCur(totalVal)));
     totalRow.appendChild(totalR);
     linesWrap.appendChild(totalRow);
-
     content.appendChild(linesWrap);
 
     // Notes
     content.appendChild(h('div',null,h('label',{className:'label'},t('notes')),
-      h('textarea',{className:'input',rows:'2',placeholder:t('notes')+'…',value:form.notes,style:{resize:'none'},
+      h('textarea',{className:'input',rows:'2',placeholder:t('notes')+'...',value:form.notes,style:{resize:'none'},
         onInput:e=>form.notes=e.target.value})));
 
     // Save
     const saveBtn = h('button',{className:'btn btn-primary',style:{width:'100%',marginTop:'8px'},onClick:async()=>{
-      if(!form.partner_name.trim()){
-        alert(t('fillPartner'));
-        return;
-      }
-      const hasValidLine = lines.some(l=>l.article_name.trim() && (parseFloat(l.quantity)||0) > 0);
-      if(!hasValidLine){
-        alert(t('fillPosition'));
-        return;
-      }
+      if(!form.partner_name.trim()){showToast(t('fillPartner'),'error');return}
+      const hasValidLine = lines.some(l=>l.article_name.trim()&&(parseFloat(l.quantity)||0)>0);
+      if(!hasValidLine){showToast(t('fillPosition'),'error');return}
       const docId = isEdit?id:uuid();
       const allDocs = await dbGetAll('shipment_docs');
       const prefix = form.doc_type==='inbound'?'EIN':'AUS';
       const yr = new Date().getFullYear();
       const docNum = isEdit?(await dbGet('shipment_docs',id))?.doc_number:`${prefix}-${yr}-${String(allDocs.filter(d=>d.doc_type===form.doc_type).length+1).padStart(3,'0')}`;
-
       const doc = {
-        id:docId, doc_number:docNum, doc_type:form.doc_type, partner_name:form.partner_name,
-        reference:form.reference, doc_date:form.doc_date, doc_time:form.doc_time, status:form.status,
-        total_qty:totalQty, total_value:totalVal, notes:form.notes, revision:1,
-        created_by:state.user.id, created_at:isEdit?(await dbGet('shipment_docs',id))?.created_at||now():now(),
-        updated_by:state.user.id, updated_at:now(), _sync:'pending'
+        id:docId,doc_number:docNum,doc_type:form.doc_type,partner_name:form.partner_name,
+        reference:form.reference,doc_date:form.doc_date,doc_time:form.doc_time,status:form.status,
+        total_qty:totalQty,total_value:totalVal,notes:form.notes,revision:1,
+        created_by:state.user.id,created_at:isEdit?(await dbGet('shipment_docs',id))?.created_at||now():now(),
+        updated_by:state.user.id,updated_at:now(),_sync:'pending'
       };
       await dbPut('shipment_docs',doc);
-
-      // Remove old items
       if(isEdit){const old=await dbGetAll('shipment_items');for(const o of old.filter(i=>i.doc_id===docId))await dbDelete('shipment_items',o.id)}
-
       const valid = lines.filter(l=>l.article_name.trim());
       for(let i=0;i<valid.length;i++){
         const l = valid[i];
         await dbPut('shipment_items',{
-          id:l.id, doc_id:docId, line_number:i+1, article_name:l.article_name, sku:l.sku,
-          quantity:parseFloat(l.quantity)||0, unit:l.unit, unit_price:parseFloat(l.unit_price)||0,
+          id:l.id,doc_id:docId,line_number:i+1,article_name:l.article_name,sku:l.sku,
+          quantity:parseFloat(l.quantity)||0,unit:l.unit,unit_price:parseFloat(l.unit_price)||0,
           line_total:(parseFloat(l.quantity)||0)*(parseFloat(l.unit_price)||0),
-          note:'', revision:1, created_by:state.user.id, created_at:now(), updated_by:state.user.id, updated_at:now(), _sync:'pending'
+          note:'',revision:1,created_by:state.user.id,created_at:now(),updated_by:state.user.id,updated_at:now(),_sync:'pending'
         });
       }
       await addAudit('shipment_doc',docId,isEdit?'update':'create');
       await addOutbox('shipment',docId,{doc,items:valid});
+      showToast(isEdit?t('save'):t('createShipment'),'success');
       navigate('shipments');
     }});
     saveBtn.innerHTML=I.check+`<span>${isEdit?t('save'):t('createShipment')}</span>`;
     content.appendChild(saveBtn);
-
     page.appendChild(content);
     return page;
   }
@@ -1656,7 +2013,7 @@ async function renderShipForm() {
   renderShell(buildPage());
 }
 
-// ─── Shipment Detail ─────────────────────────────────────────
+// --- Shipment Detail ---
 async function renderShipDetail() {
   const id = state.routeParam;
   const doc = await dbGet('shipment_docs',id);
@@ -1666,23 +2023,21 @@ async function renderShipDetail() {
   const um = userMap();
 
   const page = h('div',{className:'page',style:{maxWidth:'480px',margin:'0 auto'}});
-
   const hdr = h('div',{className:'flex-between no-print',style:{marginBottom:'20px'}});
   const hdrL = h('div',{style:{display:'flex',alignItems:'center',gap:'10px'}});
-  const backBtn = h('button',{className:'btn-ghost',style:{padding:'8px',borderRadius:'10px',marginLeft:'-8px'},title:t('back'),onClick:()=>navigate('shipments')});
+  const backBtn = h('button',{className:'btn-ghost',style:{padding:'8px',borderRadius:'10px',marginLeft:'-8px'},onClick:()=>navigate('shipments')});
   backBtn.innerHTML=I.back;
   hdrL.append(backBtn,h('h2',{style:{fontSize:'18px',fontWeight:'700'}},doc.doc_number));
   hdr.appendChild(hdrL);
   const hdrR = h('div',{style:{display:'flex',gap:'6px'}});
-  const editBtn = h('button',{className:'btn btn-sm btn-ghost',style:{display:'flex',alignItems:'center',gap:'6px'},title:t('edit'),onClick:()=>navigate('ship-form',id)});
+  const editBtn = h('button',{className:'btn btn-sm btn-ghost',onClick:()=>navigate('ship-form',id)});
   editBtn.innerHTML=I.edit+`<span>${t('edit')}</span>`;
-  const printBtn = h('button',{className:'btn btn-sm btn-ghost',style:{display:'flex',alignItems:'center',gap:'6px'},title:'Imprimer',onClick:()=>window.print()});
+  const printBtn = h('button',{className:'btn btn-sm btn-ghost',onClick:()=>window.print()});
   printBtn.innerHTML=I.print+`<span>PDF</span>`;
   hdrR.append(editBtn,printBtn);
   hdr.appendChild(hdrR);
   page.appendChild(hdr);
 
-  // Info card
   const card = h('div',{className:'card'});
   const badges = h('div',{style:{display:'flex',gap:'6px',marginBottom:'12px'}});
   badges.append(h('span',{className:`badge ${SHIP_BADGE[doc.doc_type]}`},SHIP_TYPE[doc.doc_type]),
@@ -1692,7 +2047,7 @@ async function renderShipDetail() {
   const grid = h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'10px 16px',fontSize:'13px'}});
   const mkF = (l,v) => h('div',null,h('p',{style:{fontSize:'10px',color:'var(--text4)'}},l),h('p',{style:{color:'var(--text2)'}},v));
   grid.append(mkF(t('partner'),doc.partner_name),mkF(t('date'),`${fmtDate(doc.doc_date)} ${doc.doc_time}`));
-  if(doc.reference)grid.appendChild(mkF(t('reference'),doc.reference));
+  if(doc.reference) grid.appendChild(mkF(t('reference'),doc.reference));
   grid.appendChild(mkF(t('createdBy'),(um[doc.created_by]||{}).display_name||'?'));
   card.appendChild(grid);
   page.appendChild(card);
@@ -1709,8 +2064,8 @@ async function renderShipDetail() {
       h('span',{className:'text-mono',style:{fontSize:'11px',color:'var(--text4)'}},String(it.line_number)),
       h('span',{style:{color:'var(--text2)'}},it.article_name,it.sku?h('span',{className:'text-mono',style:{fontSize:'10px',color:'var(--text4)',marginLeft:'4px'}},it.sku):null),
       h('span',{className:'tabular text-right',style:{color:'var(--text2)'}},`${it.quantity} ${it.unit}`),
-      h('span',{className:'tabular text-right',style:{color:'var(--text3)'}},it.unit_price?fmtCur(it.unit_price):'—'),
-      h('span',{className:'tabular text-right',style:{fontWeight:'500'}},it.line_total?fmtCur(it.line_total):'—')
+      h('span',{className:'tabular text-right',style:{color:'var(--text3)'}},it.unit_price?fmtCur(it.unit_price):'\u2014'),
+      h('span',{className:'tabular text-right',style:{fontWeight:'500'}},it.line_total?fmtCur(it.line_total):'\u2014')
     );
     table.appendChild(row);
   });
@@ -1718,7 +2073,7 @@ async function renderShipDetail() {
   const tfoot = h('div',{style:{display:'grid',gridTemplateColumns:'30px 1fr 70px 70px 80px',padding:'10px 12px',borderTop:'1px solid var(--border)',fontSize:'13px',fontWeight:'600'}});
   tfoot.append(h('span'),h('span',{style:{fontSize:'11px',color:'var(--text3)'}},t('total')),
     h('span',{className:'tabular text-right'},String(doc.total_qty)),h('span'),
-    h('span',{className:'tabular text-right'},doc.total_value?fmtCur(doc.total_value):'—'));
+    h('span',{className:'tabular text-right'},doc.total_value?fmtCur(doc.total_value):'\u2014'));
   table.appendChild(tfoot);
   page.appendChild(table);
 
@@ -1727,7 +2082,6 @@ async function renderShipDetail() {
       h('p',{style:{fontSize:'10px',color:'var(--text4)',marginBottom:'4px'}},t('notes')),h('p',{style:{color:'var(--text2)'}},doc.notes)));
   }
 
-  // Audit
   if(audits.length){
     const ab = h('button',{className:'btn-ghost btn-sm no-print',style:{marginTop:'12px',color:'var(--text4)'},
       onClick:()=>{ad.style.display=ad.style.display==='none'?'block':'none'}});
@@ -1741,136 +2095,31 @@ async function renderShipDetail() {
     });
     page.appendChild(ad);
   }
-
   renderShell(page);
 }
 
-// ─── Reports ─────────────────────────────────────────────────
-async function renderReports() {
-  const d = new Date();
-  let dateFrom = new Date(d.getFullYear(),d.getMonth(),1).toISOString().slice(0,10);
-  let dateTo = today();
-
-  async function buildPage(){
-    const txns = (await dbGetAll('transactions')).filter(t=>t.status==='active'&&t.date>=dateFrom&&t.date<=dateTo);
-
-    const incAmt = txns.filter(t=>t.type!=='expense').reduce((s,t)=>s+t.amount,0);
-    const expAmt = txns.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
-    const net = incAmt-expAmt;
-
-    // By category
-    const byCat = {};
-    txns.forEach(tx=>{byCat[tx.category]=(byCat[tx.category]||0)+tx.amount});
-    const catEntries = Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
-    const totalAll = incAmt+expAmt;
-
-    // By payment
-    const byPay = {};
-    txns.forEach(tx=>{byPay[tx.payment_method]=(byPay[tx.payment_method]||0)+tx.amount});
-
-    const page = h('div',{className:'page',style:{maxWidth:'500px',margin:'0 auto'}});
-    page.appendChild(h('h2',{style:{fontSize:'18px',fontWeight:'700',marginBottom:'14px'}},'Reports'));
-
-    // Date range
-    const dateRow = h('div',{style:{display:'flex',alignItems:'center',gap:'10px',marginBottom:'16px'}});
-    dateRow.innerHTML=I.cal;
-    dateRow.querySelector('svg').style.cssText='width:16px;height:16px;color:var(--text4);flex-shrink:0';
-    dateRow.append(
-      h('input',{className:'input',type:'date',value:dateFrom,style:{flex:1,fontSize:'13px',padding:'10px 12px'},onInput:e=>{dateFrom=e.target.value;rebuildR()}}),
-      h('span',{style:{color:'var(--text4)',fontSize:'13px'}},'–'),
-      h('input',{className:'input',type:'date',value:dateTo,style:{flex:1,fontSize:'13px',padding:'10px 12px'},onInput:e=>{dateTo=e.target.value;rebuildR()}})
-    );
-    page.appendChild(dateRow);
-
-    // Summary
-    const sum = h('div',{className:'grid3'});
-    const mkS = (cls,icon,label,val,sub) => {
-      const c = h('div',{className:`stat-card ${cls}`,style:{padding:'12px'}});
-      c.innerHTML=`<div class="stat-icon">${icon}<span style="font-size:9px">${label}</span></div>`;
-      c.appendChild(h('div',{className:'tabular',style:{fontSize:'15px',fontWeight:'700'}},val));
-      c.appendChild(h('p',{style:{fontSize:'9px',color:'var(--text4)',marginTop:'2px'}},sub));
-      return c;
-    };
-    const sc = txns.filter(t=>t.type!=='expense').length;
-    const ec = txns.filter(t=>t.type==='expense').length;
-    sum.append(
-      mkS('sc-green',I.up,'Einnahmen',fmtCur(incAmt),`${sc} Buchungen`),
-      mkS('sc-red',I.down,'Ausgaben',fmtCur(expAmt),`${ec} Buchungen`),
-      mkS('sc-blue',I.chart,'Saldo',fmtCur(net),`${txns.length} gesamt`)
-    );
-    page.appendChild(sum);
-
-    // Category breakdown
-    const catCard = h('div',{className:'card',style:{marginTop:'14px'}});
-    const catH = h('div',{style:{display:'flex',alignItems:'center',gap:'8px',marginBottom:'12px'}});
-    catH.innerHTML=I.pie; catH.querySelector('svg').style.cssText='width:14px;height:14px;color:var(--text4)';
-    catH.appendChild(h('h3',{style:{fontSize:'12px',fontWeight:'600',color:'var(--text3)'}},'Nach Kategorie'));
-    catCard.appendChild(catH);
-
-    if(catEntries.length===0){catCard.appendChild(h('p',{style:{fontSize:'13px',color:'var(--text4)'}},'Keine Daten'));}
-    else{
-      catEntries.forEach(([cat,amt])=>{
-        const pct = totalAll>0?(amt/totalAll)*100:0;
-        const row = h('div',{style:{marginBottom:'10px'}});
-        const top = h('div',{className:'flex-between',style:{fontSize:'13px',marginBottom:'4px'}});
-        top.append(h('span',{style:{color:'var(--text2)'}},cat),h('span',{className:'tabular',style:{color:'var(--text3)'}},fmtCur(amt)));
-        row.appendChild(top);
-        const bar = h('div',{style:{height:'6px',borderRadius:'3px',background:'var(--bg3)',overflow:'hidden'}});
-        bar.appendChild(h('div',{style:{height:'100%',width:`${Math.max(pct,1)}%`,borderRadius:'3px',background:'rgba(59,130,246,.4)',transition:'width .3s'}}));
-        row.appendChild(bar);
-        catCard.appendChild(row);
-      });
-    }
-    page.appendChild(catCard);
-
-    // Payment breakdown
-    const payCard = h('div',{className:'card',style:{marginTop:'12px'}});
-    payCard.appendChild(h('h3',{style:{fontSize:'12px',fontWeight:'600',color:'var(--text3)',marginBottom:'10px'}},'Nach Zahlungsart'));
-    const payGrid = h('div',{className:'grid3'});
-    Object.entries(byPay).forEach(([m,amt])=>{
-      payGrid.appendChild(h('div',{style:{textAlign:'center',padding:'10px',borderRadius:'8px',background:'var(--bg3)'}},
-        h('p',{className:'tabular',style:{fontSize:'16px',fontWeight:'700'}},fmtCur(amt)),
-        h('p',{style:{fontSize:'10px',color:'var(--text4)',marginTop:'2px'}},PAY[m]||m)));
-    });
-    payCard.appendChild(payGrid);
-    page.appendChild(payCard);
-
-    return page;
-  }
-
-  async function rebuildR(){const m=$('.main');m.innerHTML='';m.appendChild(await buildPage())}
-  renderShell(await buildPage());
-}
-
-// ─── Settings ────────────────────────────────────────────────
-// ─── Warehouse / Lager ───────────────────────────────────────
+// --- Warehouse ---
 async function renderWarehouse() {
   const allDocs = (await dbGetAll('shipment_docs')).sort((a,b)=>b.created_at.localeCompare(a.created_at));
   const allItems = await dbGetAll('shipment_items');
   const um = userMap();
-
   const stored = allDocs.filter(d=>d.status==='en_stock');
   const sold = allDocs.filter(d=>d.status==='vendu');
-
   const storedValue = stored.reduce((s,d)=>s+d.total_value,0);
   const soldValue = sold.reduce((s,d)=>s+d.total_value,0);
   const storedQty = stored.reduce((s,d)=>s+d.total_qty,0);
-
   let showSold = false;
 
   function buildPage() {
     const page = h('div',{style:{display:'flex',flexDirection:'column',height:'100%'}});
     const hdr = h('div',{style:{padding:'16px 16px 10px',flexShrink:0}});
-
     const topRow = h('div',{className:'flex-between',style:{marginBottom:'12px'}});
     topRow.appendChild(h('h2',{style:{fontSize:'18px',fontWeight:'700'}},'📦 '+t('warehouse')));
     const addBtn = h('button',{className:'btn btn-primary btn-sm',onClick:()=>navigate('ship-form','new')});
     addBtn.innerHTML=I.plus+`<span>${t('addToStock')}</span>`; topRow.appendChild(addBtn);
     hdr.appendChild(topRow);
 
-    // Summary cards
     const stats = h('div',{className:'grid3',style:{marginBottom:'12px'}});
-
     const c1 = h('div',{className:'stat-card sc-violet',style:{padding:'12px'}});
     c1.innerHTML=`<div class="stat-icon">${I.pkg}<span style="font-size:9px">${t('inStock')}</span></div>`;
     c1.appendChild(h('div',{className:'tabular',style:{fontSize:'15px',fontWeight:'700'}},String(stored.length)+' '+t('items')));
@@ -1887,10 +2136,8 @@ async function renderWarehouse() {
     c3.appendChild(h('div',{className:'tabular',style:{fontSize:'15px',fontWeight:'700'}},fmtCur(soldValue)));
     c3.appendChild(h('p',{style:{fontSize:'9px',color:'var(--text4)',marginTop:'2px'}},sold.length+' '+t('items')));
     stats.appendChild(c3);
-
     hdr.appendChild(stats);
 
-    // Info hint
     if(stored.length>0) {
       const hint = h('div',{style:{padding:'10px 12px',borderRadius:'var(--radius-sm)',background:'rgba(251,191,36,.06)',border:'1px solid rgba(251,191,36,.12)',marginBottom:'8px',display:'flex',alignItems:'center',gap:'8px',fontSize:'12px',color:'var(--amber)'}});
       hint.innerHTML=I.alert;hint.querySelector('svg').style.cssText='width:14px;height:14px;flex-shrink:0';
@@ -1899,22 +2146,18 @@ async function renderWarehouse() {
     }
     page.appendChild(hdr);
 
-    // List
     const list = h('div',{style:{flex:1,overflowY:'auto',padding:'0 16px 16px'}});
-
-    // Section articles en stock
     if(stored.length===0 && !showSold){
-      list.appendChild(h('div',{style:{textAlign:'center',padding:'48px 0',color:'var(--text4)'}},
-        h('p',{style:{fontSize:'36px',marginBottom:'12px'}},'📦'),
-        h('p',{style:{fontSize:'14px',fontWeight:'500'}},t('warehouseEmpty')),
-        h('p',{style:{fontSize:'12px',marginTop:'4px'}},t('warehouseEmptyHint'))));
+      list.appendChild(h('div',{className:'empty-state'},
+        h('div',{className:'empty-icon'},'📦'),
+        h('div',{className:'empty-title'},t('warehouseEmpty')),
+        h('div',{className:'empty-desc'},t('warehouseEmptyHint'))
+      ));
     } else {
       stored.forEach(doc=>{
         const docItems = allItems.filter(i=>i.doc_id===doc.id).sort((a,b)=>a.line_number-b.line_number);
         const daysDiff = Math.floor((Date.now()-new Date(doc.created_at).getTime())/86400000);
-
         const card = h('div',{style:{padding:'14px',borderRadius:'var(--radius)',background:'var(--bg2)',border:'1px solid rgba(251,191,36,.15)',marginTop:'10px'}});
-
         const top = h('div',{className:'flex-between',style:{marginBottom:'8px'}});
         const badges = h('div',{style:{display:'flex',gap:'6px',alignItems:'center'}});
         badges.appendChild(h('span',{className:'badge badge-amber'},'📦 '+t('stored')));
@@ -1922,11 +2165,9 @@ async function renderWarehouse() {
         top.appendChild(badges);
         top.appendChild(h('span',{className:'text-mono',style:{fontSize:'11px',color:'var(--text4)'}},doc.doc_number));
         card.appendChild(top);
-
         card.appendChild(h('p',{style:{fontSize:'14px',fontWeight:'600'}},doc.partner_name));
         if(doc.reference) card.appendChild(h('p',{style:{fontSize:'11px',color:'var(--text3)',marginTop:'2px'}},doc.reference));
 
-        // Items preview
         if(docItems.length){
           const itemsList = h('div',{style:{marginTop:'10px',padding:'10px',borderRadius:'8px',background:'var(--bg1)'}});
           docItems.forEach(it=>{
@@ -1938,59 +2179,47 @@ async function renderWarehouse() {
           card.appendChild(itemsList);
         }
 
-        // Value & Actions
         const bottom = h('div',{style:{display:'flex',alignItems:'center',justifyContent:'space-between',marginTop:'10px'}});
         bottom.appendChild(h('div',null,
           h('p',{style:{fontSize:'10px',color:'var(--text4)'}},t('purchaseValue')),
           h('p',{className:'tabular',style:{fontSize:'16px',fontWeight:'700',color:'var(--amber)'}},fmtCur(doc.total_value))
         ));
-
         const actions = h('div',{style:{display:'flex',gap:'6px'}});
         const sellBtn = h('button',{className:'btn btn-sm',style:{background:'rgba(52,211,153,.12)',color:'var(--green)',border:'1px solid rgba(52,211,153,.2)'},
           onClick:async(e)=>{
             e.stopPropagation();
-            const price = prompt(t('sellPrice'));
+            const price = await showPrompt(t('sell'), t('sellPrice'));
             if(!price) return;
             const sellPrice = parseInt(price);
             const profit = sellPrice - doc.total_value;
-            if(!confirm(t('sellConfirm',{price:fmtCur(sellPrice)})+`\n${profit>=0?t('profit'):t('loss')}: ${fmtCur(Math.abs(profit))}`)) return;
-            // Mark as sold
-            await dbPut('shipment_docs',{...doc, status:'vendu', notes:`${doc.notes}\n${t('sold')}: ${fmtCur(sellPrice)} (${t('purchaseValue')}: ${fmtCur(doc.total_value)}, ${profit>=0?'+':''}${fmtCur(profit)})`, updated_by:state.user.id, updated_at:now(), _sync:'pending'});
-            // Create sale transaction
+            if(!await showConfirm(t('sell'),t('sellConfirm',{price:fmtCur(sellPrice)})+`\n${profit>=0?t('profit'):t('loss')}: ${fmtCur(Math.abs(profit))}`)) return;
+            await dbPut('shipment_docs',{...doc, status:'vendu', notes:`${doc.notes||''}\n${t('sold')}: ${fmtCur(sellPrice)} (${t('purchaseValue')}: ${fmtCur(doc.total_value)}, ${profit>=0?'+':''}${fmtCur(profit)})`, updated_by:state.user.id, updated_at:now(), _sync:'pending'});
             await dbPut('transactions',{
-              id:uuid(), type:'sale', amount:sellPrice, category:t('warehouse'),
+              id:uuid(),type:'sale',amount:sellPrice,category:t('warehouse'),
               description:`${t('warehouse')}-${t('sale')}: ${doc.partner_name} - ${doc.reference||doc.doc_number}`,
-              payment_method:'cash', date:today(), time:timeNow(), status:'active', revision:1,
-              created_by:state.user.id, created_at:now(), updated_by:state.user.id, updated_at:now(), _sync:'pending'
+              payment_method:'cash',date:today(),time:timeNow(),status:'active',revision:1,
+              created_by:state.user.id,created_at:now(),updated_by:state.user.id,updated_at:now(),_sync:'pending'
             });
             await addAudit('shipment_doc',doc.id,'update',{status:{old:'en_stock',new:'vendu'},prix_vente:sellPrice,benefice:profit});
+            showToast(`${t('sold')}: ${fmtCur(sellPrice)}`,'success');
             render();
           }});
         sellBtn.innerHTML=`${I.up} ${t('sell')}`;
         actions.appendChild(sellBtn);
-
         const detBtn = h('button',{className:'btn btn-sm btn-ghost',style:{color:'var(--text4)'},onClick:()=>navigate('ship-detail',doc.id)});
         detBtn.innerHTML=I.arrow;
         actions.appendChild(detBtn);
-
         bottom.appendChild(actions);
         card.appendChild(bottom);
-
-        if(doc.notes && !doc.notes.includes(t('sold')+':')){
-          card.appendChild(h('p',{style:{marginTop:'8px',fontSize:'11px',color:'var(--text4)',fontStyle:'italic'}},`💡 ${doc.notes}`));
-        }
-
         list.appendChild(card);
       });
     }
 
-    // Toggle sold
-    if(sold.length > 0){
+    if(sold.length>0){
       const toggleBtn = h('button',{className:'btn-ghost',style:{width:'100%',marginTop:'16px',padding:'10px',fontSize:'12px',color:'var(--text4)'},
         onClick:()=>{showSold=!showSold;rebuildW()}});
-      toggleBtn.textContent = showSold ? '▲ '+t('hideSold') : `▼ ${sold.length} ${t('showSold')}`;
+      toggleBtn.textContent = showSold?'\u25b2 '+t('hideSold'):`\u25bc ${sold.length} ${t('showSold')}`;
       list.appendChild(toggleBtn);
-
       if(showSold){
         sold.forEach(doc=>{
           const card = h('div',{style:{padding:'12px',borderRadius:'var(--radius)',background:'var(--bg2)',border:'1px solid var(--border)',marginTop:'8px',opacity:'.7',cursor:'pointer'},
@@ -2005,7 +2234,6 @@ async function renderWarehouse() {
         });
       }
     }
-
     page.appendChild(list);
     return page;
   }
@@ -2014,31 +2242,391 @@ async function renderWarehouse() {
   renderShell(buildPage());
 }
 
-// ─── Settings ────────────────────────────────────────────────
+
+// --- Reports (Enhanced with charts) ---
+async function renderReports() {
+  const d = new Date();
+  let dateFrom = new Date(d.getFullYear(),d.getMonth(),1).toISOString().slice(0,10);
+  let dateTo = today();
+
+  async function buildPage(){
+    const txns = (await dbGetAll('transactions')).filter(t=>t.status==='active'&&t.date>=dateFrom&&t.date<=dateTo);
+    const incAmt = txns.filter(t=>t.type!=='expense').reduce((s,t)=>s+t.amount,0);
+    const expAmt = txns.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+    const net = incAmt-expAmt;
+
+    // Previous period comparison
+    const periodLen = Math.max(1, Math.round((new Date(dateTo)-new Date(dateFrom))/86400000));
+    const prevTo = new Date(new Date(dateFrom).getTime()-86400000).toISOString().slice(0,10);
+    const prevFrom = new Date(new Date(dateFrom).getTime()-periodLen*86400000).toISOString().slice(0,10);
+    const prevTxns = (await dbGetAll('transactions')).filter(t=>t.status==='active'&&t.date>=prevFrom&&t.date<=prevTo);
+    const prevInc = prevTxns.filter(t=>t.type!=='expense').reduce((s,t)=>s+t.amount,0);
+    const prevExp = prevTxns.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+    const incChange = prevInc>0?Math.round(((incAmt-prevInc)/prevInc)*100):0;
+    const expChange = prevExp>0?Math.round(((expAmt-prevExp)/prevExp)*100):0;
+
+    // By category
+    const byCat = {};
+    txns.forEach(tx=>{byCat[tx.category]=(byCat[tx.category]||0)+tx.amount});
+    const catEntries = Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
+    const totalAll = incAmt+expAmt;
+
+    // By payment
+    const byPay = {};
+    txns.forEach(tx=>{byPay[tx.payment_method]=(byPay[tx.payment_method]||0)+tx.amount});
+
+    // Daily data for line chart
+    const dailyMap = {};
+    txns.forEach(tx => {
+      if (!dailyMap[tx.date]) dailyMap[tx.date] = 0;
+      dailyMap[tx.date] += (tx.type === 'expense' ? -tx.amount : tx.amount);
+    });
+    const dailyData = Object.entries(dailyMap).sort((a,b)=>a[0].localeCompare(b[0])).map(([d,v])=>({label:d.slice(8),val:Math.abs(v)}));
+
+    const page = h('div',{className:'page',style:{maxWidth:'500px',margin:'0 auto'}});
+    const hdr = h('div',{style:{display:'flex',alignItems:'center',gap:'10px',marginBottom:'14px'}});
+    const backBtn = h('button',{className:'btn-ghost',style:{padding:'8px',borderRadius:'10px',marginLeft:'-8px'},onClick:()=>navigate('settings')});
+    backBtn.innerHTML=I.back;
+    hdr.append(backBtn, h('h2',{style:{fontSize:'18px',fontWeight:'700'}},t('reports')));
+    page.appendChild(hdr);
+
+    // Date range
+    const dateRow = h('div',{style:{display:'flex',alignItems:'center',gap:'10px',marginBottom:'16px'}});
+    dateRow.innerHTML=I.cal;
+    dateRow.querySelector('svg').style.cssText='width:16px;height:16px;color:var(--text4);flex-shrink:0';
+    dateRow.append(
+      h('input',{className:'input',type:'date',value:dateFrom,style:{flex:1,fontSize:'13px',padding:'10px 12px'},onInput:e=>{dateFrom=e.target.value;rebuildR()}}),
+      h('span',{style:{color:'var(--text4)',fontSize:'13px'}},'\u2013'),
+      h('input',{className:'input',type:'date',value:dateTo,style:{flex:1,fontSize:'13px',padding:'10px 12px'},onInput:e=>{dateTo=e.target.value;rebuildR()}})
+    );
+    page.appendChild(dateRow);
+
+    // Summary with comparison
+    const sum = h('div',{className:'grid3'});
+    const mkS = (cls,icon,label,val,change) => {
+      const c = h('div',{className:`stat-card ${cls}`,style:{padding:'12px'}});
+      c.innerHTML=`<div class="stat-icon">${icon}<span style="font-size:9px">${label}</span></div>`;
+      c.appendChild(h('div',{className:'tabular',style:{fontSize:'15px',fontWeight:'700'}},val));
+      if (change !== 0) {
+        const color = change > 0 ? 'var(--green)' : 'var(--red)';
+        c.appendChild(h('p',{style:{fontSize:'9px',color,marginTop:'2px'}},`${change>0?'+':''}${change}% vs ${t('prevPeriod')}`));
+      }
+      return c;
+    };
+    sum.append(
+      mkS('sc-green',I.up,t('income'),fmtCur(incAmt),incChange),
+      mkS('sc-red',I.down,t('expenses'),fmtCur(expAmt),expChange),
+      mkS('sc-blue',I.chart,t('balance'),fmtCur(net),0)
+    );
+    page.appendChild(sum);
+
+    // Daily trend line chart
+    if (dailyData.length > 1) {
+      const trendCard = h('div',{className:'card',style:{marginTop:'14px'}});
+      trendCard.appendChild(h('h3',{style:{fontSize:'12px',fontWeight:'600',color:'var(--text3)',marginBottom:'8px'}},t('dailyTrend')));
+      trendCard.innerHTML += buildLineChart(dailyData, 300, 100);
+      page.appendChild(trendCard);
+    }
+
+    // Category breakdown with donut
+    const catCard = h('div',{className:'card',style:{marginTop:'14px'}});
+    const catH = h('div',{style:{display:'flex',alignItems:'center',gap:'8px',marginBottom:'12px'}});
+    catH.innerHTML=I.pie; catH.querySelector('svg').style.cssText='width:14px;height:14px;color:var(--text4)';
+    catH.appendChild(h('h3',{style:{fontSize:'12px',fontWeight:'600',color:'var(--text3)'}},t('categoryBreakdown')));
+    catCard.appendChild(catH);
+
+    if(catEntries.length===0){catCard.appendChild(h('p',{style:{fontSize:'13px',color:'var(--text4)'}},t('noData')));}
+    else{
+      const catContent = h('div',{style:{display:'flex',gap:'16px',alignItems:'flex-start'}});
+      // Donut
+      const donutWrap = h('div',{innerHTML:buildDonutChart(catEntries, totalAll)});
+      catContent.appendChild(donutWrap);
+      // Legend
+      const colors = ['#3b82f6','#34d399','#f87171','#fbbf24','#a78bfa','#38bdf8','#f472b6','#fb923c','#4ade80','#818cf8'];
+      const legendDiv = h('div',{style:{flex:1}});
+      catEntries.forEach(([cat,amt],i)=>{
+        const pct = totalAll>0?Math.round((amt/totalAll)*100):0;
+        const row = h('div',{style:{display:'flex',alignItems:'center',gap:'8px',marginBottom:'6px'}});
+        row.appendChild(h('div',{style:{width:'8px',height:'8px',borderRadius:'2px',background:colors[i%colors.length],flexShrink:0}}));
+        row.appendChild(h('span',{style:{fontSize:'11px',color:'var(--text2)',flex:1},className:'truncate'},cat));
+        row.appendChild(h('span',{className:'tabular',style:{fontSize:'11px',color:'var(--text3)'}},`${pct}%`));
+        legendDiv.appendChild(row);
+      });
+      catContent.appendChild(legendDiv);
+      catCard.appendChild(catContent);
+
+      // Bars
+      catEntries.forEach(([cat,amt])=>{
+        const pct = totalAll>0?(amt/totalAll)*100:0;
+        const row = h('div',{style:{marginTop:'8px'}});
+        const top = h('div',{className:'flex-between',style:{fontSize:'12px',marginBottom:'3px'}});
+        top.append(h('span',{style:{color:'var(--text2)'}},cat),h('span',{className:'tabular',style:{color:'var(--text3)'}},fmtCur(amt)));
+        row.appendChild(top);
+        const bar = h('div',{style:{height:'6px',borderRadius:'3px',background:'var(--bg3)',overflow:'hidden'}});
+        bar.appendChild(h('div',{style:{height:'100%',width:`${Math.max(pct,1)}%`,borderRadius:'3px',background:'rgba(59,130,246,.4)',transition:'width .3s'}}));
+        row.appendChild(bar);
+        catCard.appendChild(row);
+      });
+    }
+    page.appendChild(catCard);
+
+    // Payment breakdown
+    const payCard = h('div',{className:'card',style:{marginTop:'12px'}});
+    payCard.appendChild(h('h3',{style:{fontSize:'12px',fontWeight:'600',color:'var(--text3)',marginBottom:'10px'}},t('byPayment')));
+    const payGrid = h('div',{className:'grid3'});
+    Object.entries(byPay).forEach(([m,amt])=>{
+      payGrid.appendChild(h('div',{style:{textAlign:'center',padding:'10px',borderRadius:'8px',background:'var(--bg3)'}},
+        h('p',{className:'tabular',style:{fontSize:'16px',fontWeight:'700'}},fmtCur(amt)),
+        h('p',{style:{fontSize:'10px',color:'var(--text4)',marginTop:'2px'}},PAY[m]||m)));
+    });
+    payCard.appendChild(payGrid);
+    page.appendChild(payCard);
+    return page;
+  }
+
+  async function rebuildR(){const m=$('.main');m.innerHTML='';m.appendChild(await buildPage())}
+  renderShell(await buildPage());
+}
+
+// --- Contacts ---
+async function renderContacts() {
+  const allContacts = (await dbGetAll('contacts')).sort((a,b)=>(a.name||'').localeCompare(b.name||''));
+  let searchQ = '';
+
+  function buildPage() {
+    const filtered = searchQ ? allContacts.filter(c => c.name.toLowerCase().includes(searchQ.toLowerCase()) || (c.phone||'').includes(searchQ) || (c.email||'').toLowerCase().includes(searchQ.toLowerCase())) : allContacts;
+
+    const page = h('div',{style:{display:'flex',flexDirection:'column',height:'100%'}});
+    const hdr = h('div',{style:{padding:'16px 16px 10px',flexShrink:0}});
+    const topRow = h('div',{className:'flex-between',style:{marginBottom:'10px'}});
+    topRow.appendChild(h('h2',{style:{fontSize:'18px',fontWeight:'700'}},t('contacts')));
+    const addBtn = h('button',{className:'btn btn-primary btn-sm',onClick:()=>navigate('contact-form','new')});
+    addBtn.innerHTML=I.plus+`<span>${t('new')}</span>`; topRow.appendChild(addBtn);
+    hdr.appendChild(topRow);
+
+    const searchWrap = h('div',{className:'input-icon',style:{marginBottom:'8px'}});
+    searchWrap.innerHTML=I.search;
+    searchWrap.appendChild(h('input',{className:'input',type:'text',placeholder:t('search'),style:{paddingLeft:'38px'},
+      onInput:e=>{searchQ=e.target.value;rebuild()}}));
+    hdr.appendChild(searchWrap);
+    hdr.appendChild(h('p',{style:{fontSize:'11px',color:'var(--text4)'}},`${filtered.length} ${t('contacts')}`));
+    page.appendChild(hdr);
+
+    const list = h('div',{style:{flex:1,overflowY:'auto',padding:'0 16px 16px'}});
+    if(filtered.length===0){
+      list.appendChild(h('div',{className:'empty-state'},
+        h('div',{className:'empty-icon'},'👥'),
+        h('div',{className:'empty-title'},t('noContacts'))
+      ));
+    } else {
+      filtered.forEach(c=>{
+        const item = h('div',{className:'list-item',onClick:()=>navigate('contact-detail',c.id)});
+        const left = h('div',{style:{display:'flex',alignItems:'center',gap:'10px',flex:1,minWidth:0}});
+        const avatar = h('div',{style:{width:'36px',height:'36px',borderRadius:'10px',display:'flex',alignItems:'center',justifyContent:'center',
+          fontSize:'14px',fontWeight:'700',flexShrink:0,
+          background:c.type==='supplier'?'rgba(167,139,250,.15)':c.type==='customer'?'rgba(52,211,153,.15)':'rgba(59,130,246,.15)',
+          color:c.type==='supplier'?'var(--violet)':c.type==='customer'?'var(--green)':'var(--blue)'}},
+          c.name.charAt(0).toUpperCase());
+        left.appendChild(avatar);
+        const info = h('div',{style:{minWidth:0}});
+        info.appendChild(h('p',{className:'truncate',style:{fontSize:'13px',fontWeight:'500'}},c.name));
+        const metaParts = [];
+        if(c.type) metaParts.push(t(c.type+'Type'));
+        if(c.phone) metaParts.push(c.phone);
+        info.appendChild(h('p',{style:{fontSize:'10px',color:'var(--text4)',marginTop:'1px'}},metaParts.join(' \u00b7 ')));
+        left.appendChild(info);
+        item.appendChild(left);
+        item.appendChild(h('span',{style:{color:'var(--text4)'},innerHTML:I.arrow}));
+        list.appendChild(item);
+      });
+    }
+    page.appendChild(list);
+    return page;
+  }
+
+  function rebuild(){const m=$('.main');if(m){m.innerHTML='';m.appendChild(buildPage())}}
+  renderShell(buildPage());
+}
+
+// --- Contact Form ---
+async function renderContactForm() {
+  const id = state.routeParam;
+  const isEdit = id && id !== 'new';
+  let form = {name:'',type:'customer',phone:'',email:'',address:'',notes:''};
+  if(isEdit){
+    const c = await dbGet('contacts',id);
+    if(c) form = {name:c.name,type:c.type,phone:c.phone||'',email:c.email||'',address:c.address||'',notes:c.notes||''};
+  }
+
+  const page = h('div',{className:'page',style:{maxWidth:'480px',margin:'0 auto'}});
+  const hdr = h('div',{style:{display:'flex',alignItems:'center',gap:'10px',marginBottom:'20px'}});
+  const backBtn = h('button',{className:'btn-ghost',style:{padding:'8px',borderRadius:'10px',marginLeft:'-8px'},onClick:()=>navigate('contacts')});
+  backBtn.innerHTML=I.back;
+  hdr.append(backBtn,h('h2',{style:{fontSize:'18px',fontWeight:'700'}},isEdit?t('editContact'):t('newContact')));
+  page.appendChild(hdr);
+
+  const content = h('div',{className:'space-y'});
+
+  // Name
+  content.appendChild(h('div',null,h('label',{className:'label'},t('contactName')+' *'),
+    h('input',{className:'input',type:'text',placeholder:t('contactName'),value:form.name,autofocus:true,
+      onInput:e=>form.name=e.target.value})));
+
+  // Type
+  const typeWrap = h('div',null,h('label',{className:'label'},t('contactType')));
+  const typeChips = h('div',{className:'grid3'});
+  [{v:'supplier',l:t('supplierType'),c:'chip-violet'},{v:'customer',l:t('customerType'),c:'chip-green'},{v:'both',l:t('bothType'),c:'chip-blue'}].forEach(tp=>{
+    typeChips.appendChild(h('div',{className:`chip ${tp.c} ${form.type===tp.v?'active':''}`,style:{textAlign:'center'},
+      onClick:()=>{form.type=tp.v;render();}},tp.l));
+  });
+  typeWrap.appendChild(typeChips);
+  content.appendChild(typeWrap);
+
+  // Phone & Email
+  const row1 = h('div',{className:'grid2'});
+  row1.append(
+    h('div',null,h('label',{className:'label'},t('contactPhone')),h('input',{className:'input',type:'tel',placeholder:'+228...',value:form.phone,onInput:e=>form.phone=e.target.value})),
+    h('div',null,h('label',{className:'label'},t('contactEmail')),h('input',{className:'input',type:'email',placeholder:'email@...',value:form.email,onInput:e=>form.email=e.target.value}))
+  );
+  content.appendChild(row1);
+
+  // Address
+  content.appendChild(h('div',null,h('label',{className:'label'},t('contactAddress')),
+    h('input',{className:'input',type:'text',placeholder:t('contactAddress'),value:form.address,onInput:e=>form.address=e.target.value})));
+
+  // Notes
+  content.appendChild(h('div',null,h('label',{className:'label'},t('contactNotes')),
+    h('textarea',{className:'input',rows:'2',value:form.notes,style:{resize:'none'},onInput:e=>form.notes=e.target.value})));
+
+  // Save
+  const actions = h('div',{style:{display:'flex',gap:'10px',marginTop:'8px'}});
+  if(isEdit){
+    const delBtn = h('button',{className:'btn btn-danger',onClick:async()=>{
+      if(!await showConfirm(t('delete'),t('deleteConfirm')))return;
+      await dbDelete('contacts',id);
+      showToast(t('delete'),'success');
+      navigate('contacts');
+    }});
+    delBtn.innerHTML=I.trash+`<span>${t('delete')}</span>`;
+    actions.appendChild(delBtn);
+  }
+  const saveBtn = h('button',{className:'btn btn-primary',style:{flex:1},onClick:async()=>{
+    if(!form.name.trim()){showToast(t('contactName')+' *','error');return}
+    const contact = {
+      id:isEdit?id:uuid(),name:form.name.trim(),type:form.type,phone:form.phone,email:form.email,
+      address:form.address,notes:form.notes,
+      total_transactions:0,last_transaction:null,
+      created_at:isEdit?(await dbGet('contacts',id))?.created_at||now():now(),
+      updated_at:now()
+    };
+    await dbPut('contacts',contact);
+    showToast(t('save'),'success');
+    navigate('contacts');
+  }});
+  saveBtn.innerHTML=I.check+`<span>${t('save')}</span>`;
+  actions.appendChild(saveBtn);
+  content.appendChild(actions);
+  page.appendChild(content);
+  renderShell(page);
+}
+
+// --- Contact Detail ---
+async function renderContactDetail() {
+  const id = state.routeParam;
+  const contact = await dbGet('contacts',id);
+  if(!contact) return navigate('contacts');
+  const allTxns = (await dbGetAll('transactions')).filter(t=>t.status==='active'&&t.contact_id===id).sort((a,b)=>b.created_at.localeCompare(a.created_at));
+  const allShips = (await dbGetAll('shipment_docs')).filter(d=>d.partner_name===contact.name).sort((a,b)=>b.created_at.localeCompare(a.created_at));
+
+  const page = h('div',{className:'page',style:{maxWidth:'480px',margin:'0 auto'}});
+  const hdr = h('div',{className:'flex-between',style:{marginBottom:'20px'}});
+  const hdrL = h('div',{style:{display:'flex',alignItems:'center',gap:'10px'}});
+  const backBtn = h('button',{className:'btn-ghost',style:{padding:'8px',borderRadius:'10px',marginLeft:'-8px'},onClick:()=>navigate('contacts')});
+  backBtn.innerHTML=I.back;
+  hdrL.append(backBtn,h('h2',{style:{fontSize:'18px',fontWeight:'700'}},contact.name));
+  hdr.appendChild(hdrL);
+  const editBtn = h('button',{className:'btn btn-sm btn-ghost',onClick:()=>navigate('contact-form',id)});
+  editBtn.innerHTML=I.edit+`<span>${t('edit')}</span>`;
+  hdr.appendChild(editBtn);
+  page.appendChild(hdr);
+
+  const card = h('div',{className:'card'});
+  const badges = h('div',{style:{display:'flex',gap:'6px',marginBottom:'12px'}});
+  badges.appendChild(h('span',{className:`badge ${contact.type==='supplier'?'badge-violet':contact.type==='customer'?'badge-green':'badge-blue'}`},t(contact.type+'Type')));
+  card.appendChild(badges);
+
+  const grid = h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'10px 16px',fontSize:'13px'}});
+  const mkF = (l,v,icon) => {
+    if(!v) return null;
+    const d = h('div',{style:{display:'flex',alignItems:'center',gap:'6px'}});
+    if(icon){const ic=h('span',{innerHTML:icon,style:{color:'var(--text4)'}});ic.querySelector('svg').style.cssText='width:12px;height:12px';d.appendChild(ic)}
+    d.appendChild(h('div',null,h('p',{style:{fontSize:'10px',color:'var(--text4)'}},l),h('p',{style:{color:'var(--text2)'}},v)));
+    return d;
+  };
+  const phoneF = mkF(t('contactPhone'),contact.phone,I.phone);
+  const emailF = mkF(t('contactEmail'),contact.email,I.mail);
+  if(phoneF) grid.appendChild(phoneF);
+  if(emailF) grid.appendChild(emailF);
+  if(contact.address) grid.appendChild(h('div',{style:{gridColumn:'span 2'}},h('p',{style:{fontSize:'10px',color:'var(--text4)'}},t('contactAddress')),h('p',{style:{color:'var(--text2)'}},contact.address)));
+  card.appendChild(grid);
+  page.appendChild(card);
+
+  // Transactions
+  if(allTxns.length){
+    page.appendChild(h('h3',{style:{fontSize:'13px',fontWeight:'600',color:'var(--text2)',marginTop:'16px',marginBottom:'8px'}},`${t('contactTransactions')} (${allTxns.length})`));
+    allTxns.slice(0,10).forEach(tx=>{
+      const item = h('div',{className:'list-item',onClick:()=>navigate('txn-detail',tx.id)});
+      const left = h('div',{style:{flex:1,minWidth:0}});
+      left.appendChild(h('p',{className:'truncate',style:{fontSize:'12px'}},tx.description||tx.category));
+      left.appendChild(h('p',{style:{fontSize:'10px',color:'var(--text4)'}},fmtDate(tx.date)));
+      item.appendChild(left);
+      item.appendChild(h('span',{className:'tabular',style:{fontSize:'12px',fontWeight:'600',color:TXN_COLOR[tx.type]}},
+        `${tx.type==='expense'?'\u2212':'+'} ${fmtCur(tx.amount)}`));
+      page.appendChild(item);
+    });
+  }
+
+  // Shipments
+  if(allShips.length){
+    page.appendChild(h('h3',{style:{fontSize:'13px',fontWeight:'600',color:'var(--text2)',marginTop:'16px',marginBottom:'8px'}},`${t('contactShipments')} (${allShips.length})`));
+    allShips.slice(0,10).forEach(doc=>{
+      const item = h('div',{className:'list-item',onClick:()=>navigate('ship-detail',doc.id)});
+      item.appendChild(h('div',null,
+        h('span',{className:`badge ${STATUS_BADGE[doc.status]}`,style:{marginRight:'6px'}},STATUS_LABEL[doc.status]),
+        h('span',{style:{fontSize:'12px'}},doc.doc_number)
+      ));
+      item.appendChild(h('span',{style:{fontSize:'10px',color:'var(--text4)'}},fmtDate(doc.doc_date)));
+      page.appendChild(item);
+    });
+  }
+
+  renderShell(page);
+}
+
+
+// --- Settings ---
 async function renderSettings() {
   const users = await dbGetAll('users');
+  const templates = await dbGetAll('templates');
   const userIsAdmin = state.user.role==='admin';
   let gsForm = { ...state.gsConfig };
 
   const page = h('div',{className:'page',style:{maxWidth:'480px',margin:'0 auto'}});
   page.appendChild(h('h2',{style:{fontSize:'18px',fontWeight:'700',marginBottom:'16px'}},t('more')));
 
-  // === INTERFACE CARD (UX + Language) ===
+  // === INTERFACE CARD ===
   const uxCard = h('div',{className:'card',style:{marginBottom:'14px'}});
   uxCard.appendChild(h('h3',{style:{fontSize:'13px',fontWeight:'600',color:'var(--text2)',marginBottom:'8px'}},t('interface')));
-  
-  // Language switcher
+
   const langRow = h('div',{style:{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:'10px'}});
   langRow.appendChild(h('span',{style:{fontSize:'12px',color:'var(--text4)'}},t('language')));
   const langBtns = h('div',{style:{display:'flex',gap:'6px'}});
   ['de','fr','en'].forEach(l=>{
-    const btn = h('button',{className:`lang-btn ${state.lang===l?'active':''}`,onClick:()=>{setLang(l);render();}},l.toUpperCase());
-    langBtns.appendChild(btn);
+    langBtns.appendChild(h('button',{className:`lang-btn ${state.lang===l?'active':''}`,onClick:()=>{setLang(l);render();}},l.toUpperCase()));
   });
   langRow.appendChild(langBtns);
   uxCard.appendChild(langRow);
-  
-  // Simple mode
+
   uxCard.appendChild(h('p',{style:{fontSize:'12px',color:'var(--text4)'}},t('simpleModeDesc')));
   const uxBtn = h('button',{className:'btn',style:{width:'100%',marginTop:'10px',background:'var(--bg3)',color:'var(--text2)'},
     onClick:()=>{setSimpleMode(!state.simpleMode);render();}});
@@ -2046,12 +2634,86 @@ async function renderSettings() {
   uxCard.appendChild(uxBtn);
   page.appendChild(uxCard);
 
+  // === PIN CHANGE ===
+  const pinCard = h('div',{className:'card',style:{marginBottom:'14px'}});
+  pinCard.appendChild(h('h3',{style:{fontSize:'13px',fontWeight:'600',color:'var(--text2)',marginBottom:'8px'}},t('changePin')));
+
+  let pinOld='',pinNew='',pinConfirm='';
+  const pinForm = h('div',{className:'space-y-sm'});
+
+  pinForm.appendChild(h('div',null,h('label',{className:'label'},t('oldPin')),
+    h('input',{className:'input',type:'password',inputMode:'numeric',maxLength:'6',style:{letterSpacing:'.3em'},
+      onInput:e=>pinOld=e.target.value})));
+
+  const newPinWrap = h('div',null,h('label',{className:'label'},t('newPin')));
+  const newPinInp = h('input',{className:'input',type:'password',inputMode:'numeric',maxLength:'6',style:{letterSpacing:'.3em'},
+    onInput:e=>{
+      pinNew=e.target.value;
+      // Update strength indicator
+      const strength = pinNew.length < 4 ? 0 : pinNew.length < 5 ? 1 : 2;
+      const bar = newPinWrap.querySelector('.pin-strength-bar');
+      if(bar){
+        bar.style.width = ['0%','50%','100%'][strength];
+        bar.style.background = ['var(--red)','var(--amber)','var(--green)'][strength];
+      }
+      const label = newPinWrap.querySelector('.strength-label');
+      if(label) label.textContent = [t('pinWeak'),t('weak'),t('medium'),t('strong')][strength+1]||'';
+    }});
+  newPinWrap.appendChild(newPinInp);
+  const strengthDiv = h('div',{className:'pin-strength'});
+  strengthDiv.appendChild(h('div',{className:'pin-strength-bar',style:{width:'0%'}}));
+  newPinWrap.appendChild(strengthDiv);
+  newPinWrap.appendChild(h('p',{className:'strength-label',style:{fontSize:'10px',color:'var(--text4)',marginTop:'2px'}}));
+  pinForm.appendChild(newPinWrap);
+
+  pinForm.appendChild(h('div',null,h('label',{className:'label'},t('confirmPin')),
+    h('input',{className:'input',type:'password',inputMode:'numeric',maxLength:'6',style:{letterSpacing:'.3em'},
+      onInput:e=>pinConfirm=e.target.value})));
+
+  const changePinBtn = h('button',{className:'btn btn-primary btn-sm',style:{width:'100%',marginTop:'8px'},onClick:async()=>{
+    if(pinOld!==state.user.pin_hash){showToast(t('wrongPin'),'error');return}
+    if(pinNew.length<4){showToast(t('pinWeak'),'error');return}
+    if(pinNew!==pinConfirm){showToast(t('pinMismatch'),'error');return}
+    const updUser = {...state.user,pin_hash:pinNew,updated_at:now()};
+    await dbPut('users',updUser);
+    state.user = updUser;
+    showToast(t('pinChanged'),'success');
+    render();
+  }});
+  changePinBtn.innerHTML=I.lock+` <span>${t('changePin')}</span>`;
+  pinForm.appendChild(changePinBtn);
+  pinCard.appendChild(pinForm);
+  page.appendChild(pinCard);
+
   // === REPORTS LINK ===
   const reportsCard = h('div',{className:'qaction',style:{borderColor:'rgba(59,130,246,.15)',background:'linear-gradient(135deg,rgba(59,130,246,.06),transparent)',marginBottom:'14px',padding:'16px'},
     onClick:()=>navigate('reports')});
   reportsCard.innerHTML=`<div class="qaction-icon" style="background:rgba(59,130,246,.15)">${I.chart.replace('currentColor','var(--blue)')}</div>`;
   reportsCard.appendChild(h('div',null,h('h4',null,'📊 '+t('reports')),h('p',null,t('periodAnalysis'))));
   page.appendChild(reportsCard);
+
+  // === TEMPLATES ===
+  if(templates.length > 0) {
+    const tplCard = h('div',{className:'card',style:{marginBottom:'14px'}});
+    tplCard.appendChild(h('h3',{style:{fontSize:'13px',fontWeight:'600',color:'var(--text2)',marginBottom:'8px'}},t('templates')+` (${templates.length})`));
+    templates.forEach(tpl => {
+      const row = h('div',{className:'flex-between',style:{padding:'8px 0',borderBottom:'1px solid var(--border)'}});
+      row.appendChild(h('div',null,
+        h('p',{style:{fontSize:'13px'}},tpl.name),
+        h('p',{style:{fontSize:'10px',color:'var(--text4)'}},`${TXN_TYPE[tpl.type]} \u00b7 ${fmtCur(tpl.amount)} \u00b7 ${tpl.category}`)
+      ));
+      const delBtn = h('button',{className:'btn-ghost btn-sm',style:{color:'var(--red)',padding:'4px'},onClick:async()=>{
+        if(!await showConfirm(t('deleteTemplate'),tpl.name)) return;
+        await dbDelete('templates',tpl.id);
+        showToast(t('delete'),'success');
+        render();
+      }});
+      delBtn.innerHTML=I.trash;
+      row.appendChild(delBtn);
+      tplCard.appendChild(row);
+    });
+    page.appendChild(tplCard);
+  }
 
   // === SYNC CARD ===
   const syncCard = h('div',{className:'card'});
@@ -2065,7 +2727,7 @@ async function renderSettings() {
   const mkRow = (l,v,c) => {const r=h('div',{className:'flex-between',style:{padding:'4px 0'}});r.append(h('span',{style:{color:'var(--text4)'}},l),h('span',{style:{color:c||'var(--text2)'}},v));return r};
   syncInfo.append(
     mkRow('Status',state.online?t('online'):t('offline'),state.online?'var(--green)':'var(--amber)'),
-    mkRow(t('lastSync'),state.lastSync?fmtRelative(state.lastSync):'—'),
+    mkRow(t('lastSync'),state.lastSync?fmtRelative(state.lastSync):'\u2014'),
     mkRow(t('pending'),`${state.pendingCount} ${t('changes')}`,state.pendingCount>0?'var(--amber)':undefined)
   );
   syncCard.appendChild(syncInfo);
@@ -2074,10 +2736,8 @@ async function renderSettings() {
     onClick:async()=>{
       if(state.gsConfig.apiEndpoint){
         const res = await syncToGoogleSheets();
-        alert(res.ok ? `${t('connectionOk')} - ${res.synced||0} synced` : t('connectionFailed')+': '+res.error);
-      } else {
-        await triggerSync();
-      }
+        showToast(res.ok?`${t('connectionOk')} - ${res.synced||0} synced`:t('connectionFailed')+': '+res.error, res.ok?'success':'error');
+      } else { await triggerSync(); }
       render();
     }});
   syncBtn.innerHTML=`${I.refresh} <span>${t('syncNow')}</span>`;
@@ -2091,58 +2751,30 @@ async function renderSettings() {
     gsH.innerHTML=I.db;gsH.querySelector('svg').style.cssText='width:15px;height:15px;color:var(--text3)';
     gsH.appendChild(h('h3',{style:{fontSize:'13px',fontWeight:'600',color:'var(--text2)'}},t('googleSync')));
     gsCard.appendChild(gsH);
-
-    // Lock indicator for non-verified admins
-    const gsStatus = h('div',{style:{fontSize:'11px',marginBottom:'10px',color:state.gsConfig.apiEndpoint?'var(--green)':'var(--text4)'}},
-      state.gsConfig.apiEndpoint ? `✓ ${t('configured')}` : `○ ${t('notConfigured')}`);
-    gsCard.appendChild(gsStatus);
-
+    gsCard.appendChild(h('div',{style:{fontSize:'11px',marginBottom:'10px',color:state.gsConfig.apiEndpoint?'var(--green)':'var(--text4)'}},
+      state.gsConfig.apiEndpoint?`\u2713 ${t('configured')}`:`\u25cb ${t('notConfigured')}`));
     gsCard.appendChild(h('div',{className:'admin-lock'},h('p',null,`🔒 ${t('adminPinRequired')}`)));
-
     const gsFields = h('div',{className:'space-y-sm'});
-    gsFields.appendChild(h('div',null,
-      h('label',{className:'label'},t('apiEndpoint')),
+    gsFields.appendChild(h('div',null,h('label',{className:'label'},t('apiEndpoint')),
       h('input',{className:'input',type:'text',placeholder:'https://script.google.com/macros/s/...',value:gsForm.apiEndpoint,
-        onFocus:()=>requireAdminPin(()=>{}),
-        onInput:e=>gsForm.apiEndpoint=e.target.value})
-    ));
-    gsFields.appendChild(h('div',null,
-      h('label',{className:'label'},t('sheetId')),
-      h('input',{className:'input',type:'text',placeholder:'1ABC...xyz',value:gsForm.sheetId,
-        onInput:e=>gsForm.sheetId=e.target.value})
-    ));
-    gsFields.appendChild(h('div',null,
-      h('label',{className:'label'},t('apiKey')),
-      h('input',{className:'input',type:'password',placeholder:'••••••••',value:gsForm.apiKey,
-        onInput:e=>gsForm.apiKey=e.target.value})
-    ));
-
+        onFocus:()=>requireAdminPin(()=>{}),onInput:e=>gsForm.apiEndpoint=e.target.value})));
+    gsFields.appendChild(h('div',null,h('label',{className:'label'},t('sheetId')),
+      h('input',{className:'input',type:'text',placeholder:'1ABC...xyz',value:gsForm.sheetId,onInput:e=>gsForm.sheetId=e.target.value})));
+    gsFields.appendChild(h('div',null,h('label',{className:'label'},t('apiKey')),
+      h('input',{className:'input',type:'password',placeholder:'\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022',value:gsForm.apiKey,onInput:e=>gsForm.apiKey=e.target.value})));
     const gsBtns = h('div',{style:{display:'flex',gap:'8px',marginTop:'10px'}});
-    const testBtn = h('button',{className:'btn btn-sm',style:{flex:1,background:'var(--bg3)',color:'var(--text2)'},
-      onClick:async()=>{
-        requireAdminPin(async()=>{
-          const res = await testGoogleConnection();
-          alert(res.ok ? t('connectionOk') : t('connectionFailed')+': '+res.error);
-        });
-      }});
-    testBtn.innerHTML=`${I.wifi} <span>${t('testConnection')}</span>`;
-    const saveGsBtn = h('button',{className:'btn btn-primary btn-sm',style:{flex:1},
-      onClick:()=>{
-        requireAdminPin(()=>{
-          saveGsConfig(gsForm);
-          alert(t('configured'));
-          render();
-        });
-      }});
-    saveGsBtn.innerHTML=`${I.check} <span>${t('saveConfig')}</span>`;
-    gsBtns.append(testBtn,saveGsBtn);
+    gsBtns.appendChild(h('button',{className:'btn btn-sm',style:{flex:1,background:'var(--bg3)',color:'var(--text2)'},
+      onClick:()=>requireAdminPin(async()=>{const res=await testGoogleConnection();showToast(res.ok?t('connectionOk'):t('connectionFailed')+': '+res.error,res.ok?'success':'error')})},
+      t('testConnection')));
+    gsBtns.appendChild(h('button',{className:'btn btn-primary btn-sm',style:{flex:1},
+      onClick:()=>requireAdminPin(()=>{saveGsConfig(gsForm);showToast(t('configured'),'success');render()})},
+      t('saveConfig')));
     gsFields.appendChild(gsBtns);
-
     gsCard.appendChild(gsFields);
     page.appendChild(gsCard);
   }
 
-  // === USERS (Admin only, PIN protected) ===
+  // === USERS (Admin only) ===
   if(userIsAdmin){
     const usersCard = h('div',{className:'card',style:{marginTop:'14px'}});
     const usersH = h('div',{className:'flex-between',style:{marginBottom:'12px'}});
@@ -2151,9 +2783,7 @@ async function renderSettings() {
     usersHL.appendChild(h('h3',{style:{fontSize:'13px',fontWeight:'600',color:'var(--text2)'}},t('users')));
     usersH.appendChild(usersHL);
     usersCard.appendChild(usersH);
-
     usersCard.appendChild(h('div',{className:'admin-lock'},h('p',null,`🔒 ${t('adminPinRequired')}`)));
-
     users.forEach(u=>{
       const row = h('div',{className:'flex-between',style:{padding:'8px 4px'}});
       const left = h('div',{style:{display:'flex',alignItems:'center',gap:'10px'}});
@@ -2163,53 +2793,73 @@ async function renderSettings() {
       const info = h('div');
       info.appendChild(h('p',{style:{fontSize:'13px',color:u.is_active?'var(--text)':'var(--text4)',textDecoration:u.is_active?'':'line-through'}},u.display_name));
       const meta = h('p',{style:{fontSize:'10px',color:'var(--text4)'}},`@${u.username}`);
-      if(u.role==='admin'){const ab=h('span',{style:{color:'var(--amber)',marginLeft:'4px'}});ab.innerHTML=`${I.shield.replace('width="24"','width="10"')} ${t('admin')}`;meta.appendChild(ab)}
+      if(u.role==='admin') meta.appendChild(h('span',{style:{color:'var(--amber)',marginLeft:'4px'}},` ${t('admin')}`));
       info.appendChild(meta);
       left.appendChild(info);
       row.appendChild(left);
-
       if(u.id!==state.user.id){
-        const toggle = h('button',{className:'btn-ghost btn-sm',style:{fontSize:'11px',color:u.is_active?'var(--red)':'var(--green)'},
-          onClick:()=>{
-            requireAdminPin(async()=>{
-              await dbPut('users',{...u,is_active:!u.is_active,updated_at:now()});
-              state.users=await dbGetAll('users');
-              render();
-            });
-          }},
-          u.is_active?t('deactivate'):t('activate'));
-        row.appendChild(toggle);
+        row.appendChild(h('button',{className:'btn-ghost btn-sm',style:{fontSize:'11px',color:u.is_active?'var(--red)':'var(--green)'},
+          onClick:()=>requireAdminPin(async()=>{
+            await dbPut('users',{...u,is_active:!u.is_active,updated_at:now()});
+            state.users=await dbGetAll('users');render();
+          })},u.is_active?t('deactivate'):t('activate')));
       }
       usersCard.appendChild(row);
     });
     page.appendChild(usersCard);
   }
 
-  // === DATA CARD ===
+  // === DATA CARD (with Backup) ===
   const dataCard = h('div',{className:'card',style:{marginTop:'14px'}});
   const dataH = h('div',{style:{display:'flex',alignItems:'center',gap:'8px',marginBottom:'12px'}});
   dataH.innerHTML=I.db;dataH.querySelector('svg').style.cssText='width:15px;height:15px;color:var(--text3)';
   dataH.appendChild(h('h3',{style:{fontSize:'13px',fontWeight:'600',color:'var(--text2)'}},t('data')));
   dataCard.appendChild(dataH);
 
+  // CSV Export
   const exportBtn = h('button',{className:'btn',style:{width:'100%',background:'var(--bg3)',color:'var(--text2)',marginBottom:'8px'},
     onClick:async()=>{
       const txns=await dbGetAll('transactions');
-      const csv='ID,Typ,Betrag,Kategorie,Beschreibung,Zahlungsart,Datum,Uhrzeit,Status\n'+txns.map(t=>`${t.id},${t.type},${t.amount},${t.category},"${t.description}",${t.payment_method},${t.date},${t.time},${t.status}`).join('\n');
-      const b=new Blob([csv],{type:'text/csv'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=`tcha-agro-${today()}.csv`;a.click();URL.revokeObjectURL(u)
+      const csv='ID,Typ,Betrag,Kategorie,Beschreibung,Zahlungsart,Datum,Uhrzeit,Status\n'+txns.map(t=>`${t.id},${t.type},${t.amount},${t.category},"${t.description||''}",${t.payment_method},${t.date},${t.time},${t.status}`).join('\n');
+      const b=new Blob([csv],{type:'text/csv'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=`tcha-agro-${today()}.csv`;a.click();URL.revokeObjectURL(u);
+      showToast(t('exportCSV'),'success');
     }});
   exportBtn.innerHTML=`${I.download} <span>${t('exportCSV')}</span>`;
   dataCard.appendChild(exportBtn);
 
-  // Delete all data - ADMIN ONLY with PIN
+  // Full Backup Export
+  const backupExpBtn = h('button',{className:'btn',style:{width:'100%',background:'var(--bg3)',color:'var(--text2)',marginBottom:'8px'},
+    onClick:()=>exportFullBackup()});
+  backupExpBtn.innerHTML=`${I.download} <span>${t('exportBackup')} (JSON)</span>`;
+  dataCard.appendChild(backupExpBtn);
+
+  // Full Backup Import
+  const importWrap = h('div',{style:{display:'flex',gap:'8px',marginBottom:'8px'}});
+  const fileInput = h('input',{type:'file',accept:'.json',style:{display:'none'},
+    onChange:async(e)=>{
+      const file = e.target.files[0];
+      if(!file) return;
+      const mode = await showModal(t('importBackup'),'', [
+        {label:t('mergeImport'),value:'merge',primary:false},
+        {label:t('replaceImport'),value:'replace',primary:true}
+      ]);
+      if(!mode) return;
+      const ok = await importFullBackup(file, mode);
+      if(ok) render();
+    }});
+  const importBtn = h('button',{className:'btn',style:{flex:1,background:'var(--bg3)',color:'var(--text2)'},
+    onClick:()=>fileInput.click()});
+  importBtn.innerHTML=`${I.upload} <span>${t('importBackup')} (JSON)</span>`;
+  importWrap.append(importBtn,fileInput);
+  dataCard.appendChild(importWrap);
+
+  // Delete all data
   if(userIsAdmin){
     const clearBtn = h('button',{className:'btn btn-danger',style:{width:'100%'},
-      onClick:()=>{
-        requireAdminPin(async()=>{
-          if(!confirm(t('deleteConfirm')))return;
-          idb.close();idb=null;indexedDB.deleteDatabase(DB_NAME);localStorage.clear();location.reload();
-        });
-      }});
+      onClick:()=>requireAdminPin(async()=>{
+        if(!await showConfirm(t('deleteAllData'),t('deleteConfirm')))return;
+        idb.close();idb=null;indexedDB.deleteDatabase(DB_NAME);localStorage.clear();location.reload();
+      })});
     clearBtn.innerHTML=`${I.trash} <span>${t('deleteAllData')}</span>`;
     dataCard.appendChild(clearBtn);
   }
@@ -2222,7 +2872,10 @@ async function renderSettings() {
   infoH.appendChild(h('h3',{style:{fontSize:'13px',fontWeight:'600',color:'var(--text2)'}},t('info')));
   infoCard.appendChild(infoH);
   infoCard.append(
-    h('p',{style:{fontSize:'12px',color:'var(--text4)'}},'Tcha Agro v1.1 — Kassenbuch & Lagerverwaltung'),
+    h('div',{style:{display:'flex',alignItems:'center',gap:'8px'}},
+      h('p',{style:{fontSize:'12px',color:'var(--text4)'}},'Tcha Agro'),
+      h('span',{className:'version-badge'},'v2.0')
+    ),
     h('p',{style:{fontSize:'12px',color:'var(--text4)',marginTop:'4px'}},`${t('loggedInAs')}: ${state.user.display_name} (${state.user.role})`)
   );
   page.appendChild(infoCard);
@@ -2230,9 +2883,9 @@ async function renderSettings() {
   renderShell(page);
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ============================================================
 // MAIN RENDER
-// ═══════════════════════════════════════════════════════════════
+// ============================================================
 async function render() {
   if (!state.user) return renderLogin();
   await updatePending();
@@ -2246,15 +2899,17 @@ async function render() {
   if (r==='ship-form') return renderShipForm();
   if (r==='ship-detail') return renderShipDetail();
   if (r==='reports') return renderReports();
+  if (r==='contacts') return renderContacts();
+  if (r==='contact-form') return renderContactForm();
+  if (r==='contact-detail') return renderContactDetail();
   if (r==='settings') return renderSettings();
   return renderDashboard();
 }
 
-// ─── Service Worker (inline) ─────────────────────────────────
+// --- Service Worker ---
 if ('serviceWorker' in navigator) {
   const swCode = `
-    const CACHE = 'tchaagro-v1';
-    const ASSETS = [self.location.href.replace(/\\/sw\\.js.*/, '')];
+    const CACHE = 'tchaagro-v2';
     self.addEventListener('install', e => { self.skipWaiting(); });
     self.addEventListener('activate', e => { e.waitUntil(clients.claim()); });
     self.addEventListener('fetch', e => {
@@ -2277,7 +2932,7 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
 }
 
-// ─── Init ────────────────────────────────────────────────────
+// --- Init ---
 (async () => {
   await openDB();
   await seed();
